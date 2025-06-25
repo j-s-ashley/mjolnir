@@ -2,7 +2,7 @@ import re
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
-filename = "digi_no_bib.txt"
+filename = "digi_with_bib.txt"
 regions  = [
     "EcalBarrelCollectionDigi",
     "EcalEndcapCollectionDigi",
