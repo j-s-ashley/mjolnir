@@ -1,5 +1,5 @@
-first_file  = "../data/digi_no_bib.txt"
-second_file = "../data/digi_with_bib.txt"
+first_file  = "digi-no-bib.txt"
+second_file = "digi-with-bib.txt"
 num_events  = 10
 
 #with open(first_file, "r") as file1:
@@ -22,7 +22,7 @@ regions = [
 # Structure: region -> { 'count': int, 'max_energy': float, 'max_pos': [x, y, z] }
 results = defaultdict(lambda: {'count': 0, 'max_energy': 0.0, 'max_pos': [0.0, 0.0, 0.0]})
 
-with open(first_file, "r") as f:
+with open(second_file, "r") as f:
     for line in f:
         # Match hit count lines
         match_count = re.match(r"\s*(\d+)\s+hits in (\w+)", line)
