@@ -1,0 +1,16 @@
+EcalBarrelCollectionDigi:
+  Total hits: 710931
+  Max energy: 687.248
+  Max |position|: x=1532.7, y=1598.3, z=1938.0
+EcalEndcapCollectionDigi:
+  Total hits: 151873
+  Max energy: 507.459
+  Max |position|: x=1536.3, y=1629.9, z=2491.2
+HcalBarrelCollectionDigi:
+  Total hits: 27583
+  Max energy: 392.0
+  Max |position|: x=2503.0, y=2590.4, z=2205.0
+HcalEndcapCollectionDigi:
+  Total hits: 8365
+  Max energy: 248.0
+  Max |position|: x=2255.7, y=1899.1, z=3938.0
