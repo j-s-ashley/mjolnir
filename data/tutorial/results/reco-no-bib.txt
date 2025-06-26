@@ -1,0 +1,50 @@
+Loading LCIO ROOT dictionaries ...
+Reading file mjolnir/data/tutorial/no-bib/output_reco.slcio
+Event 0 track    0 p = 140.0 theta =  0.81 phi =  1.56 chi2/ndf =  9.51/22.00
+Event 0 cluster  0 e = 119.6 theta =  0.80 phi =  1.58
+Event 0 PFO      0 e = 119.6 theta =  0.81 phi =  1.57 pdg =   22 charge = 0.0
+
+Event 1 track    0 p = 139.4 theta =  1.06 phi = -0.32 chi2/ndf = 16.47/28.00
+Event 1 cluster  0 e = 116.5 theta =  1.03 phi = -0.31
+Event 1 PFO      0 e = 116.5 theta =  1.06 phi = -0.31 pdg =   22 charge = 0.0
+
+Event 2 track    0 p = 137.7 theta =  2.40 phi = -2.09 chi2/ndf = 36.69/24.00
+Event 2 cluster  0 e =   0.3 theta =  2.75 phi =  1.52
+Event 2 cluster  1 e = 120.3 theta =  2.41 phi = -2.05
+Event 2 PFO      0 e =   0.3 theta =  2.92 phi = -1.66 pdg =   22 charge = 0.0
+Event 2 PFO      1 e = 120.3 theta =  2.40 phi = -2.08 pdg =   22 charge = 0.0
+
+Event 3 track    0 p = 138.1 theta =  2.06 phi =  0.60 chi2/ndf = 26.31/28.00
+Event 3 cluster  0 e =   0.3 theta =  2.14 phi = -2.18
+Event 3 cluster  1 e =   0.7 theta =  2.02 phi =  1.86
+Event 3 cluster  2 e = 115.5 theta =  2.07 phi =  0.62
+Event 3 PFO      0 e =   0.3 theta =  2.94 phi = -1.50 pdg = 2112 charge = 0.0
+Event 3 PFO      1 e =   0.7 theta =  2.70 phi =  0.97 pdg = 2112 charge = 0.0
+Event 3 PFO      2 e = 115.5 theta =  2.06 phi =  0.61 pdg =   22 charge = 0.0
+
+Event 4 track    0 p = 137.2 theta =  1.27 phi =  2.78 chi2/ndf = 39.79/28.00
+Event 4 cluster  0 e = 118.1 theta =  1.26 phi =  2.80
+Event 4 cluster  1 e =   1.0 theta =  2.05 phi = -2.52
+Event 4 PFO      0 e = 118.1 theta =  1.27 phi =  2.79 pdg =   22 charge = 0.0
+Event 4 PFO      1 e =   1.0 theta =  1.26 phi =  2.76 pdg = 2112 charge = 0.0
+
+Event 5 track    0 p = 140.0 theta =  1.10 phi = -0.71 chi2/ndf = 15.93/30.00
+Event 5 cluster  0 e = 114.9 theta =  1.08 phi = -0.70
+Event 5 PFO      0 e = 114.9 theta =  1.10 phi = -0.70 pdg =   22 charge = 0.0
+
+Event 6 track    0 p = 140.1 theta =  1.85 phi = -1.90 chi2/ndf = 19.37/30.00
+Event 6 cluster  0 e = 118.2 theta =  1.87 phi = -1.87
+Event 6 PFO      0 e = 118.2 theta =  1.85 phi = -1.89 pdg =   22 charge = 0.0
+
+Event 7 track    0 p = 140.7 theta =  0.70 phi =  2.05 chi2/ndf = 28.05/20.00
+Event 7 cluster  0 e = 112.5 theta =  0.66 phi =  2.08
+Event 7 PFO      0 e = 112.5 theta =  0.70 phi =  2.06 pdg =   22 charge = 0.0
+
+Event 8 track    0 p = 139.5 theta =  2.05 phi = -1.67 chi2/ndf = 31.57/28.00
+Event 8 cluster  0 e = 117.7 theta =  2.05 phi = -1.65
+Event 8 PFO      0 e = 117.7 theta =  2.05 phi = -1.66 pdg =   22 charge = 0.0
+
+Event 9 track    0 p = 139.9 theta =  2.80 phi =  1.38 chi2/ndf = 12.75/22.00
+Event 9 cluster  0 e = 109.0 theta =  2.84 phi =  1.44
+Event 9 PFO      0 e = 109.0 theta =  2.80 phi =  1.40 pdg =   22 charge = 0.0
+

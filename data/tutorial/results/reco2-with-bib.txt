@@ -1,0 +1,637 @@
+Analyzing 1 file(s)
+Loading LCIO ROOT dictionaries ...
+Reading from file: output_reco_with_bib.slcio
+# of runs: 0   # of events: 10
+
+RUN: 0          EVENT: 0           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  1
+ECalBarrelCollection               SimCalorimeterHit                  73518
+ECalEndcapCollection               SimCalorimeterHit                  18047
+EcalBarrelCollectionDigi           CalorimeterHit                     56460
+EcalBarrelCollectionRec            CalorimeterHit                     56460
+EcalBarrelRelationsSimDigi         LCRelation                         56460
+EcalBarrelRelationsSimRec          LCRelation                         56460
+EcalEndcapCollectionDigi           CalorimeterHit                     14695
+EcalEndcapCollectionRec            CalorimeterHit                     14695
+EcalEndcapRelationsSimDigi         LCRelation                         14695
+EcalEndcapRelationsSimRec          LCRelation                         14695
+HCalBarrelCollection               SimCalorimeterHit                  10308
+HCalEndcapCollection               SimCalorimeterHit                   6912
+HCalRingCollection                 SimCalorimeterHit                    658
+HCalRingCollectionDigi             CalorimeterHit                       156
+HCalRingCollectionRec              CalorimeterHit                       156
+HCalRingRelationsSimDigi           LCRelation                           156
+HCalRingRelationsSimRec            LCRelation                           156
+HcalBarrelCollectionDigi           CalorimeterHit                      2580
+HcalBarrelCollectionRec            CalorimeterHit                      2580
+HcalBarrelRelationsSimDigi         LCRelation                          2580
+HcalBarrelRelationsSimRec          LCRelation                          2580
+HcalEndcapCollectionDigi           CalorimeterHit                      1097
+HcalEndcapCollectionRec            CalorimeterHit                      1097
+HcalEndcapRelationsSimDigi         LCRelation                          1097
+HcalEndcapRelationsSimRec          LCRelation                          1097
+ITBarrelHits                       TrackerHitPlane                     6494
+ITBarrelHitsRelations              LCRelation                          6494
+ITEndcapHits                       TrackerHitPlane                     2727
+ITEndcapHitsRelations              LCRelation                          2727
+InnerTrackerBarrelCollection       SimTrackerHit                      22607
+InnerTrackerEndcapCollection       SimTrackerHit                       7762
+JetOut                             ReconstructedParticle                 38
+MCParticle                         MCParticle                            28
+MuonHits                           CalorimeterHit                         1
+MuonHitsRelations                  LCRelation                             1
+OTBarrelHits                       TrackerHitPlane                     3816
+OTBarrelHitsRelations              LCRelation                          3816
+OTEndcapHits                       TrackerHitPlane                     2753
+OTEndcapHitsRelations              LCRelation                          2753
+OuterTrackerBarrelCollection       SimTrackerHit                      20881
+OuterTrackerEndcapCollection       SimTrackerHit                       8464
+PandoraClusters                    Cluster                              409
+PandoraPFOs                        ReconstructedParticle                409
+PandoraStartVertices               Vertex                               409
+SeedTracks                         Track                                  1
+SelectedPandoraPFOs                ReconstructedParticle                366
+SiTracks                           Track                                  1
+VXDBarrelHits                      TrackerHitPlane                     1806
+VXDBarrelHitsRelations             LCRelation                          1806
+VXDEndcapHits                      TrackerHitPlane                     4448
+VXDEndcapHitsRelations             LCRelation                          4448
+VertexBarrelCollection             SimTrackerHit                      10712
+VertexEndcapCollection             SimTrackerHit                      16545
+YokeBarrelCollection               SimCalorimeterHit                      1
+YokeEndcapCollection               SimCalorimeterHit                      0
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 1           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  3
+ECalBarrelCollection               SimCalorimeterHit                  81792
+ECalEndcapCollection               SimCalorimeterHit                  18721
+EcalBarrelCollectionDigi           CalorimeterHit                     63456
+EcalBarrelCollectionRec            CalorimeterHit                     63456
+EcalBarrelRelationsSimDigi         LCRelation                         63456
+EcalBarrelRelationsSimRec          LCRelation                         63456
+EcalEndcapCollectionDigi           CalorimeterHit                     14087
+EcalEndcapCollectionRec            CalorimeterHit                     14087
+EcalEndcapRelationsSimDigi         LCRelation                         14087
+EcalEndcapRelationsSimRec          LCRelation                         14087
+HCalBarrelCollection               SimCalorimeterHit                  11442
+HCalEndcapCollection               SimCalorimeterHit                  13674
+HCalRingCollection                 SimCalorimeterHit                    874
+HCalRingCollectionDigi             CalorimeterHit                       202
+HCalRingCollectionRec              CalorimeterHit                       202
+HCalRingRelationsSimDigi           LCRelation                           202
+HCalRingRelationsSimRec            LCRelation                           202
+HcalBarrelCollectionDigi           CalorimeterHit                      2744
+HcalBarrelCollectionRec            CalorimeterHit                      2744
+HcalBarrelRelationsSimDigi         LCRelation                          2744
+HcalBarrelRelationsSimRec          LCRelation                          2744
+HcalEndcapCollectionDigi           CalorimeterHit                      1225
+HcalEndcapCollectionRec            CalorimeterHit                      1225
+HcalEndcapRelationsSimDigi         LCRelation                          1225
+HcalEndcapRelationsSimRec          LCRelation                          1225
+ITBarrelHits                       TrackerHitPlane                     7928
+ITBarrelHitsRelations              LCRelation                          7928
+ITEndcapHits                       TrackerHitPlane                     3177
+ITEndcapHitsRelations              LCRelation                          3177
+InnerTrackerBarrelCollection       SimTrackerHit                      27111
+InnerTrackerEndcapCollection       SimTrackerHit                       8327
+JetOut                             ReconstructedParticle                 31
+MCParticle                         MCParticle                            13
+MuonHits                           CalorimeterHit                         0
+MuonHitsRelations                  LCRelation                             0
+OTBarrelHits                       TrackerHitPlane                     4564
+OTBarrelHitsRelations              LCRelation                          4564
+OTEndcapHits                       TrackerHitPlane                     2821
+OTEndcapHitsRelations              LCRelation                          2821
+OuterTrackerBarrelCollection       SimTrackerHit                      23639
+OuterTrackerEndcapCollection       SimTrackerHit                       9159
+PandoraClusters                    Cluster                              463
+PandoraPFOs                        ReconstructedParticle                463
+PandoraStartVertices               Vertex                               463
+SeedTracks                         Track                                  3
+SelectedPandoraPFOs                ReconstructedParticle                387
+SiTracks                           Track                                  1
+VXDBarrelHits                      TrackerHitPlane                     1763
+VXDBarrelHitsRelations             LCRelation                          1763
+VXDEndcapHits                      TrackerHitPlane                     3717
+VXDEndcapHitsRelations             LCRelation                          3717
+VertexBarrelCollection             SimTrackerHit                      12984
+VertexEndcapCollection             SimTrackerHit                      16796
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                      0
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 2           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  5
+ECalBarrelCollection               SimCalorimeterHit                  94012
+ECalEndcapCollection               SimCalorimeterHit                  16951
+EcalBarrelCollectionDigi           CalorimeterHit                     72215
+EcalBarrelCollectionRec            CalorimeterHit                     72215
+EcalBarrelRelationsSimDigi         LCRelation                         72215
+EcalBarrelRelationsSimRec          LCRelation                         72215
+EcalEndcapCollectionDigi           CalorimeterHit                     13172
+EcalEndcapCollectionRec            CalorimeterHit                     13172
+EcalEndcapRelationsSimDigi         LCRelation                         13172
+EcalEndcapRelationsSimRec          LCRelation                         13172
+HCalBarrelCollection               SimCalorimeterHit                  14621
+HCalEndcapCollection               SimCalorimeterHit                   7496
+HCalRingCollection                 SimCalorimeterHit                    782
+HCalRingCollectionDigi             CalorimeterHit                       204
+HCalRingCollectionRec              CalorimeterHit                       204
+HCalRingRelationsSimDigi           LCRelation                           204
+HCalRingRelationsSimRec            LCRelation                           204
+HcalBarrelCollectionDigi           CalorimeterHit                      3611
+HcalBarrelCollectionRec            CalorimeterHit                      3611
+HcalBarrelRelationsSimDigi         LCRelation                          3611
+HcalBarrelRelationsSimRec          LCRelation                          3611
+HcalEndcapCollectionDigi           CalorimeterHit                       632
+HcalEndcapCollectionRec            CalorimeterHit                       632
+HcalEndcapRelationsSimDigi         LCRelation                           632
+HcalEndcapRelationsSimRec          LCRelation                           632
+ITBarrelHits                       TrackerHitPlane                     8318
+ITBarrelHitsRelations              LCRelation                          8318
+ITEndcapHits                       TrackerHitPlane                     3434
+ITEndcapHitsRelations              LCRelation                          3434
+InnerTrackerBarrelCollection       SimTrackerHit                      29236
+InnerTrackerEndcapCollection       SimTrackerHit                       9889
+JetOut                             ReconstructedParticle                 37
+MCParticle                         MCParticle                            36
+MuonHits                           CalorimeterHit                         0
+MuonHitsRelations                  LCRelation                             0
+OTBarrelHits                       TrackerHitPlane                     4842
+OTBarrelHitsRelations              LCRelation                          4842
+OTEndcapHits                       TrackerHitPlane                     3161
+OTEndcapHitsRelations              LCRelation                          3161
+OuterTrackerBarrelCollection       SimTrackerHit                      26080
+OuterTrackerEndcapCollection       SimTrackerHit                      10014
+PandoraClusters                    Cluster                              484
+PandoraPFOs                        ReconstructedParticle                485
+PandoraStartVertices               Vertex                               485
+SeedTracks                         Track                                  5
+SelectedPandoraPFOs                ReconstructedParticle                432
+SiTracks                           Track                                  2
+VXDBarrelHits                      TrackerHitPlane                     1893
+VXDBarrelHitsRelations             LCRelation                          1893
+VXDEndcapHits                      TrackerHitPlane                     3892
+VXDEndcapHitsRelations             LCRelation                          3892
+VertexBarrelCollection             SimTrackerHit                      13220
+VertexEndcapCollection             SimTrackerHit                      17943
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                      0
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 3           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  5
+ECalBarrelCollection               SimCalorimeterHit                 113718
+ECalEndcapCollection               SimCalorimeterHit                  24039
+EcalBarrelCollectionDigi           CalorimeterHit                     90504
+EcalBarrelCollectionRec            CalorimeterHit                     90504
+EcalBarrelRelationsSimDigi         LCRelation                         90504
+EcalBarrelRelationsSimRec          LCRelation                         90504
+EcalEndcapCollectionDigi           CalorimeterHit                     19986
+EcalEndcapCollectionRec            CalorimeterHit                     19986
+EcalEndcapRelationsSimDigi         LCRelation                         19986
+EcalEndcapRelationsSimRec          LCRelation                         19986
+HCalBarrelCollection               SimCalorimeterHit                  13068
+HCalEndcapCollection               SimCalorimeterHit                   8146
+HCalRingCollection                 SimCalorimeterHit                    557
+HCalRingCollectionDigi             CalorimeterHit                       148
+HCalRingCollectionRec              CalorimeterHit                       148
+HCalRingRelationsSimDigi           LCRelation                           148
+HCalRingRelationsSimRec            LCRelation                           148
+HcalBarrelCollectionDigi           CalorimeterHit                      3116
+HcalBarrelCollectionRec            CalorimeterHit                      3116
+HcalBarrelRelationsSimDigi         LCRelation                          3116
+HcalBarrelRelationsSimRec          LCRelation                          3116
+HcalEndcapCollectionDigi           CalorimeterHit                      1572
+HcalEndcapCollectionRec            CalorimeterHit                      1572
+HcalEndcapRelationsSimDigi         LCRelation                          1572
+HcalEndcapRelationsSimRec          LCRelation                          1572
+ITBarrelHits                       TrackerHitPlane                    11827
+ITBarrelHitsRelations              LCRelation                         11827
+ITEndcapHits                       TrackerHitPlane                     4571
+ITEndcapHitsRelations              LCRelation                          4571
+InnerTrackerBarrelCollection       SimTrackerHit                      39574
+InnerTrackerEndcapCollection       SimTrackerHit                      12130
+JetOut                             ReconstructedParticle                 44
+MCParticle                         MCParticle                            42
+MuonHits                           CalorimeterHit                         3
+MuonHitsRelations                  LCRelation                             3
+OTBarrelHits                       TrackerHitPlane                     6636
+OTBarrelHitsRelations              LCRelation                          6636
+OTEndcapHits                       TrackerHitPlane                     4319
+OTEndcapHitsRelations              LCRelation                          4319
+OuterTrackerBarrelCollection       SimTrackerHit                      34585
+OuterTrackerEndcapCollection       SimTrackerHit                      13318
+PandoraClusters                    Cluster                              657
+PandoraPFOs                        ReconstructedParticle                658
+PandoraStartVertices               Vertex                               658
+SeedTracks                         Track                                  5
+SelectedPandoraPFOs                ReconstructedParticle                599
+SiTracks                           Track                                  2
+VXDBarrelHits                      TrackerHitPlane                     2057
+VXDBarrelHitsRelations             LCRelation                          2057
+VXDEndcapHits                      TrackerHitPlane                     5978
+VXDEndcapHitsRelations             LCRelation                          5978
+VertexBarrelCollection             SimTrackerHit                      16426
+VertexEndcapCollection             SimTrackerHit                      25006
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                      3
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 4           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  3
+ECalBarrelCollection               SimCalorimeterHit                  78343
+ECalEndcapCollection               SimCalorimeterHit                  17993
+EcalBarrelCollectionDigi           CalorimeterHit                     60759
+EcalBarrelCollectionRec            CalorimeterHit                     60759
+EcalBarrelRelationsSimDigi         LCRelation                         60759
+EcalBarrelRelationsSimRec          LCRelation                         60759
+EcalEndcapCollectionDigi           CalorimeterHit                     14496
+EcalEndcapCollectionRec            CalorimeterHit                     14496
+EcalEndcapRelationsSimDigi         LCRelation                         14496
+EcalEndcapRelationsSimRec          LCRelation                         14496
+HCalBarrelCollection               SimCalorimeterHit                  11310
+HCalEndcapCollection               SimCalorimeterHit                   9278
+HCalRingCollection                 SimCalorimeterHit                    728
+HCalRingCollectionDigi             CalorimeterHit                       155
+HCalRingCollectionRec              CalorimeterHit                       155
+HCalRingRelationsSimDigi           LCRelation                           155
+HCalRingRelationsSimRec            LCRelation                           155
+HcalBarrelCollectionDigi           CalorimeterHit                      2814
+HcalBarrelCollectionRec            CalorimeterHit                      2814
+HcalBarrelRelationsSimDigi         LCRelation                          2814
+HcalBarrelRelationsSimRec          LCRelation                          2814
+HcalEndcapCollectionDigi           CalorimeterHit                       958
+HcalEndcapCollectionRec            CalorimeterHit                       958
+HcalEndcapRelationsSimDigi         LCRelation                           958
+HcalEndcapRelationsSimRec          LCRelation                           958
+ITBarrelHits                       TrackerHitPlane                     8283
+ITBarrelHitsRelations              LCRelation                          8283
+ITEndcapHits                       TrackerHitPlane                     3239
+ITEndcapHitsRelations              LCRelation                          3239
+InnerTrackerBarrelCollection       SimTrackerHit                      26709
+InnerTrackerEndcapCollection       SimTrackerHit                       8894
+JetOut                             ReconstructedParticle                 37
+MCParticle                         MCParticle                             7
+MuonHits                           CalorimeterHit                        30
+MuonHitsRelations                  LCRelation                            30
+OTBarrelHits                       TrackerHitPlane                     4273
+OTBarrelHitsRelations              LCRelation                          4273
+OTEndcapHits                       TrackerHitPlane                     3175
+OTEndcapHitsRelations              LCRelation                          3175
+OuterTrackerBarrelCollection       SimTrackerHit                      23137
+OuterTrackerEndcapCollection       SimTrackerHit                       9322
+PandoraClusters                    Cluster                              394
+PandoraPFOs                        ReconstructedParticle                394
+PandoraStartVertices               Vertex                               394
+SeedTracks                         Track                                  3
+SelectedPandoraPFOs                ReconstructedParticle                359
+SiTracks                           Track                                  1
+VXDBarrelHits                      TrackerHitPlane                     2236
+VXDBarrelHitsRelations             LCRelation                          2236
+VXDEndcapHits                      TrackerHitPlane                     4489
+VXDEndcapHitsRelations             LCRelation                          4489
+VertexBarrelCollection             SimTrackerHit                      13620
+VertexEndcapCollection             SimTrackerHit                      16792
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                     30
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 5           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  5
+ECalBarrelCollection               SimCalorimeterHit                  74921
+ECalEndcapCollection               SimCalorimeterHit                  15242
+EcalBarrelCollectionDigi           CalorimeterHit                     57949
+EcalBarrelCollectionRec            CalorimeterHit                     57949
+EcalBarrelRelationsSimDigi         LCRelation                         57949
+EcalBarrelRelationsSimRec          LCRelation                         57949
+EcalEndcapCollectionDigi           CalorimeterHit                     11919
+EcalEndcapCollectionRec            CalorimeterHit                     11919
+EcalEndcapRelationsSimDigi         LCRelation                         11919
+EcalEndcapRelationsSimRec          LCRelation                         11919
+HCalBarrelCollection               SimCalorimeterHit                  10771
+HCalEndcapCollection               SimCalorimeterHit                   7249
+HCalRingCollection                 SimCalorimeterHit                    574
+HCalRingCollectionDigi             CalorimeterHit                       140
+HCalRingCollectionRec              CalorimeterHit                       140
+HCalRingRelationsSimDigi           LCRelation                           140
+HCalRingRelationsSimRec            LCRelation                           140
+HcalBarrelCollectionDigi           CalorimeterHit                      2642
+HcalBarrelCollectionRec            CalorimeterHit                      2642
+HcalBarrelRelationsSimDigi         LCRelation                          2642
+HcalBarrelRelationsSimRec          LCRelation                          2642
+HcalEndcapCollectionDigi           CalorimeterHit                       555
+HcalEndcapCollectionRec            CalorimeterHit                       555
+HcalEndcapRelationsSimDigi         LCRelation                           555
+HcalEndcapRelationsSimRec          LCRelation                           555
+ITBarrelHits                       TrackerHitPlane                     7047
+ITBarrelHitsRelations              LCRelation                          7047
+ITEndcapHits                       TrackerHitPlane                     2902
+ITEndcapHitsRelations              LCRelation                          2902
+InnerTrackerBarrelCollection       SimTrackerHit                      23942
+InnerTrackerEndcapCollection       SimTrackerHit                       7919
+JetOut                             ReconstructedParticle                 33
+MCParticle                         MCParticle                            18
+MuonHits                           CalorimeterHit                         0
+MuonHitsRelations                  LCRelation                             0
+OTBarrelHits                       TrackerHitPlane                     3868
+OTBarrelHitsRelations              LCRelation                          3868
+OTEndcapHits                       TrackerHitPlane                     2638
+OTEndcapHitsRelations              LCRelation                          2638
+OuterTrackerBarrelCollection       SimTrackerHit                      21244
+OuterTrackerEndcapCollection       SimTrackerHit                       8279
+PandoraClusters                    Cluster                              438
+PandoraPFOs                        ReconstructedParticle                438
+PandoraStartVertices               Vertex                               438
+SeedTracks                         Track                                  5
+SelectedPandoraPFOs                ReconstructedParticle                399
+SiTracks                           Track                                  1
+VXDBarrelHits                      TrackerHitPlane                     2028
+VXDBarrelHitsRelations             LCRelation                          2028
+VXDEndcapHits                      TrackerHitPlane                     5184
+VXDEndcapHitsRelations             LCRelation                          5184
+VertexBarrelCollection             SimTrackerHit                      11309
+VertexEndcapCollection             SimTrackerHit                      16753
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                      0
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 6           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  5
+ECalBarrelCollection               SimCalorimeterHit                  83096
+ECalEndcapCollection               SimCalorimeterHit                  14471
+EcalBarrelCollectionDigi           CalorimeterHit                     67209
+EcalBarrelCollectionRec            CalorimeterHit                     67209
+EcalBarrelRelationsSimDigi         LCRelation                         67209
+EcalBarrelRelationsSimRec          LCRelation                         67209
+EcalEndcapCollectionDigi           CalorimeterHit                     11466
+EcalEndcapCollectionRec            CalorimeterHit                     11466
+EcalEndcapRelationsSimDigi         LCRelation                         11466
+EcalEndcapRelationsSimRec          LCRelation                         11466
+HCalBarrelCollection               SimCalorimeterHit                   6838
+HCalEndcapCollection               SimCalorimeterHit                   6457
+HCalRingCollection                 SimCalorimeterHit                    359
+HCalRingCollectionDigi             CalorimeterHit                        84
+HCalRingCollectionRec              CalorimeterHit                        84
+HCalRingRelationsSimDigi           LCRelation                            84
+HCalRingRelationsSimRec            LCRelation                            84
+HcalBarrelCollectionDigi           CalorimeterHit                      1698
+HcalBarrelCollectionRec            CalorimeterHit                      1698
+HcalBarrelRelationsSimDigi         LCRelation                          1698
+HcalBarrelRelationsSimRec          LCRelation                          1698
+HcalEndcapCollectionDigi           CalorimeterHit                       461
+HcalEndcapCollectionRec            CalorimeterHit                       461
+HcalEndcapRelationsSimDigi         LCRelation                           461
+HcalEndcapRelationsSimRec          LCRelation                           461
+ITBarrelHits                       TrackerHitPlane                     8476
+ITBarrelHitsRelations              LCRelation                          8476
+ITEndcapHits                       TrackerHitPlane                     3412
+ITEndcapHitsRelations              LCRelation                          3412
+InnerTrackerBarrelCollection       SimTrackerHit                      30504
+InnerTrackerEndcapCollection       SimTrackerHit                       9508
+JetOut                             ReconstructedParticle                 35
+MCParticle                         MCParticle                            12
+MuonHits                           CalorimeterHit                         4
+MuonHitsRelations                  LCRelation                             4
+OTBarrelHits                       TrackerHitPlane                     4683
+OTBarrelHitsRelations              LCRelation                          4683
+OTEndcapHits                       TrackerHitPlane                     3139
+OTEndcapHitsRelations              LCRelation                          3139
+OuterTrackerBarrelCollection       SimTrackerHit                      27631
+OuterTrackerEndcapCollection       SimTrackerHit                       9745
+PandoraClusters                    Cluster                              453
+PandoraPFOs                        ReconstructedParticle                453
+PandoraStartVertices               Vertex                               453
+SeedTracks                         Track                                  5
+SelectedPandoraPFOs                ReconstructedParticle                428
+SiTracks                           Track                                  2
+VXDBarrelHits                      TrackerHitPlane                     2614
+VXDBarrelHitsRelations             LCRelation                          2614
+VXDEndcapHits                      TrackerHitPlane                     3838
+VXDEndcapHitsRelations             LCRelation                          3838
+VertexBarrelCollection             SimTrackerHit                      16148
+VertexEndcapCollection             SimTrackerHit                      18799
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                      4
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 7           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  4
+ECalBarrelCollection               SimCalorimeterHit                 102067
+ECalEndcapCollection               SimCalorimeterHit                  21595
+EcalBarrelCollectionDigi           CalorimeterHit                     81203
+EcalBarrelCollectionRec            CalorimeterHit                     81203
+EcalBarrelRelationsSimDigi         LCRelation                         81203
+EcalBarrelRelationsSimRec          LCRelation                         81203
+EcalEndcapCollectionDigi           CalorimeterHit                     17858
+EcalEndcapCollectionRec            CalorimeterHit                     17858
+EcalEndcapRelationsSimDigi         LCRelation                         17858
+EcalEndcapRelationsSimRec          LCRelation                         17858
+HCalBarrelCollection               SimCalorimeterHit                  10382
+HCalEndcapCollection               SimCalorimeterHit                   8044
+HCalRingCollection                 SimCalorimeterHit                    578
+HCalRingCollectionDigi             CalorimeterHit                       149
+HCalRingCollectionRec              CalorimeterHit                       149
+HCalRingRelationsSimDigi           LCRelation                           149
+HCalRingRelationsSimRec            LCRelation                           149
+HcalBarrelCollectionDigi           CalorimeterHit                      2700
+HcalBarrelCollectionRec            CalorimeterHit                      2700
+HcalBarrelRelationsSimDigi         LCRelation                          2700
+HcalBarrelRelationsSimRec          LCRelation                          2700
+HcalEndcapCollectionDigi           CalorimeterHit                       840
+HcalEndcapCollectionRec            CalorimeterHit                       840
+HcalEndcapRelationsSimDigi         LCRelation                           840
+HcalEndcapRelationsSimRec          LCRelation                           840
+ITBarrelHits                       TrackerHitPlane                    10521
+ITBarrelHitsRelations              LCRelation                         10521
+ITEndcapHits                       TrackerHitPlane                     3994
+ITEndcapHitsRelations              LCRelation                          3994
+InnerTrackerBarrelCollection       SimTrackerHit                      36358
+InnerTrackerEndcapCollection       SimTrackerHit                      11255
+JetOut                             ReconstructedParticle                 44
+MCParticle                         MCParticle                            23
+MuonHits                           CalorimeterHit                         6
+MuonHitsRelations                  LCRelation                             6
+OTBarrelHits                       TrackerHitPlane                     6131
+OTBarrelHitsRelations              LCRelation                          6131
+OTEndcapHits                       TrackerHitPlane                     3825
+OTEndcapHitsRelations              LCRelation                          3825
+OuterTrackerBarrelCollection       SimTrackerHit                      32424
+OuterTrackerEndcapCollection       SimTrackerHit                      12214
+PandoraClusters                    Cluster                              601
+PandoraPFOs                        ReconstructedParticle                601
+PandoraStartVertices               Vertex                               601
+SeedTracks                         Track                                  4
+SelectedPandoraPFOs                ReconstructedParticle                559
+SiTracks                           Track                                  1
+VXDBarrelHits                      TrackerHitPlane                     2443
+VXDBarrelHitsRelations             LCRelation                          2443
+VXDEndcapHits                      TrackerHitPlane                     4941
+VXDEndcapHitsRelations             LCRelation                          4941
+VertexBarrelCollection             SimTrackerHit                      16901
+VertexEndcapCollection             SimTrackerHit                      22986
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                      6
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 8           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  3
+ECalBarrelCollection               SimCalorimeterHit                  97753
+ECalEndcapCollection               SimCalorimeterHit                  18827
+EcalBarrelCollectionDigi           CalorimeterHit                     76493
+EcalBarrelCollectionRec            CalorimeterHit                     76493
+EcalBarrelRelationsSimDigi         LCRelation                         76493
+EcalBarrelRelationsSimRec          LCRelation                         76493
+EcalEndcapCollectionDigi           CalorimeterHit                     15132
+EcalEndcapCollectionRec            CalorimeterHit                     15132
+EcalEndcapRelationsSimDigi         LCRelation                         15132
+EcalEndcapRelationsSimRec          LCRelation                         15132
+HCalBarrelCollection               SimCalorimeterHit                  12440
+HCalEndcapCollection               SimCalorimeterHit                   6847
+HCalRingCollection                 SimCalorimeterHit                    342
+HCalRingCollectionDigi             CalorimeterHit                        72
+HCalRingCollectionRec              CalorimeterHit                        72
+HCalRingRelationsSimDigi           LCRelation                            72
+HCalRingRelationsSimRec            LCRelation                            72
+HcalBarrelCollectionDigi           CalorimeterHit                      3186
+HcalBarrelCollectionRec            CalorimeterHit                      3186
+HcalBarrelRelationsSimDigi         LCRelation                          3186
+HcalBarrelRelationsSimRec          LCRelation                          3186
+HcalEndcapCollectionDigi           CalorimeterHit                       486
+HcalEndcapCollectionRec            CalorimeterHit                       486
+HcalEndcapRelationsSimDigi         LCRelation                           486
+HcalEndcapRelationsSimRec          LCRelation                           486
+ITBarrelHits                       TrackerHitPlane                     9729
+ITBarrelHitsRelations              LCRelation                          9729
+ITEndcapHits                       TrackerHitPlane                     3886
+ITEndcapHitsRelations              LCRelation                          3886
+InnerTrackerBarrelCollection       SimTrackerHit                      32921
+InnerTrackerEndcapCollection       SimTrackerHit                      10517
+JetOut                             ReconstructedParticle                 43
+MCParticle                         MCParticle                            26
+MuonHits                           CalorimeterHit                         1
+MuonHitsRelations                  LCRelation                             1
+OTBarrelHits                       TrackerHitPlane                     5620
+OTBarrelHitsRelations              LCRelation                          5620
+OTEndcapHits                       TrackerHitPlane                     3663
+OTEndcapHitsRelations              LCRelation                          3663
+OuterTrackerBarrelCollection       SimTrackerHit                      29405
+OuterTrackerEndcapCollection       SimTrackerHit                      11458
+PandoraClusters                    Cluster                              559
+PandoraPFOs                        ReconstructedParticle                559
+PandoraStartVertices               Vertex                               559
+SeedTracks                         Track                                  3
+SelectedPandoraPFOs                ReconstructedParticle                520
+SiTracks                           Track                                  1
+VXDBarrelHits                      TrackerHitPlane                     1779
+VXDBarrelHitsRelations             LCRelation                          1779
+VXDEndcapHits                      TrackerHitPlane                     4999
+VXDEndcapHitsRelations             LCRelation                          4999
+VertexBarrelCollection             SimTrackerHit                      14164
+VertexEndcapCollection             SimTrackerHit                      21417
+YokeBarrelCollection               SimCalorimeterHit                      0
+YokeEndcapCollection               SimCalorimeterHit                      1
+---------------------------------------------------------------------------
+
+
+RUN: 0          EVENT: 9           DETECTOR: MuColl_v1
+---------------------------------------------------------------------------
+COLLECTION NAME                    COLLECTION TYPE            # OF ELEMENTS
+===========================================================================
+AllTracks                          Track                                  2
+ECalBarrelCollection               SimCalorimeterHit                  86807
+ECalEndcapCollection               SimCalorimeterHit                  21074
+EcalBarrelCollectionDigi           CalorimeterHit                     68336
+EcalBarrelCollectionRec            CalorimeterHit                     68336
+EcalBarrelRelationsSimDigi         LCRelation                         68336
+EcalBarrelRelationsSimRec          LCRelation                         68336
+EcalEndcapCollectionDigi           CalorimeterHit                     17159
+EcalEndcapCollectionRec            CalorimeterHit                     17159
+EcalEndcapRelationsSimDigi         LCRelation                         17159
+EcalEndcapRelationsSimRec          LCRelation                         17159
+HCalBarrelCollection               SimCalorimeterHit                   9812
+HCalEndcapCollection               SimCalorimeterHit                   8509
+HCalRingCollection                 SimCalorimeterHit                    440
+HCalRingCollectionDigi             CalorimeterHit                        91
+HCalRingCollectionRec              CalorimeterHit                        91
+HCalRingRelationsSimDigi           LCRelation                            91
+HCalRingRelationsSimRec            LCRelation                            91
+HcalBarrelCollectionDigi           CalorimeterHit                      2421
+HcalBarrelCollectionRec            CalorimeterHit                      2421
+HcalBarrelRelationsSimDigi         LCRelation                          2421
+HcalBarrelRelationsSimRec          LCRelation                          2421
+HcalEndcapCollectionDigi           CalorimeterHit                       527
+HcalEndcapCollectionRec            CalorimeterHit                       527
+HcalEndcapRelationsSimDigi         LCRelation                           527
+HcalEndcapRelationsSimRec          LCRelation                           527
+ITBarrelHits                       TrackerHitPlane                     8889
+ITBarrelHitsRelations              LCRelation                          8889
+ITEndcapHits                       TrackerHitPlane                     3817
+ITEndcapHitsRelations              LCRelation                          3817
+InnerTrackerBarrelCollection       SimTrackerHit                      31476
+InnerTrackerEndcapCollection       SimTrackerHit                      10384
+JetOut                             ReconstructedParticle                 39
+MCParticle                         MCParticle                            11
+MuonHits                           CalorimeterHit                         5
+MuonHitsRelations                  LCRelation                             5
+OTBarrelHits                       TrackerHitPlane                     4664
+OTBarrelHitsRelations              LCRelation                          4664
+OTEndcapHits                       TrackerHitPlane                     3345
+OTEndcapHitsRelations              LCRelation                          3345
+OuterTrackerBarrelCollection       SimTrackerHit                      27775
+OuterTrackerEndcapCollection       SimTrackerHit                      10788
+PandoraClusters                    Cluster                              526
+PandoraPFOs                        ReconstructedParticle                527
+PandoraStartVertices               Vertex                               527
+SeedTracks                         Track                                  2
+SelectedPandoraPFOs                ReconstructedParticle                499
+SiTracks                           Track                                  2
+VXDBarrelHits                      TrackerHitPlane                     2175
+VXDBarrelHitsRelations             LCRelation                          2175
+VXDEndcapHits                      TrackerHitPlane                     4585
+VXDEndcapHitsRelations             LCRelation                          4585
+VertexBarrelCollection             SimTrackerHit                      19474
+VertexEndcapCollection             SimTrackerHit                      19959
+YokeBarrelCollection               SimCalorimeterHit                      4
+YokeEndcapCollection               SimCalorimeterHit                      1
+---------------------------------------------------------------------------
+
+
+
+Finished reading 10 event(s)

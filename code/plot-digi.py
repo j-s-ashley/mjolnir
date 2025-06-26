@@ -2,7 +2,7 @@ import re
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
-filename = "digi-with-bib.txt"
+filename = "digi-no-bib.txt"
 regions  = [
     "EcalBarrelCollectionDigi",
     "EcalEndcapCollectionDigi",
@@ -44,4 +44,4 @@ for i, region in enumerate(regions):
         axes[i, j + 1].set_title(f"{region} - {axis} Position")
 
 plt.tight_layout()
-plt.savefig("digi-with-bib-dist.pdf")
+plt.savefig("digi-no-bib-dist.pdf")
