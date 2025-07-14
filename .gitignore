@@ -1,3 +1,4 @@
 *.slcio
 *.root
 code/TrkHitsStudiesWorkspace/*
+data/geometries/*
