@@ -5,7 +5,7 @@ import argparse
 import pyLCIO
 import ROOT, array
 
-TRKHIT_COLLECTIONS = [
+COLLECTIONS = [
         "ITBarrelHits",
         "ITEndcapHits",
         "OTBarrelHits",
@@ -13,34 +13,6 @@ TRKHIT_COLLECTIONS = [
         "VXDBarrelHits",
         "VXDEndcapHits"
         ]
-
-SIMTRKHIT_COLLECTIONS = [
-        "InnerTrackerBarrelCollection_HTF",
-        "InnerTrackerEndcapCollection_HTF",
-        "OuterTrackerBarrelCollection_HTF",
-        "OuterTrackerEndcapCollection_HTF",
-        "VertexBarrelCollection_HTF",
-        "VertexEndcapCollection_HTF"
-        ]
-
-REL_COLLECTIONS = [
-        "ITBarrelHitsRelations_HTF",
-        "ITEndcapHitsRelations_HTF",
-        "OTBarrelHitsRelations_HTF",
-        "OTEndcapHitsRelations_HTF",
-        "VXDBarrelHitsRelations_HTF",
-        "VXDEndcapHitsRelations_HTF"
-        ]
-
-PIXEL_COLLECTIONS = [
-        "IBPixels_HTF",
-        "IEPixels_HTF",
-        "OBPixels_HTF",
-        "OEPixels_HTF",
-        "VBPixels_HTF",
-        "VEPixels_HTF"
-        ]
-
 
 def options():
     parser = argparse.ArgumentParser(description="Generate BIB output hits TTree root file from input slcio file.")
@@ -139,66 +111,40 @@ def main():
         subdetector.clear()
         layer.clear()
 
-        rel_cols = {}
-        for rel_col in REL_COLLECTIONS:
-            rel_cols[rel_col] = get_collection(event, rel_col)
+        cols = {}
+        for col in COLLECTIONS:
+            cols[col] = get_collection(event, col)
 
         print(f"Event {i_event} has")
-        for rel_col in rel_cols:
-            print(f"  {len(rel_cols[rel_col]):5} hits in {rel_col}")
+        for col in cols:
+            print(f"  {len(cols[col]):5} hits in {col}")
 
-        for rel_col_name in REL_COLLECTIONS:
-            collection = rel_cols[rel_col_name]
+        for col_name in COLLECTIONS:
+            collection = cols[col_name]
             cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
-            print(f"Cell encoding for {rel_col_name}: {cell_encoding}")
+            decoder = pyLCIO.UTIL.CellIDDecoder__TrackerHit(cell_encoding)
+            print(f"Cell encoding for {col_name}: {cell_encoding}")
             print(f"Type: {type(cell_encoding)}")
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
 
-                digi_hit, sim_hit = hit.getFrom(), hit.getTo()
-                position = digi_hit.getPosition()
+                position = hit.getPosition()
                 x_pos = position[0]
                 y_pos = position[1]
                 z_pos = position[2]
                 x.push_back(x_pos)
                 y.push_back(y_pos)
                 z.push_back(z_pos)
-                t.push_back(digi_hit.getTime())
-                e.push_back(digi_hit.getEDep())
+                t.push_back(hit.getTime())
+                e.push_back(hit.getEDep())
                 theta.push_back(get_theta(x_pos, y_pos, z_pos))
+            
+                col_subdet = decoder(hit)["subdet"]
+                col_layer = decoder(hit)["layer"]
+                subdetector.push_back(col_subdet)
+                layer.push_back(col_layer)
                 
-
-        pix_cols = {}
-        for pix_col in PIXEL_COLLECTIONS:
-            pix_cols[pix_col] = get_collection(event, pix_col)
-
-        for pix_col in pix_cols:
-            print(f"  {len(pix_cols[pix_col]):5} hits in {pix_col}")
-
-        for pix_col_name in PIXEL_COLLECTIONS:
-            collection = pix_cols[pix_col_name]
-            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
-            print(f"Cell encoding for {pix_col_name}: {cell_encoding}")
-            print(f"Type: {type(cell_encoding)}")
-            decoder = pyLCIO.UTIL.CellIDDecoder__SimTrackerHit(collection)
-            for i_hit, hit in enumerate(pix_cols[pix_col_name]):
-                if i_hit < ops.nhits:
-                    break
-
-                position = hit.getPosition()
-                hits     = hit.getRawHits()
-                x_pos = position[0]
-                y_pos = position[1]
-                cluster_x, cluster_y = get_cluster_size(x_pos, y_pos)
-                cluster_size_x.push_back(cluster_x)
-                cluster_size_y.push_back(cluster_y)
-                cluster_size_tot.push_back(len(hits))
-
-                subdet = decoder(digi_hit)["subdet"]
-                layer = decoder(digi_hit)["layer"]
-                subdetector.push_back(subdet)
-                layer.push_back(layer)
 
         tree.Fill()
                     

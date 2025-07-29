@@ -10,12 +10,16 @@ factory = TMVA.Factory("TMVAClassification", outputFile,"!V:!Silent:Color:DrawPr
 dataloader = TMVA.DataLoader("dataset")
 
 # Define input variables
-dataloader.AddVariable("x", "F")
-dataloader.AddVariable("y", "F")
+dataloader.AddVariable("Cluster_ArrivalTime", "F")
+dataloader.AddVariable("Cluster_EnergyDeposited", "F")
+dataloader.AddVariable("Incident_Angle", "F")
+dataloader.AddVariable("Cluster_Size_x", "F")
+dataloader.AddVariable("Cluster_Size_y", "F")
+dataloader.AddVariable("Cluster_Size_tot", "F")
 
 # Load signal and background files
-sig_file = ROOT.TFile("signal.root")
-bkg_file = ROOT.TFile("background.root")
+sig_file = ROOT.TFile("../../data/beta/digi_signal.root")
+bkg_file = ROOT.TFile("../../data/beta/digi_bg.root")
 sig_tree = sig_file.Get("tree")
 bkg_tree = bkg_file.Get("tree")
 
@@ -24,7 +28,7 @@ dataloader.AddBackgroundTree(bkg_tree)
 
 # Prepare dataset
 dataloader.PrepareTrainingAndTestTree(ROOT.TCut(""), ROOT.TCut(""),
-    "nTrain_Signal=50:nTrain_Background=50:SplitMode=Random:NormMode=NumEvents:!V")
+    "nTrain_Signal=1:nTrain_Background=10000:SplitMode=Random:NormMode=NumEvents:!V")
 
 # Book a BDT
 factory.BookMethod(dataloader, TMVA.Types.kBDT, "BDT",
