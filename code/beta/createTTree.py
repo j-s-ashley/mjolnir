@@ -5,12 +5,37 @@ import pyLCIO
 import ROOT, array
 
 COLLECTIONS = [
-    "ITBarrelHitsRelations_HTF",
-    "VXDBarrelHitsRelations_HTF",
-    "VXDEndcapHitsRelations_HTF",
-    "ITEndcapHitsRelations_HTF",
-    "OTBarrelHitsRelations_HTF",
-    "OTEndcapHitsRelations_HTF"
+        "EcalBarrelCollectionDigi",
+        "EcalBarrelCollectionRec",
+        "EcalEndcapCollectionDigi",
+        "EcalEndcapCollectionRec",
+        "HcalBarrelCollectionDigi",
+        "HcalBarrelCollectionRec",
+        "HcalEndcapCollectionDigi",
+        "HcalEndcapCollectionRec",
+        "IBPixels_HTF",
+        "IEPixels_HTF",
+        "ITBarrelHits",
+        "ITBarrelHitsRelations_HTF",
+        "ITEndcapHits",
+        "ITEndcapHitsRelations_HTF",
+        "InnerTrackerBarrelCollection_HTF",
+        "InnerTrackerEndcapCollection_HTF",
+        "MCParticle",
+        "MuonHits",
+        "OBPixels_HTF",
+        "OEPixels_HTF",
+        "OTBarrelHits",
+        "OTBarrelHitsRelations_HTF",
+        "OTEndcapHits",
+        "OTEndcapHitsRelations_HTF",
+        "OuterTrackerBarrelCollection_HTF",
+        "OuterTrackerEndcapCollection_HTF",
+        "VBPixels_HTF",
+        "VEPixels_HTF",
+        "VXDBarrelHits",
+        "VXDBarrelHitsRelations_HTF",
+        "VXDEndcapHits"
 ]
 
 
