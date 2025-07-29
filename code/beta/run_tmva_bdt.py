@@ -18,17 +18,17 @@ dataloader.AddVariable("Cluster_Size_y", "F")
 dataloader.AddVariable("Cluster_Size_tot", "F")
 
 # Load signal and background files
-sig_file = ROOT.TFile("../../data/beta/digi_signal.root")
-bkg_file = ROOT.TFile("../../data/beta/digi_bg.root")
-sig_tree = sig_file.Get("tree")
-bkg_tree = bkg_file.Get("tree")
+sig_file = ROOT.TFile("../../data/beta/digi2_signal.root")
+bkg_file = ROOT.TFile("../../data/beta/digi2_bg.root")
+sig_tree = sig_file.Get("HitTree")
+bkg_tree = bkg_file.Get("HitTree")
 
 dataloader.AddSignalTree(sig_tree)
 dataloader.AddBackgroundTree(bkg_tree)
 
 # Prepare dataset
 dataloader.PrepareTrainingAndTestTree(ROOT.TCut(""), ROOT.TCut(""),
-    "nTrain_Signal=1:nTrain_Background=10000:SplitMode=Random:NormMode=NumEvents:!V")
+    "nTrain_Signal=10000:nTrain_Background=1:SplitMode=Random:NormMode=NumEvents:!V")
 
 # Book a BDT
 factory.BookMethod(dataloader, TMVA.Types.kBDT, "BDT",

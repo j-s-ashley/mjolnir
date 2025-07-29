@@ -83,11 +83,11 @@ def main():
     layer       = ROOT.std.vector('float')()
     
     # Create branches
-    tree.Branch("Hit_x", x)
-    tree.Branch("Hit_y", y)
-    tree.Branch("Hit_z", z)
-    tree.Branch("Hit_ArrivalTime", t)
-    tree.Branch("Hit_EnergyDeposited", e)
+    tree.Branch("Cluster_x", x)
+    tree.Branch("Cluster_y", y)
+    tree.Branch("Cluster_z", z)
+    tree.Branch("Cluster_ArrivalTime", t)
+    tree.Branch("Cluster_EnergyDeposited", e)
     tree.Branch("Incident_Angle", theta)
     tree.Branch("Cluster_Size_x", cluster_size_x)
     tree.Branch("Cluster_Size_y", cluster_size_y)
@@ -121,13 +121,12 @@ def main():
 
         for col_name in COLLECTIONS:
             collection = cols[col_name]
-            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
-            decoder = pyLCIO.UTIL.CellIDDecoder__TrackerHit(cell_encoding)
-            print(f"Cell encoding for {col_name}: {cell_encoding}")
-            print(f"Type: {type(cell_encoding)}")
+
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
+
+                hits = hit.getRawHits()
 
                 position = hit.getPosition()
                 x_pos = position[0]
@@ -140,11 +139,10 @@ def main():
                 e.push_back(hit.getEDep())
                 theta.push_back(get_theta(x_pos, y_pos, z_pos))
             
-                col_subdet = decoder(hit)["subdet"]
-                col_layer = decoder(hit)["layer"]
-                subdetector.push_back(col_subdet)
-                layer.push_back(col_layer)
-                
+                cluster_x, cluster_y = get_cluster_size(x_pos, y_pos)
+                cluster_size_x.push_back(cluster_x)
+                cluster_size_y.push_back(cluster_y)
+                cluster_size_tot.push_back(len(hits))
 
         tree.Fill()
                     
