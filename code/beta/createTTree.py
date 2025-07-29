@@ -149,7 +149,10 @@ def main():
             print(f"  {len(cols[col]):5} hits in {col}")
 
         for col_name in COLLECTIONS:
-            for i_hit, hit in enumerate(cols[col_name]):
+            collection = cols[col_name]
+            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
+            decoder = pyLCIO.UTIL.CellIDDecoder(encoding)
+            for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
 
@@ -164,6 +167,11 @@ def main():
                 t.push_back(digi_hit.getTime())
                 e.push_back(digi_hit.getEDep())
                 theta.push_back(get_theta(x_pos, y_pos, z_pos))
+                
+                subdet = decoder(digi_hit)["subdet"]
+                layer = decoder(digi_hit)["layer"]
+                subdetector.push_back(subdet)
+                layer.push_back(layer)
 
         pix_cols = {}
         for pix_col in PIXEL_COLLECTIONS:
