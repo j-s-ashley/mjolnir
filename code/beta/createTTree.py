@@ -56,7 +56,7 @@ def options():
 
 def get_theta(x, y, z):
     r = (x*x + y*y) ** 0.5
-    angle = math.atan2(r/z)
+    angle = math.atan2(r, z)
     return angle
 
 
@@ -148,7 +148,7 @@ def main():
             print(f"  {len(rel_cols[rel_col]):5} hits in {rel_col}")
 
         for rel_col_name in REL_COLLECTIONS:
-            collection = cols[rel_col_name]
+            collection = rel_cols[rel_col_name]
             cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
             print(f"Cell encoding for {rel_col_name}: {cell_encoding}")
             print(f"Type: {type(cell_encoding)}")
