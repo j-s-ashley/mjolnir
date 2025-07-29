@@ -150,8 +150,8 @@ def main():
 
         for col_name in COLLECTIONS:
             collection = cols[col_name]
-            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
-            decoder = pyLCIO.UTIL.CellIDDecoder(cell_encoding)
+            #cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
+            decoder = pyLCIO.UTIL.CellIDDecoder(collection)
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
