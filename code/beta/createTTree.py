@@ -152,7 +152,6 @@ def main():
             cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
             print(f"Cell encoding for {rel_col_name}: {cell_encoding}")
             print(f"Type: {type(cell_encoding)}")
-            #decoder = pyLCIO.UTIL.CellIDDecoder(collection)
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
@@ -169,10 +168,6 @@ def main():
                 e.push_back(digi_hit.getEDep())
                 theta.push_back(get_theta(x_pos, y_pos, z_pos))
                 
-                #subdet = decoder(digi_hit)["subdet"]
-                #layer = decoder(digi_hit)["layer"]
-                #subdetector.push_back(subdet)
-                #layer.push_back(layer)
 
         pix_cols = {}
         for pix_col in PIXEL_COLLECTIONS:
@@ -182,19 +177,28 @@ def main():
             print(f"  {len(pix_cols[pix_col]):5} hits in {pix_col}")
 
         for pix_col_name in PIXEL_COLLECTIONS:
+            collection = pix_cols[pix_col_name]
+            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
+            print(f"Cell encoding for {pix_col_name}: {cell_encoding}")
+            print(f"Type: {type(cell_encoding)}")
+            decoder = pyLCIO.UTIL.CellIDDecoder__SimTrackerHit(collection)
             for i_hit, hit in enumerate(pix_cols[pix_col_name]):
                 if i_hit < ops.nhits:
                     break
 
-                digi_hit, sim_hit = hit.getFrom(), hit.getTo()
-                position = digi_hit.getPosition()
-                hits     = digi_hit.getRawHits()
+                position = hit.getPosition()
+                hits     = hit.getRawHits()
                 x_pos = position[0]
                 y_pos = position[1]
                 cluster_x, cluster_y = get_cluster_size(x_pos, y_pos)
                 cluster_size_x.push_back(cluster_x)
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(hits))
+
+                subdet = decoder(digi_hit)["subdet"]
+                layer = decoder(digi_hit)["layer"]
+                subdetector.push_back(subdet)
+                layer.push_back(layer)
 
         tree.Fill()
                     
