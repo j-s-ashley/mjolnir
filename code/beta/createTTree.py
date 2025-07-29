@@ -5,9 +5,9 @@ import pyLCIO
 import ROOT, array
 
 COLLECTIONS = [
+    "ITBarrelHitsRelations_HTF",
     "VXDBarrelHitsRelations_HTF",
     "VXDEndcapHitsRelations_HTF",
-    "ITBarrelHitsRelations_HTF",
     "ITEndcapHitsRelations_HTF",
     "OTBarrelHitsRelations_HTF",
     "OTEndcapHitsRelations_HTF"
@@ -34,7 +34,7 @@ def main():
 
     stem = in_file.stem #gets the name without extension
     in_ind = stem.removeprefix("digiGNN_") #in_file.stem.split('_')[-1]
-    out_dir = "/global/cfs/projectdirs/atlas/arastogi/MuonCollider/data/MAIA/RealDigi/WithBIB/BIB_TTree"
+    out_dir = "/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta"
     out_file = f"{out_dir}/Hits_TTree_{in_ind}.root"
     tree_name = "HitTree"
     # Create a new ROOT file and TTree
