@@ -1,4 +1,5 @@
 import os
+import math
 from pathlib import Path
 import argparse
 import pyLCIO
@@ -51,6 +52,41 @@ def options():
     return parser.parse_args()
 
 
+def get_theta(x, y, z):
+    r = (x*x + y*y) ** 0.5
+    angle = math.atan2(r/z)
+    return angle
+
+
+def get_cluster_size(trkhit):
+    raw_hits = trkhit.getRawHits()
+    
+    ymax = -1e6
+    xmax = -1e6
+    ymin = 1e6
+    xmin = 1e6
+
+    for hit in raw_hits:
+        local_pos = hit.getPosition()  # Assuming (x, y, z)
+        x_local   = local_pos[0]
+        y_local   = local_pos[1]
+
+        if y_local < ymin:
+            ymin = y_local
+        if y_local > ymax:
+            ymax = y_local
+
+        if x_local < xmin:
+            xmin = x_local
+        if x_local > xmax:
+            xmax = x_local
+
+    cluster_size_y = (ymax - ymin) + 1
+    cluster_size_x = (xmax - xmin) + 1
+
+    return cluster_size_x, cluster_size_y
+
+
 def main():
 
     ops = options()
@@ -72,16 +108,12 @@ def main():
     z = ROOT.std.vector('float')()
     t =	ROOT.std.vector('float')()
     e =	ROOT.std.vector('float')()
-    isSec = ROOT.std.vector('float')()
-    mc_px = ROOT.std.vector('float')()
-    mc_py = ROOT.std.vector('float')()
-    mc_pz = ROOT.std.vector('float')()
-    mc_vx = ROOT.std.vector('float')()
-    mc_vy = ROOT.std.vector('float')()
-    mc_vz = ROOT.std.vector('float')()
-    mc_id = ROOT.std.vector('float')()
-    mc_pdgid = ROOT.std.vector('float')()
-    mc_charge = ROOT.std.vector('float')()
+    theta =	ROOT.std.vector('float')()
+    cluster_size_x   = ROOT.std.vector('float')()
+    cluster_size_y   = ROOT.std.vector('float')()
+    cluster_size_tot = ROOT.std.vector('float')()
+    subdetector = ROOT.std.vector('float')()
+    layer       = ROOT.std.vector('float')()
     
     # Create branches
     tree.Branch("Hit_x", x)
@@ -89,17 +121,13 @@ def main():
     tree.Branch("Hit_z", z)
     tree.Branch("Hit_ArrivalTime", t)
     tree.Branch("Hit_EnergyDeposited", e)
-    tree.Branch("Hit_isFromSecondary", isSec)
-    tree.Branch("MCP_Vx", mc_vx)
-    tree.Branch("MCP_Vy", mc_vy)
-    tree.Branch("MCP_Vz", mc_vz)
-    tree.Branch("MCP_Px", mc_px)
-    tree.Branch("MCP_Py", mc_py)
-    tree.Branch("MCP_Pz", mc_pz)
-    tree.Branch("MCP_ID", mc_id)
-    tree.Branch("MCP_PDGID", mc_pdgid)
-    tree.Branch("MCP_Charge", mc_charge)
-
+    tree.Branch("Incident_Angle", theta)
+    tree.Branch("Cluster_Size_x", cluster_size_x)
+    tree.Branch("Cluster_Size_y", cluster_size_y)
+    tree.Branch("Cluster_Size_tot", cluster_size_tot)
+    tree.Branch("Subdetector", subdetector)
+    tree.Branch("Layer", layer)
+    
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
 
@@ -109,15 +137,12 @@ def main():
         z.clear()
         t.clear()
         e.clear()
-        mc_px.clear()
-        mc_py.clear()
-        mc_pz.clear()
-        mc_vx.clear()
-        mc_vy.clear()
-        mc_vz.clear()
-        mc_id.clear()
-        mc_charge.clear()
-        mc_pdgid.clear()
+        theta.clear()
+        cluster_size_x.clear()
+        cluster_size_y.clear()
+        cluster_size_tot.clear()
+        subdetector.clear()
+        layer.clear()
 
         mcparticles = event.getCollection("MCParticle")
         for i_mcparticle, mcparticle in enumerate(mcparticles):
