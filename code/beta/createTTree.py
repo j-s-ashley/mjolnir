@@ -14,8 +14,6 @@ COLLECTIONS = [
         "HcalBarrelCollectionRec",
         "HcalEndcapCollectionDigi",
         "HcalEndcapCollectionRec",
-        "IBPixels_HTF",
-        "IEPixels_HTF",
         "ITBarrelHits",
         "ITBarrelHitsRelations_HTF",
         "ITEndcapHits",
@@ -24,19 +22,24 @@ COLLECTIONS = [
         "InnerTrackerEndcapCollection_HTF",
         "MCParticle",
         "MuonHits",
-        "OBPixels_HTF",
-        "OEPixels_HTF",
         "OTBarrelHits",
         "OTBarrelHitsRelations_HTF",
         "OTEndcapHits",
         "OTEndcapHitsRelations_HTF",
         "OuterTrackerBarrelCollection_HTF",
         "OuterTrackerEndcapCollection_HTF",
-        "VBPixels_HTF",
-        "VEPixels_HTF",
         "VXDBarrelHits",
         "VXDBarrelHitsRelations_HTF",
         "VXDEndcapHits"
+]
+
+PIXEL_COLLECTIONS = [
+        "IBPixels_HTF",
+        "IEPixels_HTF",
+        "OBPixels_HTF",
+        "OEPixels_HTF",
+        "VBPixels_HTF",
+        "VEPixels_HTF"
 ]
 
 
@@ -58,28 +61,21 @@ def get_theta(x, y, z):
     return angle
 
 
-def get_cluster_size(trkhit):
-    raw_hits = trkhit.getRawHits()
-    
+def get_cluster_size(x_local, y_local):
     ymax = -1e6
     xmax = -1e6
     ymin = 1e6
     xmin = 1e6
 
-    for hit in raw_hits:
-        local_pos = hit.getPosition()  # Assuming (x, y, z)
-        x_local   = local_pos[0]
-        y_local   = local_pos[1]
+    if y_local < ymin:
+        ymin = y_local
+    if y_local > ymax:
+        ymax = y_local
 
-        if y_local < ymin:
-            ymin = y_local
-        if y_local > ymax:
-            ymax = y_local
-
-        if x_local < xmin:
-            xmin = x_local
-        if x_local > xmax:
-            xmax = x_local
+    if x_local < xmin:
+        xmin = x_local
+    if x_local > xmax:
+        xmax = x_local
 
     cluster_size_y = (ymax - ymin) + 1
     cluster_size_x = (xmax - xmin) + 1
@@ -144,20 +140,6 @@ def main():
         subdetector.clear()
         layer.clear()
 
-        mcparticles = event.getCollection("MCParticle")
-        for i_mcparticle, mcparticle in enumerate(mcparticles):
-            if mcparticle.getPDG()==13 and abs(mcparticle.getVertex()[0])==0 and abs(mcparticle.getVertex()[1])==0 and abs(mcparticle.getVertex()[2])==0:
-                mc_px.push_back(mcparticle.getMomentum()[0])
-                mc_py.push_back(mcparticle.getMomentum()[1])
-                mc_pz.push_back(mcparticle.getMomentum()[2])
-                mc_vx.push_back(mcparticle.getVertex()[0])
-                mc_vy.push_back(mcparticle.getVertex()[1])
-                mc_vz.push_back(mcparticle.getVertex()[2])
-                mc_id.push_back(i_mcparticle)
-                mc_pdgid.push_back(mcparticle.getPDG())
-                mc_charge.push_back(mcparticle.getCharge())
-            #print(f"{i_mcparticle}\t(Vx,Vy,Vz)=({mcparticle.getVertex()[0]},{mcparticle.getVertex()[1]},{mcparticle.getVertex()[2]})\tPdgID={mcparticle.getPDG()}\tCharge={mcparticle.getCharge()}")
-            
         cols = {}
         for col in COLLECTIONS:
             cols[col] = get_collection(event, col)
@@ -173,17 +155,38 @@ def main():
 
                 digi_hit, sim_hit = hit.getFrom(), hit.getTo()
                 position = digi_hit.getPosition()
-                getMC = sim_hit.getMCParticle()
-                if not getMC: #all the BIB particles
-                    isSec.push_back(1)
-                else:
-                    isSec.push_back(sim_hit.isProducedBySecondary())
-                #print(f"(Vx,Vy,Vz)=({getMC.getVertex()[0]},{getMC.getVertex()[1]},{getMC.getVertex()[2]}), charge={getMC.getCharge()}, pdgID={getMC.getPDG()}")
-                x.push_back(position[0])
-                y.push_back(position[1])
-                z.push_back(position[2])
+                x_pos = position[0]
+                y_pos = position[1]
+                z_pos = position[2]
+                x.push_back(x_pos)
+                y.push_back(y_pos)
+                z.push_back(z_pos)
                 t.push_back(digi_hit.getTime())
                 e.push_back(digi_hit.getEDep())
+                theta.push_back(get_theta(x_pos, y_pos, z_pos))
+
+        pix_cols = {}
+        for pix_col in PIXEL_COLLECTIONS:
+            pix_cols[pix_col] = get_collection(event, pix_col)
+
+        for pix_col in pix_cols:
+            print(f"  {len(pix_cols[pix_col]):5} hits in {pix_col}")
+
+        for pix_col_name in PIXEL_COLLECTIONS:
+            for i_hit, hit in enumerate(pix_cols[pix_col_name]):
+                if i_hit < ops.nhits:
+                    break
+
+                digi_hit, sim_hit = hit.getFrom(), hit.getTo()
+                position = digi_hit.getPosition()
+                hits     = digi_hit.getRawHits()
+                x_pos = position[0]
+                y_pos = position[1]
+                cluster_x, cluster_y = get_cluster_size(x_pos, y_pos)
+                cluster_size_x.push_back(cluster_x)
+                cluster_size_y.push_back(cluster_y)
+                cluster_size_tot.push_back(len(hits))
+
         tree.Fill()
                     
     # Write and close
