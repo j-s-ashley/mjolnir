@@ -5,33 +5,32 @@ import argparse
 import pyLCIO
 import ROOT, array
 
-COLLECTIONS = [
-        "EcalBarrelCollectionDigi",
-        "EcalBarrelCollectionRec",
-        "EcalEndcapCollectionDigi",
-        "EcalEndcapCollectionRec",
-        "HcalBarrelCollectionDigi",
-        "HcalBarrelCollectionRec",
-        "HcalEndcapCollectionDigi",
-        "HcalEndcapCollectionRec",
+TRKHIT_COLLECTIONS = [
         "ITBarrelHits",
-        "ITBarrelHitsRelations_HTF",
         "ITEndcapHits",
-        "ITEndcapHitsRelations_HTF",
+        "OTBarrelHits",
+        "OTEndcapHits",
+        "VXDBarrelHits",
+        "VXDEndcapHits"
+        ]
+
+SIMTRKHIT_COLLECTIONS = [
         "InnerTrackerBarrelCollection_HTF",
         "InnerTrackerEndcapCollection_HTF",
-        "MCParticle",
-        "MuonHits",
-        "OTBarrelHits",
-        "OTBarrelHitsRelations_HTF",
-        "OTEndcapHits",
-        "OTEndcapHitsRelations_HTF",
         "OuterTrackerBarrelCollection_HTF",
         "OuterTrackerEndcapCollection_HTF",
-        "VXDBarrelHits",
+        "VertexBarrelCollection_HTF",
+        "VertexEndcapCollection_HTF"
+        ]
+
+REL_COLLECTIONS = [
+        "ITBarrelHitsRelations_HTF",
+        "ITEndcapHitsRelations_HTF",
+        "OTBarrelHitsRelations_HTF",
+        "OTEndcapHitsRelations_HTF",
         "VXDBarrelHitsRelations_HTF",
-        "VXDEndcapHits"
-]
+        "VXDEndcapHitsRelations_HTF"
+        ]
 
 PIXEL_COLLECTIONS = [
         "IBPixels_HTF",
@@ -40,7 +39,7 @@ PIXEL_COLLECTIONS = [
         "OEPixels_HTF",
         "VBPixels_HTF",
         "VEPixels_HTF"
-]
+        ]
 
 
 def options():
@@ -140,18 +139,20 @@ def main():
         subdetector.clear()
         layer.clear()
 
-        cols = {}
-        for col in COLLECTIONS:
-            cols[col] = get_collection(event, col)
+        rel_cols = {}
+        for rel_col in REL_COLLECTIONS:
+            rel_cols[rel_col] = get_collection(event, rel_col)
 
         print(f"Event {i_event} has")
-        for col in cols:
-            print(f"  {len(cols[col]):5} hits in {col}")
+        for rel_col in rel_cols:
+            print(f"  {len(rel_cols[rel_col]):5} hits in {rel_col}")
 
-        for col_name in COLLECTIONS:
-            collection = cols[col_name]
-            #cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
-            decoder = pyLCIO.UTIL.CellIDDecoder(collection)
+        for rel_col_name in REL_COLLECTIONS:
+            collection = cols[rel_col_name]
+            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
+            print(f"Cell encoding for {rel_col_name}: {cell_encoding}")
+            print(f"Type: {type(cell_encoding)}")
+            #decoder = pyLCIO.UTIL.CellIDDecoder(collection)
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
@@ -168,10 +169,10 @@ def main():
                 e.push_back(digi_hit.getEDep())
                 theta.push_back(get_theta(x_pos, y_pos, z_pos))
                 
-                subdet = decoder(digi_hit)["subdet"]
-                layer = decoder(digi_hit)["layer"]
-                subdetector.push_back(subdet)
-                layer.push_back(layer)
+                #subdet = decoder(digi_hit)["subdet"]
+                #layer = decoder(digi_hit)["layer"]
+                #subdetector.push_back(subdet)
+                #layer.push_back(layer)
 
         pix_cols = {}
         for pix_col in PIXEL_COLLECTIONS:
