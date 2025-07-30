@@ -3,19 +3,29 @@ import array
 
 # Setup TMVA reader
 reader = ROOT.TMVA.Reader("!Color:!Silent")
-x = array.array('f', [0.])
-y = array.array('f', [0.])
-reader.AddVariable("x", x)
-reader.AddVariable("y", y)
+
+Cluster_ArrivalTime     = array.array('f', [0.])
+Cluster_EnergyDeposited = array.array('f', [0.])
+Incident_Angle          = array.array('f', [0.])
+Cluster_Size_x          = array.array('f', [0.])
+Cluster_Size_y          = array.array('f', [0.])
+Cluster_Size_tot        = array.array('f', [0.])
+
+reader.AddVariable("Cluster_ArrivalTime", Cluster_ArrivalTime)
+reader.AddVariable("Cluster_EnergyDeposited", Cluster_EnergyDeposited)
+reader.AddVariable("Incident_Angle", Incident_Angle)
+reader.AddVariable("Cluster_Size_x", Cluster_Size_x)
+reader.AddVariable("Cluster_Size_y", Cluster_Size_y)
+reader.AddVariable("Cluster_Size_tot", Cluster_Size_tot)
 
 # Load trained weights
 reader.BookMVA("BDT", "dataset/weights/TMVAClassification_BDT.weights.xml")
 
 # Input files
-signal_file = ROOT.TFile.Open("signal.root")
-background_file = ROOT.TFile.Open("background.root")
-sig_tree = signal_file.Get("tree")
-bkg_tree = background_file.Get("tree")
+signal_file = ROOT.TFile.Open("../../data/beta/digi3_signal.root")
+background_file = ROOT.TFile.Open("../../data/beta/digi3_bg.root")
+sig_tree = signal_file.Get("HitTree")
+bkg_tree = background_file.Get("HitTree")
 
 # Histograms for BDT output
 h_sig = ROOT.TH1F("h_sig", "BDT Output;BDT Score;Events", 50, -1, 1)
@@ -23,12 +33,14 @@ h_bkg = ROOT.TH1F("h_bkg", "BDT Output;BDT Score;Events", 50, -1, 1)
 
 # Fill histograms
 for event in sig_tree:
-    x[0], y[0] = event.x, event.y
+    Cluster_ArrivalTime[0] = event.Cluster_ArrivalTime
+    Incident_Angle[0]      = event.Incident_Angle
     score = reader.EvaluateMVA("BDT")
     h_sig.Fill(score)
 
 for event in bkg_tree:
-    x[0], y[0] = event.x, event.y
+    Cluster_ArrivalTime[0] = event.Cluster_ArrivalTime
+    Incident_Angle[0]      = event.Incident_Angle
     score = reader.EvaluateMVA("BDT")
     h_bkg.Fill(score)
 
