@@ -1,6 +1,11 @@
 import ROOT
 import array
 
+def vector_to_float(vec):
+    if len(vec) == 0:
+        return 0.0
+    return float(sum(vec)) / len(vec)
+
 # Setup TMVA reader
 reader = ROOT.TMVA.Reader("!Color:!Silent")
 
@@ -33,14 +38,22 @@ h_bkg = ROOT.TH1F("h_bkg", "BDT Output;BDT Score;Events", 50, -1, 1)
 
 # Fill histograms
 for event in sig_tree:
-    Cluster_ArrivalTime[0] = event.Cluster_ArrivalTime
-    Incident_Angle[0]      = event.Incident_Angle
+    Cluster_ArrivalTime[0]     = vector_to_float(event.Cluster_ArrivalTime)
+    Cluster_EnergyDeposited[0] = vector_to_float(event.Cluster_EnergyDeposited)
+    Incident_Angle[0]          = vector_to_float(event.Incident_Angle)
+    Cluster_Size_x[0]          = vector_to_float(event.Cluster_Size_x)
+    Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
+    Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
     score = reader.EvaluateMVA("BDT")
     h_sig.Fill(score)
 
 for event in bkg_tree:
-    Cluster_ArrivalTime[0] = event.Cluster_ArrivalTime
-    Incident_Angle[0]      = event.Incident_Angle
+    Cluster_ArrivalTime[0]     = vector_to_float(event.Cluster_ArrivalTime)
+    Cluster_EnergyDeposited[0] = vector_to_float(event.Cluster_EnergyDeposited)
+    Incident_Angle[0]          = vector_to_float(event.Incident_Angle)
+    Cluster_Size_x[0]          = vector_to_float(event.Cluster_Size_x)
+    Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
+    Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
     score = reader.EvaluateMVA("BDT")
     h_bkg.Fill(score)
 
