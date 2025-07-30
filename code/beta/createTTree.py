@@ -99,18 +99,6 @@ def main():
     reader.open(str(in_file))
 
     for i_event, event in enumerate(reader):
-        x.clear()
-        y.clear()
-        z.clear()
-        t.clear()
-        e.clear()
-        theta.clear()
-        cluster_size_x.clear()
-        cluster_size_y.clear()
-        cluster_size_tot.clear()
-        subdetector.clear()
-        layer.clear()
-
         cols = {}
         for col in COLLECTIONS:
             cols[col] = get_collection(event, col)
@@ -125,6 +113,18 @@ def main():
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
+                
+                x.clear()
+                y.clear()
+                z.clear()
+                t.clear()
+                e.clear()
+                theta.clear()
+                cluster_size_x.clear()
+                cluster_size_y.clear()
+                cluster_size_tot.clear()
+                subdetector.clear()
+                layer.clear()
 
                 hits = hit.getRawHits()
 
@@ -144,7 +144,7 @@ def main():
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(hits))
 
-        tree.Fill()
+                tree.Fill()
                     
     # Write and close
     tree.Write()
