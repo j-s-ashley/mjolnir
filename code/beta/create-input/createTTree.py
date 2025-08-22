@@ -4,6 +4,7 @@ from pathlib import Path
 import argparse
 import pyLCIO
 import ROOT, array
+from array import array
 
 COLLECTIONS = [
         "ITBarrelHits",
@@ -13,6 +14,7 @@ COLLECTIONS = [
         "VXDBarrelHits",
         "VXDEndcapHits"
         ]
+
 
 def options():
     parser = argparse.ArgumentParser(description="Generate BIB output hits TTree root file from input slcio file.")
@@ -24,6 +26,18 @@ def options():
         help="Max number of hits to dump for each collection",
     )
     return parser.parse_args()
+
+
+def get_subdetector_id(collection_name):
+    subdetector_dict = {
+            "ITBarrelHits": 1,
+            "ITEndcapHits": 2,
+            "OTBarrelHits": 3,
+            "OTEndcapHits": 4,
+            "VXDBarrelHits": 5,
+            "VXDEndcapHits": 6,
+            }
+    return subdetector_dict.get(collection_name, "error")
 
 
 def get_theta(x, y, z):
@@ -79,8 +93,8 @@ def main():
     cluster_size_x   = ROOT.std.vector('float')()
     cluster_size_y   = ROOT.std.vector('float')()
     cluster_size_tot = ROOT.std.vector('float')()
-    subdetector = ROOT.std.vector('float')()
-    layer       = ROOT.std.vector('float')()
+    subdetector = ROOT.std.vector('int')()
+    layer       = ROOT.std.vector('int')()
     
     # Create branches
     tree.Branch("Cluster_x", x)
@@ -144,7 +158,7 @@ def main():
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(hits))
 
-                subdetector.push_back(col_name)
+                subdetector.push_back(get_subdetector_id(col_name))
 
                 tree.Fill()
                     
