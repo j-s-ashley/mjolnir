@@ -144,6 +144,8 @@ def main():
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(hits))
 
+                subdetector.push_back(col_name)
+
                 tree.Fill()
                     
     # Write and close
