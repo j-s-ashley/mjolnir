@@ -15,7 +15,7 @@ echo "    Geometry file: ${GEOMETRY_FILE}"
 # Randomly pick files, save, and run
 PICKED_EVENT_FILES=$(ls -1 "${EVENT_FILES}" | shuf | head -n "${NUM_EVENTS}" | sed "s|^|${EVENT_FILES}|")
 k4run ${STEERING_FILE} --LcioEvent.Files ${PICKED_EVENT_FILES} --DD4hepXMLFile ${GEOMETRY_FILE} \
-	> output_from_term_MuSIC.txt
+	-n 5000 > output_from_term_MuSIC.txt
 
 OUTPUT_DIR="/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MuSIC/signal/"
 mv output_* ${OUTPUT_DIR}

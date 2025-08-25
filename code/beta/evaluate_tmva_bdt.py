@@ -16,7 +16,7 @@ Cluster_Size_x          = array.array('f', [0.])
 Cluster_Size_y          = array.array('f', [0.])
 Cluster_Size_tot        = array.array('f', [0.])
 Subdetector             = array.array('f', [0.])
-Layer                   = array.array('f', [0.])
+#Layer                   = array.array('f', [0.])
 
 reader.AddVariable("Cluster_ArrivalTime", Cluster_ArrivalTime)
 reader.AddVariable("Cluster_EnergyDeposited", Cluster_EnergyDeposited)
@@ -25,14 +25,14 @@ reader.AddVariable("Cluster_Size_x", Cluster_Size_x)
 reader.AddVariable("Cluster_Size_y", Cluster_Size_y)
 reader.AddVariable("Cluster_Size_tot", Cluster_Size_tot)
 reader.AddVariable("Subdetector", Subdetector)
-reader.AddVariable("Layer", Layer)
+#reader.AddVariable("Layer", Layer)
 
 # Load trained weights
 reader.BookMVA("BDT", "dataset/weights/TMVAClassification_BDT.weights.xml")
 
 # Input files
-signal_file = ROOT.TFile.Open("../../data/beta/digi3_signal.root")
-background_file = ROOT.TFile.Open("../../data/beta/digi3_bg.root")
+signal_file = ROOT.TFile.Open("../../data/beta/MAIA/signal/Hits_TTree_output_digi_light_eval.root")
+background_file = ROOT.TFile.Open("../../data/beta/MAIA/bg/Hits_TTree_output_digi_light_eval.root")
 sig_tree = signal_file.Get("HitTree")
 bkg_tree = background_file.Get("HitTree")
 
@@ -49,7 +49,7 @@ for event in sig_tree:
     Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
     Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
     Subdetector[0]             = vector_to_float(event.Subdetector)
-    Layer[0]                   = vector_to_float(event.Layer)
+    #Layer[0]                   = vector_to_float(event.Layer)
     score = reader.EvaluateMVA("BDT")
     h_sig.Fill(score)
 
@@ -61,7 +61,7 @@ for event in bkg_tree:
     Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
     Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
     Subdetector[0]             = vector_to_float(event.Subdetector)
-    Layer[0]                   = vector_to_float(event.Layer)
+    #Layer[0]                   = vector_to_float(event.Layer)
     score = reader.EvaluateMVA("BDT")
     h_bkg.Fill(score)
 
