@@ -123,6 +123,10 @@ def main():
 
         for col_name in COLLECTIONS:
             collection = cols[col_name]
+            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
+            decoder = pyLCIO.UTIL.CellIDDecoder__TrackerHit(cell_encoding)
+            print(f"Cell encoding for {col_name}: {cell_encoding}")
+            print(f"Type: {type(cell_encoding)}")
 
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
@@ -159,6 +163,8 @@ def main():
                 cluster_size_tot.push_back(len(hits))
 
                 subdetector.push_back(get_subdetector_id(col_name))
+                col_layer = decoder(hit)["layer"]
+                layer.push_back(col_layer)
 
                 tree.Fill()
                     
