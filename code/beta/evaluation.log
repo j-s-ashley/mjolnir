@@ -1,4 +1,7 @@
                          : Booking "BDT" of type "BDT" from dataset/weights/TMVAClassification_BDT.weights.xml.
                          : Reading weight file: dataset/weights/TMVAClassification_BDT.weights.xml
-<FATAL>                          : Dataset[Default] : You declared 7 variables in the Reader while there are 6 variables declared in the file
-***> abort program execution
+<HEADER> DataSetInfo              : [Default] : Added class "Signal"
+<HEADER> DataSetInfo              : [Default] : Added class "Background"
+                         : Booked classifier "BDT" of type: "BDT"
+                         : Rebuilding Dataset Default
+Plots saved: bdt_score_distribution.png, bdt_roc_curve.png

@@ -1,5 +1,5 @@
 DataSetInfo              : [dataset] : Added class "Signal"
-                         : Add Tree HitTree of type Signal with 29 events
+                         : Add Tree HitTree of type Signal with 17533 events
 DataSetInfo              : [dataset] : Added class "Background"
                          : Add Tree HitTree of type Background with 295934 events
 Factory                  : Booking method: [1mBDT[0m
@@ -14,9 +14,9 @@ DataSetFactory           : [dataset] : Number of events in input trees
                          : 
                          : Number of training and testing events
                          : ---------------------------------------------------------------------------
-                         : Signal     -- training events            : 14
-                         : Signal     -- testing events             : 14
-                         : Signal     -- training and testing events: 28
+                         : Signal     -- training events            : 8766
+                         : Signal     -- testing events             : 8766
+                         : Signal     -- training and testing events: 17532
                          : Background -- training events            : 147967
                          : Background -- testing events             : 147967
                          : Background -- training and testing events: 295934
@@ -44,12 +44,12 @@ DataSetFactory           : [dataset] : Number of events in input trees
 DataSetInfo              : Correlation matrix (Signal):
                          : ----------------------------------------------------------------------------------------------------------------------------------
                          :                          Cluster_ArrivalTime Cluster_EnergyDeposited Incident_Angle Cluster_Size_x Cluster_Size_y Cluster_Size_tot
-                         :     Cluster_ArrivalTime:              +1.000                  +0.384         +0.016         +0.000         +0.000           +0.393
-                         : Cluster_EnergyDeposited:              +0.384                  +1.000         +0.018         +0.000         +0.000           +0.370
-                         :          Incident_Angle:              +0.016                  +0.018         +1.000         +0.000         +0.000           +0.494
+                         :     Cluster_ArrivalTime:              +1.000                  +0.012         +0.000         +0.000         +0.000           +0.018
+                         : Cluster_EnergyDeposited:              +0.012                  +1.000         -0.009         +0.000         +0.000           +0.481
+                         :          Incident_Angle:              +0.000                  -0.009         +1.000         +0.000         +0.000           -0.029
                          :          Cluster_Size_x:              +0.000                  +0.000         +0.000         +1.000         +0.000           +0.000
                          :          Cluster_Size_y:              +0.000                  +0.000         +0.000         +0.000         +1.000           +0.000
-                         :        Cluster_Size_tot:              +0.393                  +0.370         +0.494         +0.000         +0.000           +1.000
+                         :        Cluster_Size_tot:              +0.018                  +0.481         -0.029         +0.000         +0.000           +1.000
                          : ----------------------------------------------------------------------------------------------------------------------------------
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (0, 3) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (0, 4) = 0
@@ -72,12 +72,12 @@ DataSetInfo              : Correlation matrix (Signal):
 DataSetInfo              : Correlation matrix (Background):
                          : ----------------------------------------------------------------------------------------------------------------------------------
                          :                          Cluster_ArrivalTime Cluster_EnergyDeposited Incident_Angle Cluster_Size_x Cluster_Size_y Cluster_Size_tot
-                         :     Cluster_ArrivalTime:              +1.000                  -0.083         -0.009         +0.000         +0.000           -0.056
-                         : Cluster_EnergyDeposited:              -0.083                  +1.000         +0.004         +0.000         +0.000           +0.893
-                         :          Incident_Angle:              -0.009                  +0.004         +1.000         +0.000         +0.000           -0.004
+                         :     Cluster_ArrivalTime:              +1.000                  -0.087         -0.011         +0.000         +0.000           -0.063
+                         : Cluster_EnergyDeposited:              -0.087                  +1.000         +0.005         +0.000         +0.000           +0.903
+                         :          Incident_Angle:              -0.011                  +0.005         +1.000         +0.000         +0.000           -0.002
                          :          Cluster_Size_x:              +0.000                  +0.000         +0.000         +1.000         +0.000           +0.000
                          :          Cluster_Size_y:              +0.000                  +0.000         +0.000         +0.000         +1.000           +0.000
-                         :        Cluster_Size_tot:              -0.056                  +0.893         -0.004         +0.000         +0.000           +1.000
+                         :        Cluster_Size_tot:              -0.063                  +0.903         -0.002         +0.000         +0.000           +1.000
                          : ----------------------------------------------------------------------------------------------------------------------------------
 DataSetFactory           : [dataset] :  
                          : 
@@ -99,33 +99,33 @@ Factory                  : [dataset] : Create Transformation "I" with events fro
 <WARNING>                : Variable "Cluster_Size_y" has zero, negative, or NaN RMS^2: 0 ==> set to zero. Please check the variable content
 TFHandler_Factory        :                Variable                       Mean                       RMS               [        Min                       Max ]
                          : --------------------------------------------------------------------------------------------------------------------------------------
-                         :     Cluster_ArrivalTime:                  0.20484                 0.098376   [                 0.010998                  0.55382 ]
-                         : Cluster_EnergyDeposited:               7.3933e-05               0.00017037   [               2.8098e-06                0.0077031 ]
-                         :          Incident_Angle:                   1.5938                  0.66963   [                  0.43466                   2.7160 ]
+                         :     Cluster_ArrivalTime:                  0.20450                 0.097740   [                 0.011008                  0.55448 ]
+                         : Cluster_EnergyDeposited:               7.1238e-05               0.00016417   [               2.1402e-06                0.0066582 ]
+                         :          Incident_Angle:                   1.5922                  0.66491   [                  0.42866                   2.7160 ]
                          :          Cluster_Size_x:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
                          :          Cluster_Size_y:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
-                         :        Cluster_Size_tot:                   10.402                   41.292   [                   1.0000                   3366.0 ]
+                         :        Cluster_Size_tot:                   9.9382                   36.611   [                   1.0000                   2831.0 ]
                          : --------------------------------------------------------------------------------------------------------------------------------------
                          : Ranking input variables (method unspecific)...
 IdTransformation         : Ranking result (top variable is best ranked)
                          : ------------------------------------------------
                          : Rank : Variable                : Separation
                          : ------------------------------------------------
-                         :    1 : Incident_Angle          : 7.871e-01
-                         :    2 : Cluster_ArrivalTime     : 4.319e-01
-                         :    3 : Cluster_EnergyDeposited : 3.443e-01
-                         :    4 : Cluster_Size_tot        : 1.063e-01
+                         :    1 : Cluster_EnergyDeposited : 2.304e-01
+                         :    2 : Cluster_Size_tot        : 1.308e-01
+                         :    3 : Cluster_ArrivalTime     : 6.719e-02
+                         :    4 : Incident_Angle          : 4.019e-02
                          :    5 : Cluster_Size_x          : 5.304e-33
                          :    6 : Cluster_Size_y          : 5.304e-33
                          : ------------------------------------------------
 Factory                  : Train method: BDT for Classification
                          : 
-BDT                      : #events: (reweighted) sig: 73990.5 bkg: 73990.5
-                         : #events: (unweighted) sig: 14 bkg: 147967
+BDT                      : #events: (reweighted) sig: 78366.5 bkg: 78366.5
+                         : #events: (unweighted) sig: 8766 bkg: 147967
                          : Training 200 Decision Trees ... patience please
-                         : Elapsed time for training with 147981 events: [1;31m13 sec[0m         
-BDT                      : [dataset] : Evaluation of BDT on training sample (147981 events)
-                         : Elapsed time for evaluation of 147981 events: [1;31m0.731 sec[0m       
+                         : Elapsed time for training with 156733 events: [1;31m14.8 sec[0m         
+BDT                      : [dataset] : Evaluation of BDT on training sample (156733 events)
+                         : Elapsed time for evaluation of 156733 events: [1;31m0.735 sec[0m       
                          : Creating xml weight file: [0;36mdataset/weights/TMVAClassification_BDT.weights.xml[0m
                          : Creating standalone class: [0;36mdataset/weights/TMVAClassification_BDT.class.C[0m
                          : TMVA_output.root:/dataset/Method_BDT/BDT
@@ -136,8 +136,8 @@ BDT                      : Ranking result (top variable is best ranked)
                          : ---------------------------------------------------------
                          : Rank : Variable                : Variable Importance
                          : ---------------------------------------------------------
-                         :    1 : Incident_Angle          : 5.462e-01
-                         :    2 : Cluster_ArrivalTime     : 4.538e-01
+                         :    1 : Cluster_ArrivalTime     : 5.290e-01
+                         :    2 : Incident_Angle          : 4.710e-01
                          :    3 : Cluster_EnergyDeposited : 0.000e+00
                          :    4 : Cluster_Size_x          : 0.000e+00
                          :    5 : Cluster_Size_y          : 0.000e+00
@@ -149,8 +149,8 @@ Factory                  : === Destroy and recreate all methods via weight files
 Factory                  : [1mTest all methods[0m
 Factory                  : Test method: BDT for Classification performance
                          : 
-BDT                      : [dataset] : Evaluation of BDT on testing sample (147981 events)
-                         : Elapsed time for evaluation of 147981 events: [1;31m0.663 sec[0m       
+BDT                      : [dataset] : Evaluation of BDT on testing sample (156733 events)
+                         : Elapsed time for evaluation of 156733 events: [1;31m0.66 sec[0m       
 Factory                  : [1mEvaluate all methods[0m
 Factory                  : Evaluate classifier: BDT
                          : 
@@ -164,19 +164,19 @@ BDT                      : [dataset] : Loop over test events and fill histograms
 <WARNING>                : Variable "Cluster_Size_y" has zero, negative, or NaN RMS^2: 0 ==> set to zero. Please check the variable content
 TFHandler_BDT            :                Variable                       Mean                       RMS               [        Min                       Max ]
                          : --------------------------------------------------------------------------------------------------------------------------------------
-                         :     Cluster_ArrivalTime:                  0.20480                 0.098293   [                 0.011008                  0.55448 ]
-                         : Cluster_EnergyDeposited:               7.3339e-05               0.00016493   [               2.1402e-06                0.0075438 ]
-                         :          Incident_Angle:                   1.5945                  0.67196   [                  0.42831                   2.7068 ]
+                         :     Cluster_ArrivalTime:                  0.20504                 0.097736   [                 0.010998                  0.55168 ]
+                         : Cluster_EnergyDeposited:               7.0461e-05               0.00016264   [               2.1402e-06                0.0077031 ]
+                         :          Incident_Angle:                   1.5927                  0.66526   [                  0.42831                   2.7074 ]
                          :          Cluster_Size_x:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
                          :          Cluster_Size_y:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
-                         :        Cluster_Size_tot:                   10.203                   36.454   [                   1.0000                   3302.0 ]
+                         :        Cluster_Size_tot:                   9.8427                   39.118   [                   1.0000                   3366.0 ]
                          : --------------------------------------------------------------------------------------------------------------------------------------
                          : 
                          : Evaluation results ranked by best signal efficiency and purity (area)
                          : -------------------------------------------------------------------------------------------------------------------
                          : DataSet       MVA                       
                          : Name:         Method:          ROC-integ
-                         : dataset       BDT            : 0.962
+                         : dataset       BDT            : 0.691
                          : -------------------------------------------------------------------------------------------------------------------
                          : 
                          : Testing efficiency compared to training efficiency (overtraining check)
@@ -184,15 +184,15 @@ TFHandler_BDT            :                Variable                       Mean   
                          : DataSet              MVA              Signal efficiency: from test sample (from training sample) 
                          : Name:                Method:          @B=0.01             @B=0.10            @B=0.30   
                          : -------------------------------------------------------------------------------------------------------------------
-                         : dataset              BDT            : 0.287 (0.287)       0.931 (0.931)      1.000 (1.000)
+                         : dataset              BDT            : 0.036 (0.035)       0.258 (0.258)      0.545 (0.546)
                          : -------------------------------------------------------------------------------------------------------------------
                          : 
-Dataset:dataset          : Created tree 'TestTree' with 147981 events
+Dataset:dataset          : Created tree 'TestTree' with 156733 events
                          : 
-Dataset:dataset          : Created tree 'TrainTree' with 147981 events
+Dataset:dataset          : Created tree 'TrainTree' with 156733 events
                          : 
 Factory                  : [1mThank you for using TMVA![0m
                          : [1mFor citation information, please visit: http://tmva.sf.net/citeTMVA.html[0m
 TMVA training completed. Output saved to 'TMVA_output.root'
-Tue Sep 30 06:32:34 PDT 2025
-Tue Sep 30 06:32:38 PDT 2025
+Tue Sep 30 08:28:35 PDT 2025
+Tue Sep 30 08:30:30 PDT 2025
