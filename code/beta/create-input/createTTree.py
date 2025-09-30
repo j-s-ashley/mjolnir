@@ -102,6 +102,8 @@ def main():
 
         for col_name in COLLECTIONS:
             collection = cols[col_name]
+            cellid_encoding = collection.getParameters().getStringVal("CellIDEncoding")
+            print(f"CellIDEncoding for {col_name}: {cellid_encoding}")
 
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
@@ -134,6 +136,8 @@ def main():
                 cluster_size_x.push_back(cluster_x)
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(hits))
+
+                cellid = hit.getCellID0()
 
                 tree.Fill()
                     
