@@ -7,12 +7,7 @@ import ROOT, array
 from array import array
 
 COLLECTIONS = [
-        "ITBarrelHits",
-        "ITEndcapHits",
-        "OTBarrelHits",
-        "OTEndcapHits",
-        "VXDBarrelHits",
-        "VXDEndcapHits"
+        "VXDBarrelHits"
         ]
 
 
@@ -26,18 +21,6 @@ def options():
         help="Max number of hits to dump for each collection",
     )
     return parser.parse_args()
-
-
-def get_subdetector_id(collection_name):
-    subdetector_dict = {
-            "ITBarrelHits": 1,
-            "ITEndcapHits": 2,
-            "OTBarrelHits": 3,
-            "OTEndcapHits": 4,
-            "VXDBarrelHits": 5,
-            "VXDEndcapHits": 6,
-            }
-    return subdetector_dict.get(collection_name, "error")
 
 
 def get_theta(x, y, z):
@@ -93,8 +76,6 @@ def main():
     cluster_size_x   = ROOT.std.vector('float')()
     cluster_size_y   = ROOT.std.vector('float')()
     cluster_size_tot = ROOT.std.vector('float')()
-    subdetector = ROOT.std.vector('int')()
-    layer       = ROOT.std.vector('int')()
     
     # Create branches
     tree.Branch("Cluster_x", x)
@@ -106,8 +87,6 @@ def main():
     tree.Branch("Cluster_Size_x", cluster_size_x)
     tree.Branch("Cluster_Size_y", cluster_size_y)
     tree.Branch("Cluster_Size_tot", cluster_size_tot)
-    tree.Branch("Subdetector", subdetector)
-    tree.Branch("Layer", layer)
     
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
@@ -123,10 +102,6 @@ def main():
 
         for col_name in COLLECTIONS:
             collection = cols[col_name]
-            cell_encoding = collection.getParameters().getStringVal("CellIDEncoding")
-            decoder = pyLCIO.UTIL.CellIDDecoder__TrackerHit(cell_encoding)
-            print(f"Cell encoding for {col_name}: {cell_encoding}")
-            print(f"Type: {type(cell_encoding)}")
 
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
@@ -141,8 +116,6 @@ def main():
                 cluster_size_x.clear()
                 cluster_size_y.clear()
                 cluster_size_tot.clear()
-                subdetector.clear()
-                layer.clear()
 
                 hits = hit.getRawHits()
 
@@ -161,10 +134,6 @@ def main():
                 cluster_size_x.push_back(cluster_x)
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(hits))
-
-                subdetector.push_back(get_subdetector_id(col_name))
-                col_layer = decoder(hit)["layer"]
-                layer.push_back(col_layer)
 
                 tree.Fill()
                     
