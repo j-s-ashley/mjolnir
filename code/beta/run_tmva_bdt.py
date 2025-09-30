@@ -16,7 +16,7 @@ dataloader.AddVariable("Incident_Angle", "F")
 dataloader.AddVariable("Cluster_Size_x", "F")
 dataloader.AddVariable("Cluster_Size_y", "F")
 dataloader.AddVariable("Cluster_Size_tot", "F")
-dataloader.AddVariable("Subdetector", "F")
+#dataloader.AddVariable("Subdetector", "F")
 #dataloader.AddVariable("Layer", "F")
 
 # Load signal and background files

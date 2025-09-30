@@ -12,14 +12,6 @@ echo "Feeding ${NUM_EVENTS} event data files into ${STEERING_FILE}"
 echo "    Event file source directory: ${EVENT_FILES}"
 echo "    Geometry file: ${GEOMETRY_FILE}"
 
-### === Randomly pick files, save, and run === ###
-# Pick NUM_EVENTS random files
+# Randomly pick files, save, and run
 PICKED_EVENT_FILES=$(ls -1 "${EVENT_FILES}" | shuf | head -n "${NUM_EVENTS}" | sed "s|^|${EVENT_FILES}|")
-k4run ${STEERING_FILE} --LcioEvent.Files ${PICKED_EVENT_FILES} --DD4hepXMLFile ${GEOMETRY_FILE} \
-	-n ${NUM_EVENTS} | tee output_from_term_MAIA.txt
-
-OUTPUT_DIR="/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal/"
-mv output_* ${OUTPUT_DIR}
-
-#TTREE_SCRIPT="mjolnir/code/beta/create-input/createTTree.py"
-#python ${TTREE_SCRIPT} -i "${OUTPUT_DIR}output_digi_light_training.slcio"
+echo "${PICKED_EVENT_FILES}"
