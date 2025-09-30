@@ -15,7 +15,7 @@ Incident_Angle          = array.array('f', [0.])
 Cluster_Size_x          = array.array('f', [0.])
 Cluster_Size_y          = array.array('f', [0.])
 Cluster_Size_tot        = array.array('f', [0.])
-Subdetector             = array.array('f', [0.])
+#Subdetector             = array.array('f', [0.])
 #Layer                   = array.array('f', [0.])
 
 reader.AddVariable("Cluster_ArrivalTime", Cluster_ArrivalTime)
@@ -24,7 +24,7 @@ reader.AddVariable("Incident_Angle", Incident_Angle)
 reader.AddVariable("Cluster_Size_x", Cluster_Size_x)
 reader.AddVariable("Cluster_Size_y", Cluster_Size_y)
 reader.AddVariable("Cluster_Size_tot", Cluster_Size_tot)
-reader.AddVariable("Subdetector", Subdetector)
+#reader.AddVariable("Subdetector", Subdetector)
 #reader.AddVariable("Layer", Layer)
 
 # Load trained weights

@@ -12,22 +12,30 @@ echo "Feeding ${NUM_EVENTS} event data files into ${STEERING_FILE}"
 echo "    Event file source directory: ${EVENT_FILES}"
 echo "    Geometry file: ${GEOMETRY_FILE}"
 
-### === Randomly pick files, save, and run === ###
 # Pick NUM_EVENTS random files
 PICKED_EVENT_FILES=$(ls -1 "${EVENT_FILES}" | shuf | head -n "${NUM_EVENTS}" | sed "s|^|${EVENT_FILES}|")
+
 # Merge selected event files
 MERGE_LOG="MAIA-merged-sim.log"
 date >> ${MERGE_LOG}
 echo ${PICKED_EVENT_FILES} >> ${MERGE_LOG}
 SIM_FILE_NAME="MAIA-merged-sim.slcio"
 lcio_merge_files ${SIM_FILE_NAME} ${PICKED_EVENT_FILES}
+
 # Run digitization
 DIGI_LOG="MAIA-digi.log"
 k4run ${STEERING_FILE} --LcioEvent.Files ${SIM_FILE_NAME} --DD4hepXMLFile ${GEOMETRY_FILE} \
 	-n ${NUM_EVENTS} | tee ${DIGI_LOG}
-OUTPUT_DIR="/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal/"
-mv output_* ${OUTPUT_DIR}
+
+# Tidy working directory
+OG_DIGI_SLCIO="output_digi_light.slcio"
+OG_DIGI_ROOT="output_digi.root"
+DIGI_SLCIO="output_digi_light_eval.slcio"
+DIGI_ROOT="output_digi_eval.root"
+OUTPUT_DIR="/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal"
+mv ${OG_DIGI_SLCIO} "${OUTPUT_DIR}/${DIGI_SLCIO}"
+mv ${OG_DIGI_ROOT} "${OUTPUT_DIR}/${DIGI_ROOT}"
+
 # Convert to TTree
 TTREE_SCRIPT="mjolnir/code/beta/create-input/createTTree.py"
-DIGI_FILE_NAME="output_digi_light_training.slcio"
-python ${TTREE_SCRIPT} -i "${OUTPUT_DIR}${DIGI_FILE_NAME}"
+python ${TTREE_SCRIPT} -i "${OUTPUT_DIR}/${DIGI_SLCIO}"
