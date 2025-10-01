@@ -1,3 +1,4 @@
+import re
 import os
 import math
 from pathlib import Path
@@ -7,7 +8,12 @@ import ROOT, array
 from array import array
 
 COLLECTIONS = [
-        "VXDBarrelHits"
+        "ITBarrelHits",
+        "ITEndcapHits",
+        "OTBarrelHits",
+        "OTEndcapHits",
+        "VXDBarrelHits",
+        "VXDEndcapHits"
         ]
 
 
@@ -49,6 +55,39 @@ def get_cluster_size(x_local, y_local):
     cluster_size_x = (xmax - xmin) + 1
 
     return cluster_size_x, cluster_size_y
+
+
+def parse_cellid_encoding(enc_str):
+    """
+    Parse encoding string like "system:5,side:-2,layer:6,..." into list of (name,width).
+    Negative widths are allowed in strings (sometimes used to indicate signed), we use abs(width).
+    """
+    parts = [p.strip() for p in enc_str.split(',') if p.strip()]
+    fields = []
+    for p in parts:
+        m = re.match(r'^([^:]+)\s*:\s*(-?\d+)\s*$', p)
+        if not m:
+            raise ValueError(f"Can't parse token: {p!r}")
+        name = m.group(1)
+        width = abs(int(m.group(2)))
+        fields.append((name, width))
+    return fields
+
+
+def decode_cellid(cellid, fields):
+    """
+    Decode integer cellid into dict by interpreting fields as MSB->LSB order.
+    fields is list of (name,width).
+    """
+    total_bits = sum(w for _, w in fields)
+    rem_bits = total_bits
+    out = {}
+    for name, width in fields:
+        rem_bits -= width
+        mask = (1 << width) - 1
+        value = (cellid >> rem_bits) & mask
+        out[name] = value
+    return out
 
 
 def main():
