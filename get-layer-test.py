@@ -28,34 +28,25 @@ def options():
     return parser.parse_args()
 
 def parse_cellid_encoding(enc_str):
-    """
-    Parse encoding string like "system:5,side:-2,layer:6,..." into list of (name,width).
-    Negative widths are allowed in strings (sometimes used to indicate signed), we use abs(width).
-    """
-    parts = [p.strip() for p in enc_str.split(',') if p.strip()]
+    """Parse an encoding string like 'system:5,side:-2,layer:6,module:11,sensor:8'"""
     fields = []
-    for p in parts:
-        m = re.match(r'^([^:]+)\s*:\s*(-?\d+)\s*$', p)
-        if not m:
-            raise ValueError(f"Can't parse token: {p!r}")
-        name = m.group(1)
-        width = abs(int(m.group(2)))
-        fields.append((name, width))
+    for part in enc_str.split(','):
+        name, width = part.split(':')
+        fields.append((name.strip(), abs(int(width))))
     return fields
 
 def decode_cellid(cellid, fields):
     """
-    Decode integer cellid into dict by interpreting fields as MSB->LSB order.
-    fields is list of (name,width).
+    Decode integer cellid into dict of field values (LSB-first).
+    fields: list of (name,width), in order given by CellIDEncoding string.
     """
-    total_bits = sum(w for _, w in fields)
-    rem_bits = total_bits
     out = {}
+    shift = 0
     for name, width in fields:
-        rem_bits -= width
         mask = (1 << width) - 1
-        value = (cellid >> rem_bits) & mask
+        value = (cellid >> shift) & mask
         out[name] = value
+        shift += width
     return out
 
 def main():
@@ -92,11 +83,10 @@ def main():
                     break
 
                 cellid = hit.getCellID0()
-                info   = decode_cellid(cellid, fields)
-                subdet = info.get('system')
-                layer  = info.get('layer')
-
-                print(f"{col_name} hit {i_hit} in layer {layer} of {subdet}")
+                decoded = decode_cellid(cellid, fields)
+                print("Decoded fields:", decoded)
+                print("System (subdetector):", decoded['system'])
+                print("Layer:", decoded['layer'])
 
 def get_collection(event, name):
     names = event.getCollectionNames()
