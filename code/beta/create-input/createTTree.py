@@ -16,7 +16,6 @@ COLLECTIONS = [
         "VXDEndcapHits"
         ]
 
-
 def options():
     parser = argparse.ArgumentParser(description="Generate BIB output hits TTree root file from input slcio file.")
     parser.add_argument("-i", required=True, type=Path, help="Input LCIO file")
@@ -28,12 +27,10 @@ def options():
     )
     return parser.parse_args()
 
-
 def get_theta(x, y, z):
     r = (x*x + y*y) ** 0.5
     angle = math.atan2(r, z)
     return angle
-
 
 def get_cluster_size(x_local, y_local):
     ymax = -1e6
@@ -56,39 +53,27 @@ def get_cluster_size(x_local, y_local):
 
     return cluster_size_x, cluster_size_y
 
-
 def parse_cellid_encoding(enc_str):
-    """
-    Parse encoding string like "system:5,side:-2,layer:6,..." into list of (name,width).
-    Negative widths are allowed in strings (sometimes used to indicate signed), we use abs(width).
-    """
-    parts = [p.strip() for p in enc_str.split(',') if p.strip()]
+    """Parse an encoding string like 'system:5,side:-2,layer:6,module:11,sensor:8'"""
     fields = []
-    for p in parts:
-        m = re.match(r'^([^:]+)\s*:\s*(-?\d+)\s*$', p)
-        if not m:
-            raise ValueError(f"Can't parse token: {p!r}")
-        name = m.group(1)
-        width = abs(int(m.group(2)))
-        fields.append((name, width))
+    for part in enc_str.split(','):
+        name, width = part.split(':')
+        fields.append((name.strip(), abs(int(width))))
     return fields
-
 
 def decode_cellid(cellid, fields):
     """
-    Decode integer cellid into dict by interpreting fields as MSB->LSB order.
-    fields is list of (name,width).
+    Decode integer cellid into dict of field values (LSB-first).
+    fields: list of (name,width), in order given by CellIDEncoding string.
     """
-    total_bits = sum(w for _, w in fields)
-    rem_bits = total_bits
     out = {}
+    shift = 0
     for name, width in fields:
-        rem_bits -= width
         mask = (1 << width) - 1
-        value = (cellid >> rem_bits) & mask
+        value = (cellid >> shift) & mask
         out[name] = value
+        shift += width
     return out
-
 
 def main():
 
@@ -115,7 +100,9 @@ def main():
     cluster_size_x   = ROOT.std.vector('float')()
     cluster_size_y   = ROOT.std.vector('float')()
     cluster_size_tot = ROOT.std.vector('float')()
-    
+    subdetector = ROOT.std.vector('int')
+    layer       = ROOT.std.vector('int')
+
     # Create branches
     tree.Branch("Cluster_x", x)
     tree.Branch("Cluster_y", y)
@@ -126,6 +113,8 @@ def main():
     tree.Branch("Cluster_Size_x", cluster_size_x)
     tree.Branch("Cluster_Size_y", cluster_size_y)
     tree.Branch("Cluster_Size_tot", cluster_size_tot)
+    tree.Branch("Subdetector", subdetector)
+    tree.Branch("Layer", layer)
     
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
@@ -142,7 +131,6 @@ def main():
         for col_name in COLLECTIONS:
             collection = cols[col_name]
             cellid_encoding = collection.getParameters().getStringVal("CellIDEncoding")
-            print(f"CellIDEncoding for {col_name}: {cellid_encoding}")
 
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
@@ -157,6 +145,8 @@ def main():
                 cluster_size_x.clear()
                 cluster_size_y.clear()
                 cluster_size_tot.clear()
+                subdetector.clear()
+                layer.clear()
 
                 hits = hit.getRawHits()
 
@@ -177,6 +167,9 @@ def main():
                 cluster_size_tot.push_back(len(hits))
 
                 cellid = hit.getCellID0()
+                decoded = decode_cellid(cellid, fields)
+                subdetector.push_back(decoded['system'])
+                layer.push_back(decoded['layer'])
 
                 tree.Fill()
                     
