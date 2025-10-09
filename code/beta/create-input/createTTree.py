@@ -167,6 +167,7 @@ def main():
                 cluster_size_tot.push_back(len(hits))
 
                 cellid = hit.getCellID0()
+                fields = parse_cellid_encoding(cellid_encoding)
                 decoded = decode_cellid(cellid, fields)
                 subdetector.push_back(decoded['system'])
                 layer.push_back(decoded['layer'])
