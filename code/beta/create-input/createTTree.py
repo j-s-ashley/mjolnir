@@ -100,8 +100,8 @@ def main():
     cluster_size_x   = ROOT.std.vector('float')()
     cluster_size_y   = ROOT.std.vector('float')()
     cluster_size_tot = ROOT.std.vector('float')()
-    subdetector = ROOT.std.vector('int')
-    layer       = ROOT.std.vector('int')
+    subdetector = ROOT.std.vector('int')()
+    layer       = ROOT.std.vector('int')()
 
     # Create branches
     tree.Branch("Cluster_x", x)
