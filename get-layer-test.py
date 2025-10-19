@@ -5,8 +5,8 @@ from pathlib import Path
 import argparse
 import pyLCIO
 from pyLCIO import EVENT, UTIL
-import ROOT, array
-from array import array
+import ROOT
+import matplotlib.pyplot as plt
 
 COLLECTIONS = [
         "ITBarrelHits",
@@ -62,14 +62,17 @@ def main():
             enc = collection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
             print(f"CellIDEncoding for {col_name}: {enc}")
             dec = UTIL.BitField64(enc)
+            layer_hits = []
 
             for i_hit, hit in enumerate(collection):
                 if i_hit < ops.nhits:
                     break
                 dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32))
-                print("Decoder:", dec)
-                print("System (subdetector):", dec["system"].value())
-                print("Layer:", dec["layer"].value())
+                layer_hits.append(dec["layer"].value())
+            
+            plt.hist(layer_hits)
+            plt.savefig(f"{col_name}.pdf")
+            plt.clf()
 
 if __name__ == "__main__":
     main()
