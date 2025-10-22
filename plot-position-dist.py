@@ -1,11 +1,12 @@
 import math
 from pathlib import Path
+from collections import defaultdict
 import statistics
+import numpy as np
+import ROOT
 import argparse
 import pyLCIO
 from pyLCIO import EVENT, UTIL
-import numpy as np
-import ROOT
 import matplotlib.pyplot as plt
 
 COLLECTIONS = [
@@ -39,7 +40,6 @@ def get_r(x, y):
     return r
 
 def main():
-
     ops = options()
     in_file = ops.i
     print(f"Reading file {in_file}")
@@ -47,71 +47,83 @@ def main():
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
 
+    data = defaultdict(list) # Dynamic list for positional information per hit collection
+
+    # Start of event loop
     for i_event, event in enumerate(reader):
-        cols = {}
+        cols = {} # Temporary dictionary storage for collections
+        
+        # Within each event, get hit collections
         for col in COLLECTIONS:
             cols[col] = get_collection(event, col)
 
-        print(f"Event {i_event} has")
-        for col in cols:
-            print(f"  {len(cols[col]):5} hits in {col}")
-
+        # Start of hit collection loop
         for col_name in COLLECTIONS:
             collection = cols[col_name]
-            enc = collection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
-            dec   = UTIL.BitField64(enc)
-            r     = []
-            r_dif = []
-            z     = []
-            z_dif = []
+            enc = collection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding) # Get CellID info
+            dec = UTIL.BitField64(enc) # Create 64-bit CellID decoder
 
+            # Start loop over each hit in collection
             for i_hit, hit in enumerate(collection):
+                # Limit hit number based on input at runtime
                 if i_hit < ops.nhits:
                     break
-                dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32))
-                position = hit.getPosition()
+                dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32)) # 32-bit to 64-bit, then shift
+                position = hit.getPosition() # Structure: position[x, y, z]
+                # Get z-values from endcaps, r-values from barrel
                 if "Endcap" in col_name:
                     z_pos = position[2]
                     side_val = dec["side"].value()
                     if i_hit != 0:
-                        d_z = z_pos - z[i_hit-1]
-                        z_dif.append(d_z)
-                    z.append(z_pos * side_val)
+                        d_z = z_pos - data[col_name][i_hit-1]
+                        data[f"{col_name}-d_z"].append(d_z)
+                    data[col_name].append(z_pos * side_val)
                 else:
                     r_pos = get_r(position[0], position[1])
                     if i_hit != 0:
-                        d_r = r_pos - r[i_hit-1]
-                        r_dif.append(d_r)
-                    r.append(r_pos)
+                        d_r = r_pos - data[col_name][i_hit-1]
+                        data[f"{col_name}-d_r"].append(d_r)
+                    data[col_name].append(r_pos)
+                    # End of loop over each hit
+    # End of event loop
 
-            if "Endcap" in col_name:
-                z_min = min(z)
-                z_max = max(z)
-                print(col_name)
-                print(f"           minimum z: {z_min}")
-                print(f"           maximum z: {z_max}")
-                print(f"          average dz: {z_max}")
-                print(f"          z variance: {statistics.variance(z_dif)}")
+    # Pull and plot aggregated data per subdetector
+    for col, vals in data.items():
+        print(col)
+        if "Endcap" in col:
+            if "d_z" in col:
+                avg_dz   = statistics.mean(vals)
+                sigma_dz = statistics.variance(vals)
+                print(f"{col} average distance between hits: {avg_dz}")
+                print(f"{col} variance in distance between hits: {sigma_dz}")
+            else:
+                z_min = min(vals)
+                z_max = max(vals)
+                print(f"{col} minimum z: {z_min}")
+                print(f"{col} maximum z: {z_max}")
                 bins = np.arange(z_min-1, z_max+1, 1)
-                plt.hist(z, bins=bins)
+                plt.hist(vals, bins=bins)
                 plt.xlabel("z")
                 plt.ylabel("hits")
+        else:
+            if "d_r" in col:
+                avg_dr   = statistics.mean(vals)
+                sigma_dr = statistics.variance(vals)
+                print(f"{col} average distance between hits: {avg_dr}")
+                print(f"{col} variance in distance between hits: {sigma_dr}")
             else:
-                r_min = min(r)
-                r_max = max(r)
-                print(f"           minimum r: {r_min}")
-                print(f"           maximum r: {r_max}")
-                print(f"          average dr: {r_max}")
-                print(f"          r variance: {statistics.variance(r_dif)}")
+                r_min = min(vals)
+                r_max = max(vals)
+                print(f"{col} minimum r: {r_min}")
+                print(f"{col} maximum r: {r_max}")
                 bins = np.arange(r_min-1, r_max+1, 1)
-                plt.hist(r, bins=bins)
+                plt.hist(vals, bins=bins)
                 plt.xlabel("r")
                 plt.ylabel("hits")
-
-            plt.grid()
-            plt.title(f"{col_name}-position-dist.pdf")
-            plt.savefig(f"{col_name}-layer-vs-position.pdf")
-            plt.clf()
+        plt.grid()
+        plt.title(f"{col}-position-dist-signal")
+        plt.savefig(f"{col}-position-dist-signal.pdf")
+        plt.clf()
 
 if __name__ == "__main__":
     main()
