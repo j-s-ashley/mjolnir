@@ -61,20 +61,6 @@ def parse_cellid_encoding(enc_str):
         fields.append((name.strip(), abs(int(width))))
     return fields
 
-def decode_cellid(cellid, fields):
-    """
-    Decode integer cellid into dict of field values (LSB-first).
-    fields: list of (name,width), in order given by CellIDEncoding string.
-    """
-    out = {}
-    shift = 0
-    for name, width in fields:
-        mask = (1 << width) - 1
-        value = (cellid >> shift) & mask
-        out[name] = value
-        shift += width
-    return out
-
 def main():
 
     ops = options()
@@ -119,6 +105,7 @@ def main():
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
 
+    # Start of event loop
     for i_event, event in enumerate(reader):
         cols = {}
         for col in COLLECTIONS:
@@ -128,14 +115,19 @@ def main():
         for col in cols:
             print(f"  {len(cols[col]):5} hits in {col}")
 
+        # Within each event, get hit collections
         for col_name in COLLECTIONS:
             collection = cols[col_name]
-            cellid_encoding = collection.getParameters().getStringVal("CellIDEncoding")
+            enc = collection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding) # Get CellID info
+            dec = UTIL.BitField64(enc) # Create 64-bit CellID decoder
 
+            # Start loop over each hit in collection
             for i_hit, hit in enumerate(collection):
+                # Limit hit number based on input at runtime
                 if i_hit < ops.nhits:
                     break
                 
+                # Reset variable storage
                 x.clear()
                 y.clear()
                 z.clear()
@@ -166,11 +158,14 @@ def main():
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(hits))
 
-                cellid = hit.getCellID0()
-                fields = parse_cellid_encoding(cellid_encoding)
-                decoded = decode_cellid(cellid, fields)
-                subdetector.push_back(decoded['system'])
-                layer.push_back(decoded['layer'])
+                dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32)) # 32-bit to 64-bit, then shift
+                layer_val = dec["layer"].value()
+                side_val  = dec["side"].value()
+                if side_val != 0: # Check if negative layer values exist (i.e., endcaps)
+                    layer.push_back(side_val * layer_val)
+                else:
+                    layer.push_back(layer_val)
+                subdetector.push_back(dec['system'].value())
 
                 tree.Fill()
                     
