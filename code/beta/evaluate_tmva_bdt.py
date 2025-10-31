@@ -15,8 +15,8 @@ Incident_Angle          = array.array('f', [0.])
 Cluster_Size_x          = array.array('f', [0.])
 Cluster_Size_y          = array.array('f', [0.])
 Cluster_Size_tot        = array.array('f', [0.])
-#Subdetector             = array.array('f', [0.])
-#Layer                   = array.array('f', [0.])
+Subdetector             = array.array('f', [0.])
+Layer                   = array.array('f', [0.])
 
 reader.AddVariable("Cluster_ArrivalTime", Cluster_ArrivalTime)
 reader.AddVariable("Cluster_EnergyDeposited", Cluster_EnergyDeposited)
@@ -24,8 +24,8 @@ reader.AddVariable("Incident_Angle", Incident_Angle)
 reader.AddVariable("Cluster_Size_x", Cluster_Size_x)
 reader.AddVariable("Cluster_Size_y", Cluster_Size_y)
 reader.AddVariable("Cluster_Size_tot", Cluster_Size_tot)
-#reader.AddVariable("Subdetector", Subdetector)
-#reader.AddVariable("Layer", Layer)
+reader.AddVariable("Subdetector", Subdetector)
+reader.AddVariable("Layer", Layer)
 
 # Load trained weights
 reader.BookMVA("BDT", "dataset/weights/TMVAClassification_BDT.weights.xml")
@@ -48,8 +48,8 @@ for event in sig_tree:
     Cluster_Size_x[0]          = vector_to_float(event.Cluster_Size_x)
     Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
     Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
-    #Subdetector[0]             = vector_to_float(event.Subdetector)
-    #Layer[0]                   = vector_to_float(event.Layer)
+    Subdetector[0]             = vector_to_float(event.Subdetector)
+    Layer[0]                   = vector_to_float(event.Layer)
     score = reader.EvaluateMVA("BDT")
     h_sig.Fill(score)
 
@@ -60,14 +60,10 @@ for event in bkg_tree:
     Cluster_Size_x[0]          = vector_to_float(event.Cluster_Size_x)
     Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
     Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
-    #Subdetector[0]             = vector_to_float(event.Subdetector)
-    #Layer[0]                   = vector_to_float(event.Layer)
+    Subdetector[0]             = vector_to_float(event.Subdetector)
+    Layer[0]                   = vector_to_float(event.Layer)
     score = reader.EvaluateMVA("BDT")
     h_bkg.Fill(score)
-
-# Normalize for comparison
-h_sig.Scale(1.0 / h_sig.Integral())
-h_bkg.Scale(1.0 / h_bkg.Integral())
 
 # Draw BDT Score distributions
 canvas = ROOT.TCanvas("c1", "BDT Output", 800, 600)
@@ -78,7 +74,7 @@ h_sig.SetLineWidth(2)
 
 h_bkg.Draw("HIST")
 h_sig.Draw("HIST SAME")
-legend = ROOT.TLegend(0.7, 0.75, 0.5, 0.5)
+legend = ROOT.TLegend(0.15, 0.75, 0.35, 0.9)
 legend.AddEntry(h_sig, "Signal", "l")
 legend.AddEntry(h_bkg, "Background", "l")
 legend.Draw()
