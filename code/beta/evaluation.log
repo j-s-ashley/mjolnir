@@ -4,4 +4,3 @@
 <HEADER> DataSetInfo              : [Default] : Added class "Background"
                          : Booked classifier "BDT" of type: "BDT"
                          : Rebuilding Dataset Default
-Plots saved: bdt_score_distribution.png, bdt_roc_curve.png
