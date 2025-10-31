@@ -83,6 +83,29 @@ legend.AddEntry(h_sig, "Signal", "l")
 legend.AddEntry(h_bkg, "Background", "l")
 legend.Draw()
 
+canvas.Update()
+
+# 2 stat boxes
+st_sig = h_sig.GetListOfFunctions().FindObject("stats")
+st_bg  = h_bg.GetListOfFunctions().FindObject("stats")
+if st_sig:
+    st_sign.SetTextColor(ROOT.kRed)
+    st_sign.SetX1NDC(0.72)
+    st_sign.SetX2NDC(0.9)
+    st_sign.SetY1NDC(0.7)
+    st_sign.SetY2NDC(0.9)
+if st_bg:
+    st_bg.SetTextColor(ROOT.kBlue)
+    st_bg = st_bg.Clone()
+    st_bg.SetX1NDC(0.72)
+    st_bg.SetX2NDC(0.9)
+    st_bg.SetY1NDC(0.5)
+    st_bg.SetY2NDC(0.7)
+    h_bg.GetListOfFunctions().Add(st_bg)
+
+canvas.Modified()
+canvas.Update()
+
 canvas.SaveAs("bdt_score_distribution.png")
 
 # ROC Curve
