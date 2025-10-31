@@ -4,6 +4,7 @@ import math
 from pathlib import Path
 import argparse
 import pyLCIO
+from pyLCIO import EVENT, UTIL
 import ROOT, array
 from array import array
 
