@@ -77,34 +77,39 @@ h_bkg.SetLineWidth(2)
 h_sig.SetLineWidth(2)
 
 h_sig.Draw("HIST")
+canvas.Update()
+st_sig = h_sig.FindObject("stats")
+if not st_sig:
+    st_sig = h_sig.GetListOfFunctions().FindObject("stats")
+if st_sig and isinstance(st_sig, ROOT.TPaveStats):
+    st_sig.SetTextColor(ROOT.kRed)
+    st_sig.SetX1NDC(0.72)
+    st_sig.SetX2NDC(0.9)
+    st_sig.SetY1NDC(0.75)
+    st_sig.SetY2NDC(0.9)
+
 h_bkg.Draw("HIST SAME")
+canvas.Update()
+st_bkg = h_bkg.FindObject("stats")
+if not st_bkg:
+    st_bkg = h_bkg.GetListOfFunctions().FindObject("stats")
+if st_bkg and isinstance(st_bkg, ROOT.TPaveStats):
+    st_bkg.SetTextColor(ROOT.kBlue)
+    st_bkg.SetX1NDC(0.72)
+    st_bkg.SetX2NDC(0.9)
+    st_bkg.SetY1NDC(0.55)
+    st_bkg.SetY2NDC(0.7)
+
+if st_sig:
+    h_sig.GetListOfFunctions().Add(st_sig)
+
+canvas.Modified()
+canvas.Update()
+
 legend = ROOT.TLegend(0.15, 0.75, 0.35, 0.9)
 legend.AddEntry(h_sig, "Signal", "l")
 legend.AddEntry(h_bkg, "Background", "l")
 legend.Draw()
-
-canvas.Update()
-
-# 2 stat boxes
-st_sig = h_sig.GetListOfFunctions().FindObject("stats")
-st_bkg = h_bkg.GetListOfFunctions().FindObject("stats")
-if st_sig:
-    st_sign.SetTextColor(ROOT.kRed)
-    st_sign.SetX1NDC(0.72)
-    st_sign.SetX2NDC(0.9)
-    st_sign.SetY1NDC(0.7)
-    st_sign.SetY2NDC(0.9)
-if st_bkg:
-    st_bkg.SetTextColor(ROOT.kBlue)
-    st_bkg = st_bkg.Clone()
-    st_bkg.SetX1NDC(0.72)
-    st_bkg.SetX2NDC(0.9)
-    st_bkg.SetY1NDC(0.5)
-    st_bkg.SetY2NDC(0.7)
-    h_bkg.GetListOfFunctions().Add(st_bkg)
-
-canvas.Modified()
-canvas.Update()
 
 canvas.SaveAs("bdt_score_distribution.png")
 
