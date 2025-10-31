@@ -34,23 +34,33 @@ DataSetFactory           : [dataset] : Number of events in input trees
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 2) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 4) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 5) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 6) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 7) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 0) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 1) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 2) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 3) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 5) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 6) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 7) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (5, 3) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (5, 4) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (6, 3) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (6, 4) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (7, 3) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (7, 4) = 0
 DataSetInfo              : Correlation matrix (Signal):
-                         : ----------------------------------------------------------------------------------------------------------------------------------
-                         :                          Cluster_ArrivalTime Cluster_EnergyDeposited Incident_Angle Cluster_Size_x Cluster_Size_y Cluster_Size_tot
-                         :     Cluster_ArrivalTime:              +1.000                  +0.211         +0.006         +0.000         +0.000           -0.378
-                         : Cluster_EnergyDeposited:              +0.211                  +1.000         +0.004         +0.000         +0.000           +0.191
-                         :          Incident_Angle:              +0.006                  +0.004         +1.000         +0.000         +0.000           -0.009
-                         :          Cluster_Size_x:              +0.000                  +0.000         +0.000         +1.000         +0.000           +0.000
-                         :          Cluster_Size_y:              +0.000                  +0.000         +0.000         +0.000         +1.000           +0.000
-                         :        Cluster_Size_tot:              -0.378                  +0.191         -0.009         +0.000         +0.000           +1.000
-                         : ----------------------------------------------------------------------------------------------------------------------------------
+                         : ------------------------------------------------------------------------------------------------------------------------------------------------------
+                         :                          Cluster_ArrivalTime Cluster_EnergyDeposited Incident_Angle Cluster_Size_x Cluster_Size_y Cluster_Size_tot Subdetector   Layer
+                         :     Cluster_ArrivalTime:              +1.000                  +0.211         +0.006         +0.000         +0.000           -0.378      +0.895  -0.193
+                         : Cluster_EnergyDeposited:              +0.211                  +1.000         +0.004         +0.000         +0.000           +0.191      +0.290  -0.127
+                         :          Incident_Angle:              +0.006                  +0.004         +1.000         +0.000         +0.000           -0.009      +0.004  -0.431
+                         :          Cluster_Size_x:              +0.000                  +0.000         +0.000         +1.000         +0.000           +0.000      +0.000  +0.000
+                         :          Cluster_Size_y:              +0.000                  +0.000         +0.000         +0.000         +1.000           +0.000      +0.000  +0.000
+                         :        Cluster_Size_tot:              -0.378                  +0.191         -0.009         +0.000         +0.000           +1.000      -0.395  +0.119
+                         :             Subdetector:              +0.895                  +0.290         +0.004         +0.000         +0.000           -0.395      +1.000  -0.299
+                         :                   Layer:              -0.193                  -0.127         -0.431         +0.000         +0.000           +0.119      -0.299  +1.000
+                         : ------------------------------------------------------------------------------------------------------------------------------------------------------
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (0, 3) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (0, 4) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (1, 3) = 0
@@ -62,23 +72,33 @@ DataSetInfo              : Correlation matrix (Signal):
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 2) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 4) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 5) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 6) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (3, 7) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 0) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 1) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 2) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 3) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 5) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 6) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (4, 7) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (5, 3) = 0
 <WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (5, 4) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (6, 3) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (6, 4) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (7, 3) = 0
+<WARNING>                : Dataset[Default] : <GetCorrelationMatrix> Zero variances for variables (7, 4) = 0
 DataSetInfo              : Correlation matrix (Background):
-                         : ----------------------------------------------------------------------------------------------------------------------------------
-                         :                          Cluster_ArrivalTime Cluster_EnergyDeposited Incident_Angle Cluster_Size_x Cluster_Size_y Cluster_Size_tot
-                         :     Cluster_ArrivalTime:              +1.000                  -0.052         -0.005         +0.000         +0.000           -0.093
-                         : Cluster_EnergyDeposited:              -0.052                  +1.000         -0.001         +0.000         +0.000           +0.631
-                         :          Incident_Angle:              -0.005                  -0.001         +1.000         +0.000         +0.000           +0.000
-                         :          Cluster_Size_x:              +0.000                  +0.000         +0.000         +1.000         +0.000           +0.000
-                         :          Cluster_Size_y:              +0.000                  +0.000         +0.000         +0.000         +1.000           +0.000
-                         :        Cluster_Size_tot:              -0.093                  +0.631         +0.000         +0.000         +0.000           +1.000
-                         : ----------------------------------------------------------------------------------------------------------------------------------
+                         : ------------------------------------------------------------------------------------------------------------------------------------------------------
+                         :                          Cluster_ArrivalTime Cluster_EnergyDeposited Incident_Angle Cluster_Size_x Cluster_Size_y Cluster_Size_tot Subdetector   Layer
+                         :     Cluster_ArrivalTime:              +1.000                  -0.052         -0.005         +0.000         +0.000           -0.093      +0.890  -0.014
+                         : Cluster_EnergyDeposited:              -0.052                  +1.000         -0.001         +0.000         +0.000           +0.631      -0.037  -0.000
+                         :          Incident_Angle:              -0.005                  -0.001         +1.000         +0.000         +0.000           +0.000      -0.006  -0.481
+                         :          Cluster_Size_x:              +0.000                  +0.000         +0.000         +1.000         +0.000           +0.000      +0.000  +0.000
+                         :          Cluster_Size_y:              +0.000                  +0.000         +0.000         +0.000         +1.000           +0.000      +0.000  +0.000
+                         :        Cluster_Size_tot:              -0.093                  +0.631         +0.000         +0.000         +0.000           +1.000      -0.121  +0.010
+                         :             Subdetector:              +0.890                  -0.037         -0.006         +0.000         +0.000           -0.121      +1.000  -0.107
+                         :                   Layer:              -0.014                  -0.000         -0.481         +0.000         +0.000           +0.010      -0.107  +1.000
+                         : ------------------------------------------------------------------------------------------------------------------------------------------------------
 DataSetFactory           : [dataset] :  
                          : 
 Factory                  : [1mTrain all methods[0m
@@ -91,6 +111,8 @@ Factory                  : [dataset] : Create Transformation "I" with events fro
                          : Input : variable 'Cluster_Size_x' <---> Output : variable 'Cluster_Size_x'
                          : Input : variable 'Cluster_Size_y' <---> Output : variable 'Cluster_Size_y'
                          : Input : variable 'Cluster_Size_tot' <---> Output : variable 'Cluster_Size_tot'
+                         : Input : variable 'Subdetector' <---> Output : variable 'Subdetector'
+                         : Input : variable 'Layer' <---> Output : variable 'Layer'
 <WARNING>                : Variable "Cluster_Size_x" has zero, negative, or NaN RMS^2: 0 ==> set to zero. Please check the variable content
 <WARNING>                : Variable "Cluster_Size_x" has zero, negative, or NaN RMS^2: 0 ==> set to zero. Please check the variable content
 <WARNING>                : Variable "Cluster_Size_x" has zero, negative, or NaN RMS^2: 0 ==> set to zero. Please check the variable content
@@ -105,6 +127,8 @@ TFHandler_Factory        :                Variable                       Mean   
                          :          Cluster_Size_x:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
                          :          Cluster_Size_y:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
                          :        Cluster_Size_tot:                   2.8675                   12.148   [                   1.0000                   3366.0 ]
+                         :             Subdetector:                   3.7696                   1.3714   [                   1.0000                   6.0000 ]
+                         :                   Layer:                  0.48229                   1.7105   [                  -6.0000                   6.0000 ]
                          : --------------------------------------------------------------------------------------------------------------------------------------
                          : Ranking input variables (method unspecific)...
 IdTransformation         : Ranking result (top variable is best ranked)
@@ -114,18 +138,20 @@ IdTransformation         : Ranking result (top variable is best ranked)
                          :    1 : Cluster_EnergyDeposited : 1.532e-01
                          :    2 : Cluster_ArrivalTime     : 1.474e-01
                          :    3 : Incident_Angle          : 1.195e-01
-                         :    4 : Cluster_Size_tot        : 1.345e-02
-                         :    5 : Cluster_Size_x          : 5.304e-33
-                         :    6 : Cluster_Size_y          : 5.304e-33
+                         :    4 : Subdetector             : 1.042e-01
+                         :    5 : Layer                   : 2.578e-02
+                         :    6 : Cluster_Size_tot        : 1.345e-02
+                         :    7 : Cluster_Size_x          : 5.304e-33
+                         :    8 : Cluster_Size_y          : 5.304e-33
                          : ------------------------------------------------
 Factory                  : Train method: BDT for Classification
                          : 
 BDT                      : #events: (reweighted) sig: 1.44268e+06 bkg: 1.44268e+06
                          : #events: (unweighted) sig: 30808 bkg: 2854555
                          : Training 200 Decision Trees ... patience please
-                         : Elapsed time for training with 2885363 events: [1;31m273 sec[0m         
+                         : Elapsed time for training with 2885363 events: [1;31m343 sec[0m         
 BDT                      : [dataset] : Evaluation of BDT on training sample (2885363 events)
-                         : Elapsed time for evaluation of 2885363 events: [1;31m15.7 sec[0m       
+                         : Elapsed time for evaluation of 2885363 events: [1;31m13.8 sec[0m       
                          : Creating xml weight file: [0;36mdataset/weights/TMVAClassification_BDT.weights.xml[0m
                          : Creating standalone class: [0;36mdataset/weights/TMVAClassification_BDT.class.C[0m
                          : TMVA_output.root:/dataset/Method_BDT/BDT
@@ -136,12 +162,14 @@ BDT                      : Ranking result (top variable is best ranked)
                          : ---------------------------------------------------------
                          : Rank : Variable                : Variable Importance
                          : ---------------------------------------------------------
-                         :    1 : Cluster_ArrivalTime     : 5.383e-01
-                         :    2 : Incident_Angle          : 4.617e-01
-                         :    3 : Cluster_EnergyDeposited : 0.000e+00
-                         :    4 : Cluster_Size_x          : 0.000e+00
-                         :    5 : Cluster_Size_y          : 0.000e+00
-                         :    6 : Cluster_Size_tot        : 0.000e+00
+                         :    1 : Cluster_ArrivalTime     : 3.273e-01
+                         :    2 : Incident_Angle          : 2.680e-01
+                         :    3 : Subdetector             : 2.116e-01
+                         :    4 : Layer                   : 1.932e-01
+                         :    5 : Cluster_EnergyDeposited : 0.000e+00
+                         :    6 : Cluster_Size_x          : 0.000e+00
+                         :    7 : Cluster_Size_y          : 0.000e+00
+                         :    8 : Cluster_Size_tot        : 0.000e+00
                          : ---------------------------------------------------------
 Factory                  : === Destroy and recreate all methods via weight files for testing ===
                          : 
@@ -150,7 +178,7 @@ Factory                  : [1mTest all methods[0m
 Factory                  : Test method: BDT for Classification performance
                          : 
 BDT                      : [dataset] : Evaluation of BDT on testing sample (2885363 events)
-                         : Elapsed time for evaluation of 2885363 events: [1;31m12.9 sec[0m       
+                         : Elapsed time for evaluation of 2885363 events: [1;31m13 sec[0m       
 Factory                  : [1mEvaluate all methods[0m
 Factory                  : Evaluate classifier: BDT
                          : 
@@ -170,13 +198,15 @@ TFHandler_BDT            :                Variable                       Mean   
                          :          Cluster_Size_x:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
                          :          Cluster_Size_y:                   1.0000                   0.0000   [                   1.0000                   1.0000 ]
                          :        Cluster_Size_tot:                   2.8851                   12.730   [                   1.0000                   3302.0 ]
+                         :             Subdetector:                   3.7711                   1.3720   [                   1.0000                   6.0000 ]
+                         :                   Layer:                  0.48244                   1.7088   [                  -6.0000                   6.0000 ]
                          : --------------------------------------------------------------------------------------------------------------------------------------
                          : 
                          : Evaluation results ranked by best signal efficiency and purity (area)
                          : -------------------------------------------------------------------------------------------------------------------
                          : DataSet       MVA                       
                          : Name:         Method:          ROC-integ
-                         : dataset       BDT            : 0.783
+                         : dataset       BDT            : 0.804
                          : -------------------------------------------------------------------------------------------------------------------
                          : 
                          : Testing efficiency compared to training efficiency (overtraining check)
@@ -184,7 +214,7 @@ TFHandler_BDT            :                Variable                       Mean   
                          : DataSet              MVA              Signal efficiency: from test sample (from training sample) 
                          : Name:                Method:          @B=0.01             @B=0.10            @B=0.30   
                          : -------------------------------------------------------------------------------------------------------------------
-                         : dataset              BDT            : 0.101 (0.101)       0.506 (0.506)      0.714 (0.714)
+                         : dataset              BDT            : 0.141 (0.142)       0.518 (0.519)      0.739 (0.739)
                          : -------------------------------------------------------------------------------------------------------------------
                          : 
 Dataset:dataset          : Created tree 'TestTree' with 2885363 events
@@ -194,5 +224,5 @@ Dataset:dataset          : Created tree 'TrainTree' with 2885363 events
 Factory                  : [1mThank you for using TMVA![0m
                          : [1mFor citation information, please visit: http://tmva.sf.net/citeTMVA.html[0m
 TMVA training completed. Output saved to 'TMVA_output.root'
-Thu Oct  9 04:18:57 PDT 2025
-Thu Oct  9 04:22:06 PDT 2025
+Thu Oct 30 18:36:15 PDT 2025
+Thu Oct 30 18:40:00 PDT 2025
