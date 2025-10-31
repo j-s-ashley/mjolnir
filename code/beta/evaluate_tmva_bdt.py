@@ -37,8 +37,8 @@ sig_tree = signal_file.Get("HitTree")
 bkg_tree = background_file.Get("HitTree")
 
 # Histograms for BDT output
-h_sig = ROOT.TH1F("h_sig", "BDT Output;BDT Score;Normalized Events", 50, -1, 1)
 h_bkg = ROOT.TH1F("h_bkg", "BDT Output;BDT Score;Normalized Events", 50, -1, 1)
+h_sig = ROOT.TH1F("h_sig", "BDT Output;BDT Score;Normalized Events", 50, -1, 1)
 
 # Fill histograms
 for event in sig_tree:
@@ -66,8 +66,8 @@ for event in bkg_tree:
     h_bkg.Fill(score)
 
 # Normalize for comparison
-h_sig.Scale(1.0 / h_sig.Integral())
 h_bkg.Scale(1.0 / h_bkg.Integral())
+h_sig.Scale(1.0 / h_sig.Integral())
 
 # Draw BDT Score distributions
 canvas = ROOT.TCanvas("c1", "BDT Output", 800, 600)
@@ -76,8 +76,8 @@ h_sig.SetLineColor(ROOT.kRed)
 h_bkg.SetLineWidth(2)
 h_sig.SetLineWidth(2)
 
-h_bkg.Draw("HIST")
-h_sig.Draw("HIST SAME")
+h_sig.Draw("HIST")
+h_bkg.Draw("HIST SAME")
 legend = ROOT.TLegend(0.15, 0.75, 0.35, 0.9)
 legend.AddEntry(h_sig, "Signal", "l")
 legend.AddEntry(h_bkg, "Background", "l")
