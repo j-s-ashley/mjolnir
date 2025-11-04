@@ -16,8 +16,8 @@ dataloader.AddVariable("Incident_Angle", "F")
 dataloader.AddVariable("Cluster_Size_x", "F")
 dataloader.AddVariable("Cluster_Size_y", "F")
 dataloader.AddVariable("Cluster_Size_tot", "F")
-dataloader.AddVariable("Subdetector", "F")
-dataloader.AddVariable("Layer", "F")
+#dataloader.AddVariable("Subdetector", "F")
+#dataloader.AddVariable("Layer", "F")
 
 # Load signal and background files
 sig_file = ROOT.TFile("/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal/Hits_TTree_output_digi_light_training.root")
