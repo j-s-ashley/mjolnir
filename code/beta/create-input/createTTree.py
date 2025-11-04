@@ -54,14 +54,6 @@ def get_cluster_size(x_local, y_local):
 
     return cluster_size_x, cluster_size_y
 
-def parse_cellid_encoding(enc_str):
-    """Parse an encoding string like 'system:5,side:-2,layer:6,module:11,sensor:8'"""
-    fields = []
-    for part in enc_str.split(','):
-        name, width = part.split(':')
-        fields.append((name.strip(), abs(int(width))))
-    return fields
-
 def main():
 
     ops = options()
