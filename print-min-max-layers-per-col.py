@@ -65,10 +65,12 @@ def main():
                     break
                 dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32))
                 layer_hits.append(dec["layer"].value())
-            
-            plt.hist(layer_hits)
-            plt.savefig(f"{col_name}.pdf")
-            plt.clf()
+
+            if len(layer_hits) != 0:
+                print(f"Min layer = {min(layer_hits)}")
+                print(f"Max layer = {max(layer_hits)}")
+            else:
+                print(f"No hits in {col_name}.")
 
 if __name__ == "__main__":
     main()
