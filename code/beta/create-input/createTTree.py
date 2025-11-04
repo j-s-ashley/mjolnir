@@ -9,12 +9,12 @@ import ROOT, array
 from array import array
 
 COLLECTIONS = [
-        #"ITBarrelHits",
-        #"ITEndcapHits",
-        #"OTBarrelHits",
-        #"OTEndcapHits",
+        "ITBarrelHits",
+        "ITEndcapHits",
+        "OTBarrelHits",
+        "OTEndcapHits",
         "VXDBarrelHits",
-        #"VXDEndcapHits"
+        "VXDEndcapHits"
         ]
 
 def options():
