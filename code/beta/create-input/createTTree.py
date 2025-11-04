@@ -33,24 +33,30 @@ def get_theta(x, y, z):
     angle = math.atan2(r, z)
     return angle
 
-def get_cluster_size(x_local, y_local):
-    ymax = -1e6
-    xmax = -1e6
-    ymin = 1e6
-    xmin = 1e6
+def get_cluster_size(hits):
+    y_max = -1e6
+    x_max = -1e6
+    y_min = 1e6
+    x_min = 1e6
 
-    if y_local < ymin:
-        ymin = y_local
-    if y_local > ymax:
-        ymax = y_local
+    for j in range(len(hits)):
+        hit_constituent = hits[j]
+        local_pos = hit_constituent.getPosition()
+        x_local   = local_pos[0]
+        y_local   = local_pos[1]
 
-    if x_local < xmin:
-        xmin = x_local
-    if x_local > xmax:
-        xmax = x_local
+        if y_local < y_min:
+            y_min = y_local
+        if y_local > y_max:
+            y_max = y_local
 
-    cluster_size_y = (ymax - ymin) + 1
-    cluster_size_x = (xmax - xmin) + 1
+        if x_local < x_min:
+            x_min = x_local
+        if x_local > x_max:
+            x_max = x_local
+
+    cluster_size_y = (y_max - y_min) + 1
+    cluster_size_x = (x_max - x_min) + 1
 
     return cluster_size_x, cluster_size_y
 
@@ -133,7 +139,7 @@ def main():
                 subdetector.clear()
                 layer.clear()
 
-                hits = hit.getRawHits()
+                pixel_hits = hit.getRawHits()
 
                 position = hit.getPosition()
                 x_pos = position[0]
@@ -146,10 +152,10 @@ def main():
                 e.push_back(hit.getEDep())
                 theta.push_back(get_theta(x_pos, y_pos, z_pos))
             
-                cluster_x, cluster_y = get_cluster_size(x_pos, y_pos)
+                cluster_x, cluster_y = get_cluster_size(pixel_hits)
                 cluster_size_x.push_back(cluster_x)
                 cluster_size_y.push_back(cluster_y)
-                cluster_size_tot.push_back(len(hits))
+                cluster_size_tot.push_back(len(pixel_hits))
 
                 dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32)) # 32-bit to 64-bit, then shift
                 layer_val = dec["layer"].value()
