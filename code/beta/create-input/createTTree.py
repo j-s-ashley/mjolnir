@@ -85,8 +85,8 @@ def main():
     cluster_size_x   = ROOT.std.vector('float')()
     cluster_size_y   = ROOT.std.vector('float')()
     cluster_size_tot = ROOT.std.vector('float')()
-    #subdetector = ROOT.std.vector('int')()
-    #layer       = ROOT.std.vector('int')()
+    subdetector = ROOT.std.vector('int')()
+    layer       = ROOT.std.vector('int')()
 
     # Create branches
     tree.Branch("Cluster_x", x)
@@ -98,8 +98,8 @@ def main():
     tree.Branch("Cluster_Size_x", cluster_size_x)
     tree.Branch("Cluster_Size_y", cluster_size_y)
     tree.Branch("Cluster_Size_tot", cluster_size_tot)
-    #tree.Branch("Subdetector", subdetector)
-    #tree.Branch("Layer", layer)
+    tree.Branch("Subdetector", subdetector)
+    tree.Branch("Layer", layer)
     
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
@@ -117,8 +117,8 @@ def main():
         # Within each event, get hit collections
         for col_name in COLLECTIONS:
             collection = cols[col_name]
-            #enc = collection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding) # Get CellID info
-            #dec = UTIL.BitField64(enc) # Create 64-bit CellID decoder
+            enc = collection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding) # Get CellID info
+            dec = UTIL.BitField64(enc) # Create 64-bit CellID decoder
 
             # Start loop over each hit in collection
             for i_hit, hit in enumerate(collection):
@@ -136,8 +136,8 @@ def main():
                 cluster_size_x.clear()
                 cluster_size_y.clear()
                 cluster_size_tot.clear()
-                #subdetector.clear()
-                #layer.clear()
+                subdetector.clear()
+                layer.clear()
 
                 pixel_hits = hit.getRawHits()
 
@@ -157,14 +157,14 @@ def main():
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(pixel_hits))
 
-                #dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32)) # 32-bit to 64-bit, then shift
-                #layer_val = dec["layer"].value()
-                #side_val  = dec["side"].value()
-                #if side_val != 0: # Check if negative layer values exist (i.e., endcaps)
-                #    layer.push_back(side_val * layer_val)
-                #else:
-                #    layer.push_back(layer_val)
-                #subdetector.push_back(dec['system'].value())
+                dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32)) # 32-bit to 64-bit, then shift
+                layer_val = dec["layer"].value()
+                side_val  = dec["side"].value()
+                if side_val != 0: # Check if negative layer values exist (i.e., endcaps)
+                    layer.push_back(side_val * layer_val)
+                else:
+                    layer.push_back(layer_val)
+                subdetector.push_back(dec['system'].value())
 
                 tree.Fill()
                     

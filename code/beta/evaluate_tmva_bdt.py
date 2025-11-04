@@ -24,8 +24,8 @@ reader.AddVariable("Incident_Angle", Incident_Angle)
 reader.AddVariable("Cluster_Size_x", Cluster_Size_x)
 reader.AddVariable("Cluster_Size_y", Cluster_Size_y)
 reader.AddVariable("Cluster_Size_tot", Cluster_Size_tot)
-#reader.AddVariable("Subdetector", Subdetector)
-#reader.AddVariable("Layer", Layer)
+reader.AddVariable("Subdetector", Subdetector)
+reader.AddVariable("Layer", Layer)
 
 # Load trained weights
 reader.BookMVA("BDT", "dataset/weights/TMVAClassification_BDT.weights.xml")
@@ -48,8 +48,8 @@ for event in sig_tree:
     Cluster_Size_x[0]          = vector_to_float(event.Cluster_Size_x)
     Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
     Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
-#    Subdetector[0]             = vector_to_float(event.Subdetector)
-#    Layer[0]                   = vector_to_float(event.Layer)
+    Subdetector[0]             = vector_to_float(event.Subdetector)
+    Layer[0]                   = vector_to_float(event.Layer)
     score = reader.EvaluateMVA("BDT")
     h_sig.Fill(score)
 
@@ -60,8 +60,8 @@ for event in bkg_tree:
     Cluster_Size_x[0]          = vector_to_float(event.Cluster_Size_x)
     Cluster_Size_y[0]          = vector_to_float(event.Cluster_Size_y)
     Cluster_Size_tot[0]        = vector_to_float(event.Cluster_Size_tot)
-#    Subdetector[0]             = vector_to_float(event.Subdetector)
-#    Layer[0]                   = vector_to_float(event.Layer)
+    Subdetector[0]             = vector_to_float(event.Subdetector)
+    Layer[0]                   = vector_to_float(event.Layer)
     score = reader.EvaluateMVA("BDT")
     h_bkg.Fill(score)
 
