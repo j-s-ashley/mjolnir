@@ -85,8 +85,7 @@ def main():
     cluster_size_x   = ROOT.std.vector('float')()
     cluster_size_y   = ROOT.std.vector('float')()
     cluster_size_tot = ROOT.std.vector('float')()
-    subdetector = ROOT.std.vector('int')()
-    layer       = ROOT.std.vector('int')()
+    #subdetector = ROOT.std.vector('int')()
 
     # Create branches
     tree.Branch("Cluster_x", x)
@@ -98,11 +97,12 @@ def main():
     tree.Branch("Cluster_Size_x", cluster_size_x)
     tree.Branch("Cluster_Size_y", cluster_size_y)
     tree.Branch("Cluster_Size_tot", cluster_size_tot)
-    tree.Branch("Subdetector", subdetector)
-    tree.Branch("Layer", layer)
+    #tree.Branch("Subdetector", subdetector)
     
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
+
+    layers = []
 
     # Start of event loop
     for i_event, event in enumerate(reader):
@@ -125,6 +125,11 @@ def main():
                 # Limit hit number based on input at runtime
                 if i_hit < ops.nhits:
                     break
+                dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32)) # 32-bit to 64-bit, then shift
+                layer_val = dec["layer"].value()
+                if layer_val != 0:
+                    continue
+                layers.append(layer_val)
                 
                 # Reset variable storage
                 x.clear()
@@ -136,8 +141,7 @@ def main():
                 cluster_size_x.clear()
                 cluster_size_y.clear()
                 cluster_size_tot.clear()
-                subdetector.clear()
-                layer.clear()
+                #subdetector.clear()
 
                 pixel_hits = hit.getRawHits()
 
@@ -157,14 +161,7 @@ def main():
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(pixel_hits))
 
-                dec.setValue(hit.getCellID0() | (hit.getCellID1() << 32)) # 32-bit to 64-bit, then shift
-                layer_val = dec["layer"].value()
-                side_val  = dec["side"].value()
-                if side_val != 0: # Check if negative layer values exist (i.e., endcaps)
-                    layer.push_back(side_val * layer_val)
-                else:
-                    layer.push_back(layer_val)
-                subdetector.push_back(dec['system'].value())
+                #subdetector.push_back(dec['system'].value())
 
                 tree.Fill()
                     
@@ -173,6 +170,8 @@ def main():
     root_file.Close()
 
     print(f"ROOT file '{out_file}' with tree '{tree_name}' created.")
+    print("Layers considered:")
+    print(layers)
 
 def get_collection(event, name):
     names = event.getCollectionNames()
