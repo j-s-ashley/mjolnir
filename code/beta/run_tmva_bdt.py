@@ -3,11 +3,13 @@ from ROOT import TMVA
 from array import array
 
 # Create output file
-outputFile = ROOT.TFile("TMVA_output.root", "RECREATE")
+output_file = ROOT.TFile("TMVA_output.root", "RECREATE")
 
 # Initialize TMVA
 TMVA.Tools.Instance()
-factory = TMVA.Factory("TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification")
+factory = TMVA.Factory("TMVAClassification", output_file,"!V:!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification")
+factory = TMVA.Factory("TMVAClassification", output_file,
+        "!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification:Correlations:InputCorrelations:VariableImportance")
 dataloader = TMVA.DataLoader("dataset")
 
 # Define input variables
@@ -58,5 +60,5 @@ factory.TrainAllMethods()
 factory.TestAllMethods()
 factory.EvaluateAllMethods()
 
-outputFile.Close()
+output_file.Close()
 print("TMVA training completed. Output saved to 'TMVA_output.root'")
