@@ -15,6 +15,7 @@ echo "Working directory contents:"
 ls
 
 echo "Simulating..."
+SIM.compactFile = '/global/cfs/projectdirs/atlas/arastogi/MuonCollider/data/MAIA/detector-simulation/geometries/MAIA_v0/MAIA_v0.xml'
 ddsim --steeringFile mucoll-benchmarks/simulation/ilcsoft/steer_baseline.py --inputFile output_gen_training.slcio --outputFile output_sim_training.slcio
 echo "Simulation complete"
 echo "Working directory contents:"
@@ -46,7 +47,7 @@ echo "Digitization complete"
 echo "Working directory contents:"
 ls
 echo "Renaming output as training output"
-mv output_digi.slcio ${OUTPUT_DIR}output_digi_training.slcio
+mv output_digi.root ${OUTPUT_DIR}output_digi_training.root
 mv output_digi_light.slcio ${OUTPUT_DIR}output_digi_light_training.slcio
 echo "Working directory contents:"
 ls
