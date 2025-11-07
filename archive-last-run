@@ -1,0 +1,32 @@
+#!/bin/bash
+
+read -p "Enter name for archive directory to create: " DIR
+
+SIG_MAIN_DIR="data/beta/MAIA/signal/"
+BKG_MAIN_DIR="data/beta/MAIA/bg/"
+SIG_NEW_DIR="${SIG_MAIN_DIR}archives/${DIR}"
+BKG_NEW_DIR="${BKG_MAIN_DIR}archives/${DIR}"
+
+mkdir ${SIG_NEW_DIR}
+mkdir ${BKG_NEW_DIR}
+
+echo "Directories created:"
+echo "    ${SIG_NEW_DIR}"
+echo "    ${BKG_NEW_DIR}"
+echo "Current contents of main signal directory:"
+ls ${SIG_MAIN_DIR}
+echo "Signal archives:"
+ls ${SIG_MAIN_DIR}/archives
+
+echo "Current contents of main background directory:"
+ls ${BKG_MAIN_DIR}
+echo "Background archives:"
+ls ${BKG_MAIN_DIR}/archives
+
+echo "Moving TTrees to archives..."
+mv ${SIG_MAIN_DIR}Hits_TTree_output_digi_light_* ${SIG_NEW_DIR}
+mv ${BKG_MAIN_DIR}Hits_TTree_output_digi_light_* ${BKG_NEW_DIR}
+echo "Contents of new signal archive directory:"
+ls ${SIG_NEW_DIR}
+echo "Contents of new background archive directory:"
+ls ${BKG_NEW_DIR}
