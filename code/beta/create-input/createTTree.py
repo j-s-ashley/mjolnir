@@ -9,12 +9,12 @@ import ROOT, array
 from array import array
 
 COLLECTIONS = [
-        #"ITBarrelHits",
-        #"ITEndcapHits",
-        #"OTBarrelHits",
-        #"OTEndcapHits",
+        "ITBarrelHits",
+        "ITEndcapHits",
+        "OTBarrelHits",
+        "OTEndcapHits",
         "VXDBarrelHits",
-        #"VXDEndcapHits"
+        "VXDEndcapHits"
         ]
 
 def options():
@@ -85,7 +85,7 @@ def main():
     cluster_size_x   = ROOT.std.vector('float')()
     cluster_size_y   = ROOT.std.vector('float')()
     cluster_size_tot = ROOT.std.vector('float')()
-    #subdetector = ROOT.std.vector('int')()
+    subdetector = ROOT.std.vector('int')()
 
     # Create branches
     tree.Branch("Cluster_x", x)
@@ -97,7 +97,7 @@ def main():
     tree.Branch("Cluster_Size_x", cluster_size_x)
     tree.Branch("Cluster_Size_y", cluster_size_y)
     tree.Branch("Cluster_Size_tot", cluster_size_tot)
-    #tree.Branch("Subdetector", subdetector)
+    tree.Branch("Subdetector", subdetector)
     
     reader = pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(str(in_file))
@@ -141,7 +141,7 @@ def main():
                 cluster_size_x.clear()
                 cluster_size_y.clear()
                 cluster_size_tot.clear()
-                #subdetector.clear()
+                subdetector.clear()
 
                 pixel_hits = hit.getRawHits()
 
@@ -161,7 +161,7 @@ def main():
                 cluster_size_y.push_back(cluster_y)
                 cluster_size_tot.push_back(len(pixel_hits))
 
-                #subdetector.push_back(dec['system'].value())
+                subdetector.push_back(dec['system'].value())
 
                 tree.Fill()
                     
