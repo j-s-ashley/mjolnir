@@ -1,5 +1,6 @@
 import ROOT
 from ROOT import TMVA
+from array import array
 
 # Create output file
 outputFile = ROOT.TFile("TMVA_output.root", "RECREATE")
@@ -10,13 +11,30 @@ factory = TMVA.Factory("TMVAClassification", outputFile,"!V:!Silent:Color:DrawPr
 dataloader = TMVA.DataLoader("dataset")
 
 # Define input variables
-dataloader.AddVariable("Cluster_ArrivalTime", "F")
-dataloader.AddVariable("Cluster_EnergyDeposited", "F")
-dataloader.AddVariable("Incident_Angle", "F")
-dataloader.AddVariable("Cluster_Size_x", "F")
-dataloader.AddVariable("Cluster_Size_y", "F")
-dataloader.AddVariable("Cluster_Size_tot", "F")
-dataloader.AddVariable("Subdetector", "F")
+variables = [
+    "Cluster_ArrivalTime",
+    "Cluster_EnergyDeposited",
+    "Incident_Angle",
+    "Cluster_Size_x",
+    "Cluster_Size_y",
+    "Cluster_Size_tot",
+    "Cluster_x",
+    "Cluster_y",
+    "Cluster_z",
+    "Cluster_RMS_x",
+    "Cluster_RMS_y",
+    "Cluster_Skew_x",
+    "Cluster_Skew_y",
+    "Cluster_AspectRatio",
+    "Cluster_Eccentricity"
+]
+
+# Load input variables
+for v in variables:
+    dataloader.AddVariable(v, "F")
+for i in range(9):
+    dataloader.AddVariable(f"PixelHits_EnergyDeposited_{i}", "F")
+    dataloader.AddVariable(f"PixelHits_ArrivalTime_{i}", "F")
 
 # Load signal and background files
 sig_file = ROOT.TFile("/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal/Hits_TTree_output_digi_light_training.root")
@@ -24,8 +42,8 @@ bkg_file = ROOT.TFile("/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/M
 sig_tree = sig_file.Get("HitTree")
 bkg_tree = bkg_file.Get("HitTree")
 
-dataloader.AddSignalTree(sig_tree)
-dataloader.AddBackgroundTree(bkg_tree)
+dataloader.AddSignalTree(sig_tree, 1.0)
+dataloader.AddBackgroundTree(bkg_tree, 1.0)
 
 # Prepare dataset
 dataloader.PrepareTrainingAndTestTree(ROOT.TCut(""), ROOT.TCut(""),
