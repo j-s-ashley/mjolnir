@@ -7,9 +7,10 @@ output_file = ROOT.TFile("TMVA_output.root", "RECREATE")
 
 # Initialize TMVA
 TMVA.Tools.Instance()
-factory = TMVA.Factory("TMVAClassification", output_file,"!V:!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification")
 factory = TMVA.Factory("TMVAClassification", output_file,
-        "!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification:Correlations:InputCorrelations:VariableImportance")
+        "!V:!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification")
+factory = TMVA.Factory("TMVAClassification", output_file,
+        "!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification")
 dataloader = TMVA.DataLoader("dataset")
 
 # Define input variables

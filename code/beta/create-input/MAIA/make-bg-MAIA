@@ -75,8 +75,6 @@ echo "Output directory contents:"
 ls ${OUTPUT_DIR}
 
 echo "Digitizing..."
-export MUPLUS="/global/cfs/cdirs/atlas/spgriso/MuonCollider/data/bib/10TeV-2024/MAIA/sim_mp"
-export MUMINUS="/global/cfs/cdirs/atlas/spgriso/MuonCollider/data/bib/10TeV-2024/MAIA/sim_mm"
 echo "MUPLUS set to"
 echo ${MUPLUS}
 echo "MUMINUS set to"

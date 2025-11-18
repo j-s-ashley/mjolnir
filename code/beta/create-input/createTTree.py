@@ -10,12 +10,12 @@ from pyLCIO import EVENT, UTIL
 from array import array
 
 COLLECTIONS = [
-        "ITBarrelHits",
-        "ITEndcapHits",
-        "OTBarrelHits",
-        "OTEndcapHits",
+        #"ITBarrelHits",
+        #"ITEndcapHits",
+        #"OTBarrelHits",
+        #"OTEndcapHits",
         "VXDBarrelHits",
-        "VXDEndcapHits"
+        #"VXDEndcapHits"
         ]
 
 def options():
@@ -23,7 +23,7 @@ def options():
     parser.add_argument("-i", required=True, type=Path, help="Input LCIO file")
     parser.add_argument(
         "--nhits",
-        default=0,
+        default=9,
         type=int,
         help="Max number of hits to dump for each collection",
     )
