@@ -225,9 +225,9 @@ Factory                  : Train method: BDT for Classification
 BDT                      : #events: (reweighted) sig: 60812.5 bkg: 60812.5
                          : #events: (unweighted) sig: 2241 bkg: 119384
                          : Training 200 Decision Trees ... patience please
-                         : Elapsed time for training with 121625 events: [1;31m42.4 sec[0m         
+                         : Elapsed time for training with 121625 events: [1;31m35.6 sec[0m         
 BDT                      : [dataset] : Evaluation of BDT on training sample (121625 events)
-                         : Elapsed time for evaluation of 121625 events: [1;31m0.819 sec[0m       
+                         : Elapsed time for evaluation of 121625 events: [1;31m0.693 sec[0m       
                          : Creating xml weight file: [0;36mdataset/weights/TMVAClassification_BDT.weights.xml[0m
                          : Creating standalone class: [0;36mdataset/weights/TMVAClassification_BDT.class.C[0m
                          : TMVA_output.root:/dataset/Method_BDT/BDT
@@ -279,7 +279,7 @@ Factory                  : [1mTest all methods[0m
 Factory                  : Test method: BDT for Classification performance
                          : 
 BDT                      : [dataset] : Evaluation of BDT on testing sample (121625 events)
-                         : Elapsed time for evaluation of 121625 events: [1;31m0.754 sec[0m       
+                         : Elapsed time for evaluation of 121625 events: [1;31m0.655 sec[0m       
 Factory                  : [1mEvaluate all methods[0m
 Factory                  : Evaluate classifier: BDT
                          : 
@@ -355,5 +355,5 @@ Dataset:dataset          : Created tree 'TrainTree' with 121625 events
 Factory                  : [1mThank you for using TMVA![0m
                          : [1mFor citation information, please visit: http://tmva.sf.net/citeTMVA.html[0m
 TMVA training completed. Output saved to 'TMVA_output.root'
-Tue Nov 11 16:47:31 PST 2025
-Tue Nov 11 16:48:19 PST 2025
+Tue Nov 18 12:29:57 PST 2025
+Tue Nov 18 12:31:05 PST 2025
