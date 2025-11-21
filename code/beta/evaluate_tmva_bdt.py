@@ -46,6 +46,7 @@ bkg_eval_file = ROOT.TFile.Open("../../data/beta/MAIA/bg/Hits_TTree_output_digi_
 sig_eval_tree = sig_eval_file.Get("HitTree")
 bkg_eval_tree = bkg_eval_file.Get("HitTree")
 
+# --- OUTPUT --- #
 combined_out_file = ROOT.TFile("BDT_combined_training_eval.root", "RECREATE")
 
 def evaluate_flat_tree(flat_tree, scores_list):
@@ -72,34 +73,74 @@ training_sig_eff     = training_tpr
 training_roc_auc     = auc(training_sig_eff, training_bkg_rej)
 print(f"Training  ROC AUC (Signal efficiency vs Background rejection) = {training_roc_auc:.3f}")
 
-# Save score histograms and ROC
-h_sig_training = ROOT.TH1F("h_sig_training_score", "Signal BDT Output (Training );BDT Score;Entries", 100, -1, 1)
+# Save score histograms
+h_sig_train = ROOT.TH1F("h_sig_train_score", "Signal BDT Output (Training);BDT Score;Entries", 100, -1, 1)
 for s in sig_training_scores:
-    h_sig_training.Fill(s)
-h_sig_training.Scale(1. / h_sig_training.Integral())
+    h_sig_train.Fill(s)
+h_sig_train_norm = h_sig_train.Clone("h_sig_train_norm")
+h_sig_train_norm.Scale(1. / h_sig_train.Integral())
 
-h_bkg_training = ROOT.TH1F("h_bkg_training_score", "Background BDT Output (Training );BDT Score;Entries", 100, -1, 1)
+h_bkg_train = ROOT.TH1F("h_bkg_train_score", "Background BDT Output (Training);BDT Score;Entries", 100, -1, 1)
 for b in bkg_training_scores:
-    h_bkg_training.Fill(b)
-h_bkg_training.Scale(1. / h_bkg_training.Integral())
+    h_bkg_train.Fill(b)
+h_bkg_train_norm = h_bkg_train.Clone("h_bkg_train_norm")
+h_bkg_train_norm.Scale(1. / h_bkg_train.Integral())
 
-c_hist_train = ROOT.TCanvas("c_hist_train", "BDT Output", 800, 600)
-h_sig_training.SetLineColor(ROOT.kRed)
-h_bkg_training.SetLineColor(ROOT.kBlue)
-h_sig_training.SetLineWidth(2)
-h_bkg_training.SetLineWidth(2)
-h_sig_training.Draw("HIST")
-h_bkg_training.Draw("HIST SAME")
-h_sig_training.SetStats(0)
+# Non-normalized histograms
+c_hist_train = ROOT.TCanvas("c_hist_train", "BDT Output (Non-normalized)", 800, 600)
 
+# Fix y-axis to data max
+training_hists      = [h_sig_train, h_bkg_train]
+training_global_max = max(h.GetMaximum() for h in training_hists)
+training_y_max      = 1.2 * training_global_max
+
+# Draw pretty plot
+h_sig_train.SetLineColor(ROOT.kRed)
+h_bkg_train.SetLineColor(ROOT.kBlue)
+h_sig_train.SetLineWidth(2)
+h_bkg_train.SetLineWidth(2)
+h_sig_train.SetMaximum(training_y_max)
+h_sig_train.Draw("HIST")
+h_bkg_train.Draw("HIST SAME")
+h_sig_train.SetStats(0)
+
+# Add a legend
 training_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
-training_hist_legend.AddEntry(h_sig_training, "Signal clusters", "l")
-training_hist_legend.AddEntry(h_bkg_training, "Background clusters", "l")
+training_hist_legend.AddEntry(h_sig_train, "Signal clusters", "l")
+training_hist_legend.AddEntry(h_bkg_train, "Background clusters", "l")
 training_hist_legend.Draw()
 
 c_hist_train.SaveAs("BDT_evaluation_of_training_wpixels.png")
 c_hist_train.Write()
 
+# Normalized histograms
+c_hist_train_norm = ROOT.TCanvas("c_hist_train_norm", "BDT Output", 800, 600)
+
+# Fix y-axis to data max
+training_norm_hists      = [h_sig_train_norm, h_bkg_train_norm]
+training_norm_global_max = max(h.GetMaximum() for h in training_norm_hists)
+training_norm_y_max      = 1.2 * training_norm_global_max
+
+# Draw pretty plot
+h_sig_train_norm.SetLineColor(ROOT.kRed)
+h_bkg_train_norm.SetLineColor(ROOT.kBlue)
+h_sig_train_norm.SetLineWidth(2)
+h_bkg_train_norm.SetLineWidth(2)
+h_sig_train_norm.SetMaximum(training_norm_y_max)
+h_sig_train_norm.Draw("HIST")
+h_bkg_train_norm.Draw("HIST SAME")
+h_sig_train_norm.SetStats(0)
+
+# Add a legend
+training_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
+training_hist_legend.AddEntry(h_sig_train_norm, "Signal clusters", "l")
+training_hist_legend.AddEntry(h_bkg_train_norm, "Background clusters", "l")
+training_hist_legend.Draw()
+
+c_hist_train_norm.SaveAs("BDT_evaluation_of_training_wpixels.png")
+c_hist_train_norm.Write()
+
+# ROC curve
 c_roc_train = ROOT.TCanvas("c_roc_train", "ROC Curve (Signal Eff vs Background Rejection)", 600, 600)
 g_train = ROOT.TGraph(len(training_sig_eff), array('f', training_bkg_rej), array('f', training_sig_eff))
 
@@ -128,26 +169,38 @@ eval_sig_eff     = eval_tpr
 eval_roc_auc     = auc(eval_sig_eff, eval_bkg_rej)
 print(f"Evaluation ROC AUC (Signal efficiency vs Background rejection) = {eval_roc_auc:.3f}")
 
-# Save score histograms and ROC
+# Save score histograms
 h_sig_eval = ROOT.TH1F("h_sig_eval_score", "Signal BDT Output (Evaluation);BDT Score;Entries", 100, -1, 1)
 for s in sig_eval_scores:
     h_sig_eval.Fill(s)
-h_sig_eval.Scale(1. / h_sig_eval.Integral())
+h_sig_eval_norm = h_sig_eval.Clone("h_sig_eval_norm")
+h_sig_eval_norm.Scale(1. / h_sig_eval.Integral())
 
 h_bkg_eval = ROOT.TH1F("h_bkg_eval_score", "Background BDT Output (Evaluation);BDT Score;Entries", 100, -1, 1)
 for b in bkg_eval_scores:
     h_bkg_eval.Fill(b)
-h_bkg_eval.Scale(1. / h_bkg_eval.Integral())
+h_bkg_eval_norm = h_bkg_eval.Clone("h_bkg_eval_norm")
+h_bkg_eval_norm.Scale(1. / h_bkg_eval.Integral())
 
-c_hist_eval = ROOT.TCanvas("c_hist_eval", "BDT Output", 800, 600)
+# Non-normalized histograms
+c_hist_eval = ROOT.TCanvas("c_hist_eval", "BDT Output (Non-normalized)", 800, 600)
+
+# Fix y-axis to data max
+eval_hists      = [h_sig_eval, h_bkg_eval]
+eval_global_max = max(h.GetMaximum() for h in eval_hists)
+eval_y_max      = 1.2 * eval_global_max
+
+# Draw pretty plots
 h_sig_eval.SetLineColor(ROOT.kRed)
 h_bkg_eval.SetLineColor(ROOT.kBlue)
 h_sig_eval.SetLineWidth(2)
 h_bkg_eval.SetLineWidth(2)
+h_sig_eval.SetMaximum(eval_y_max)
 h_sig_eval.Draw("HIST")
 h_bkg_eval.Draw("HIST SAME")
 h_sig_eval.SetStats(0)
 
+# Add a legend
 eval_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
 eval_hist_legend.AddEntry(h_sig_eval, "Signal clusters", "l")
 eval_hist_legend.AddEntry(h_bkg_eval, "Background clusters", "l")
@@ -156,6 +209,34 @@ eval_hist_legend.Draw()
 c_hist_eval.SaveAs("BDT_evaluation_of_eval_wpixels.png")
 c_hist_eval.Write()
 
+# Normalized histograms
+c_hist_eval_norm = ROOT.TCanvas("c_hist_eval_norm", "BDT Output", 800, 600)
+
+# Fix y-axis to data max
+eval_norm_hists      = [h_sig_eval_norm, h_bkg_eval_norm]
+eval_norm_global_max = max(h.GetMaximum() for h in eval_norm_hists)
+eval_norm_y_max      = 1.2 * eval_norm_global_max
+
+# Draw pretty plots
+h_sig_eval_norm.SetLineColor(ROOT.kRed)
+h_bkg_eval_norm.SetLineColor(ROOT.kBlue)
+h_sig_eval_norm.SetLineWidth(2)
+h_bkg_eval_norm.SetLineWidth(2)
+h_sig_eval_norm.SetMaximum(eval_norm_y_max)
+h_sig_eval_norm.Draw("HIST")
+h_bkg_eval_norm.Draw("HIST SAME")
+h_sig_eval_norm.SetStats(0)
+
+# Add a legend
+eval_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
+eval_hist_legend.AddEntry(h_sig_eval_norm, "Signal clusters", "l")
+eval_hist_legend.AddEntry(h_bkg_eval_norm, "Background clusters", "l")
+eval_hist_legend.Draw()
+
+c_hist_eval_norm.SaveAs("BDT_evaluation_of_eval_wpixels.png")
+c_hist_eval_norm.Write()
+
+# ROC curve
 c_roc_eval = ROOT.TCanvas("c_roc_eval", "ROC Curve (Signal Eff vs Background Rejection)", 600, 600)
 g_eval = ROOT.TGraph(len(eval_sig_eff), array('f', eval_bkg_rej), array('f', eval_sig_eff))
 
@@ -173,36 +254,41 @@ g_eval.Write("eval_ROC_curve")
 # --- Combined stats --- #
 # Save score histograms and ROC
 c_hist_comb = ROOT.TCanvas("c_hist_comb", "BDT Output", 800, 600)
-h_sig_eval.SetLineColor(ROOT.kRed)
-h_bkg_eval.SetLineColor(ROOT.kBlue)
-h_sig_training.SetLineColor(ROOT.kMagenta)
-h_bkg_training.SetLineColor(ROOT.kCyan)
-h_sig_eval.Draw("HIST")
-h_bkg_eval.Draw("HIST SAME")
-h_sig_training.Draw("HIST SAME")
-h_bkg_training.Draw("HIST SAME")
-h_sig_eval.SetStats(0)
-h_bkg_eval.SetStats(0)
-h_sig_training.SetStats(0)
-h_bkg_training.SetStats(0)
+
+# Fix y-axis to data max
+norm_hists      = [h_sig_train_norm, h_sig_eval_norm, h_sig_eval_norm, h_bkg_eval_norm]
+norm_global_max = max(h.GetMaximum() for h in norm_hists)
+norm_y_max      = 1.2 * norm_global_max
+
+h_sig_eval_norm.SetLineColor(ROOT.kRed)
+h_bkg_eval_norm.SetLineColor(ROOT.kBlue)
+h_sig_train_norm.SetLineColor(ROOT.kMagenta)
+h_bkg_train_norm.SetLineColor(ROOT.kCyan)
+h_sig_eval_norm.SetMaximum(norm_y_max)
+h_sig_eval_norm.Draw("HIST")
+h_bkg_eval_norm.Draw("HIST SAME")
+h_sig_train_norm.Draw("HIST SAME")
+h_bkg_train_norm.Draw("HIST SAME")
+h_sig_eval_norm.SetStats(0)
 
 comb_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
-comb_hist_legend.AddEntry(h_sig_eval, "Signal clusters in evaluation data", "l")
-comb_hist_legend.AddEntry(h_sig_training, "Signal clusters in training data", "l")
-comb_hist_legend.AddEntry(h_bkg_eval, "Background clusters in evaluation data", "l")
-comb_hist_legend.AddEntry(h_bkg_training, "Background clusters in training data", "l")
+comb_hist_legend.AddEntry(h_sig_eval_norm, "Signal (evaluation data)", "l")
+comb_hist_legend.AddEntry(h_sig_train_norm, "Signal (training data)", "l")
+comb_hist_legend.AddEntry(h_bkg_eval_norm, "Background (evaluation data)", "l")
+comb_hist_legend.AddEntry(h_bkg_train_norm, "Background (training data)", "l")
 comb_hist_legend.Draw()
 
 c_hist_comb.SaveAs("BDT_evaluation_of_comb_wpixels.png")
 c_hist_comb.Write()
 
+# ROC Curve
 c_roc_comb = ROOT.TCanvas("c_roc_comb", "ROC Curve (Signal Eff vs Background Rejection)", 600, 600)
 
 comb_roc_legend = ROOT.TLegend(0.15, 0.20, 0.35, 0.35)
 g_train.SetLineColorAlpha(ROOT.kBlue,0.5)
 g_eval.SetLineColorAlpha(ROOT.kRed,0.5)
 g_train.Draw("AL")
-g_eval.Draw("AL")
+g_eval.Draw("L SAME")
 comb_roc_legend.AddEntry(g_train,"Training Data","l")
 comb_roc_legend.AddEntry(g_eval,"Evaluation Data","l")
 comb_roc_legend.Draw()
@@ -212,7 +298,7 @@ c_roc_comb.SaveAs("BDT_ROC_of_comb_SigEff_vs_BkgRej_wpixels.png")
 # Write all to output file
 h_sig_eval.Write()
 h_bkg_eval.Write()
-h_sig_training.Write()
-h_bkg_training.Write()
+h_sig_train_norm.Write()
+h_bkg_train_norm.Write()
 
 combined_out_file.Close()
