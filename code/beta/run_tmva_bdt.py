@@ -9,8 +9,6 @@ output_file = ROOT.TFile("TMVA_output.root", "RECREATE")
 TMVA.Tools.Instance()
 factory = TMVA.Factory("TMVAClassification", output_file,
         "!V:!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification")
-factory = TMVA.Factory("TMVAClassification", output_file,
-        "!Silent:Color:DrawProgressBar:Transformations=I;:AnalysisType=Classification")
 dataloader = TMVA.DataLoader("dataset")
 
 # Define input variables
@@ -60,6 +58,46 @@ factory.BookMethod(dataloader, TMVA.Types.kBDT, "BDT",
 factory.TrainAllMethods()
 factory.TestAllMethods()
 factory.EvaluateAllMethods()
+
+n_bins = 50
+
+for v in variables:
+    # Determine common range from both trees
+    sig_min = sig_tree.GetMinimum(v)
+    sig_max = sig_tree.GetMaximum(v)
+    bkg_min = bkg_tree.GetMinimum(v)
+    bkg_max = bkg_tree.GetMaximum(v)
+
+    x_min = min(sig_min, bkg_min)
+    x_max = max(sig_max, bkg_max)
+
+    h_sig_name = f"h_sig_{v}"
+    h_bkg_name = f"h_bkg_{v}"
+
+    h_sig = ROOT.TH1F(h_sig_name, f"Normalized {v} (signal vs background)", n_bins, x_min, x_max)
+    h_bkg = ROOT.TH1F(h_bkg_name, f"Normalized {v} (signal vs background)", n_bins, x_min, x_max)
+
+    # Fill hists from original trees
+    sig_tree.Draw(f"{v}>>{h_sig_name}", "", "goff")
+    bkg_tree.Draw(f"{v}>>{h_bkg_name}", "", "goff")
+
+    # Pretty plots
+    ROOT.gStyle.SetOptStat(0)
+    c = ROOT.TCanvas(f"c_{v}", f"{v} signal vs background", 800, 600)
+
+    h_sig.SetLineColor(ROOT.kRed)
+    h_bkg.SetLineColor(ROOT.kBlue)
+    h_sig.SetLineWidth(2)
+    h_bkg.SetLineWidth(2)
+    h_sig.DrawNormalized("HIST")
+    h_bkg.DrawNormalized("HIST SAME")
+
+    leg = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
+    leg.AddEntry(h_sig, "Signal", "l")
+    leg.AddEntry(h_bkg, "Background", "l")
+    leg.Draw()
+
+    c.Write()
 
 output_file.Close()
 print("TMVA training completed. Output saved to 'TMVA_output.root'")
