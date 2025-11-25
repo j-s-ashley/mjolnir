@@ -123,6 +123,8 @@ def get_collection(event, name):
         return event.getCollection(name)
     return []
 
+c = 299.792458 # mm/ns, used for corrected timing
+
 def main():
     ops = options()
     in_file = ops.i
@@ -221,7 +223,13 @@ def main():
                 r_pos    = math.sqrt(x_pos**2+y_pos**2)
 
                 cluster_energy[0] = hit.getEDep()
-                cluster_time[0]   = hit.getTime()
+                
+                # Compute corrected timing
+                t_raw             = hit.getTime()
+                d_pos             = math.sqrt(x_pos**2 + y_pos**2 + z_pos**2)
+                t_cor             = t_raw - (d_pos / c)
+                cluster_time[0]   = t_cor
+                
                 cluster_x[0]      = x_pos
                 cluster_y[0]      = y_pos
                 cluster_z[0]      = z_pos
