@@ -3,6 +3,8 @@ from ROOT import TMVA
 from dataclasses import dataclass
 from array import array
 
+sensor_thickness = 50 
+
 # Manual normalization
 def normalize_in_place(h):
     integ = h.Integral()
@@ -28,15 +30,15 @@ class Variable:
 variables = {
         "Cluster_ArrivalTime": Variable(label="Cluster arrival time [ns]", ymax=0.23, xmin=-0.52, xmax=0.7),
         "Cluster_EnergyDeposited": Variable(label="Cluster energy deposited [KeV]", ymax=1.1, xmin=0, xmax=0.0007),
-        "Incident_Angle": Variable(label="Incident angle", ymax=0.077, xmin=0, xmax=3),
+        "Incident_Angle": Variable(label="Incident angle [radians]", ymax=0.077, xmin=0, xmax=3),
         "Cluster_Size_x": Variable(label="Cluster size in x [pixels]", ymax=1.1, xmin=0, xmax=60),
         "Cluster_Size_y": Variable(label="Cluster size in y [pixels]", ymax=1.1, xmin=0, xmax=400),
         "Cluster_Size_tot": Variable(label="Total cluster size [pixels]", ymax=1.1, xmin=0, xmax=400),
         "Cluster_x": Variable(label="Cluster x position [cm]", ymax=0.11, xmin=-35, xmax=35),
         "Cluster_y": Variable(label="Cluster y position [cm]", ymax=0.11, xmin=-35, xmax=35),
         "Cluster_z": Variable(label="Cluster z position [cm]", ymax=0.0055, xmin=-80, xmax=80),
-        "Cluster_RMS_x": Variable(label="Cluster RMS in x [cm^2]", ymax=0.22, xmin=0, xmax=90000),
-        "Cluster_RMS_y": Variable(label="Cluster RMS in y [cm^2]", ymax=0.22, xmin=0, xmax=350000),
+        "Cluster_RMS_x": Variable(label="Cluster RMS in x [cm^{2}]", ymax=0.22, xmin=0, xmax=90000),
+        "Cluster_RMS_y": Variable(label="Cluster RMS in y [cm^{2}]", ymax=0.22, xmin=0, xmax=350000),
         "Cluster_Skew_x": Variable(label="Cluster skew in x", ymax=0.55, xmin=-1.75, xmax=1.75),
         "Cluster_Skew_y": Variable(label="Cluster skew in y", ymax=0.55, xmin=-1.75, xmax=1.75),
         "Cluster_AspectRatio": Variable(label="Cluster aspect ratio", ymax=1.1, xmin=0, xmax=25000),
@@ -51,11 +53,8 @@ for i in range(9):
     dataloader.AddVariable(f"PixelHits_ArrivalTime_{i}", "F")
 
 # Load signal and background files
-#sig_file = ROOT.TFile("/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal/Hits_TTree_output_digi_light_training.root")
-#bkg_file = ROOT.TFile("/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/bg/Hits_TTree_output_digi_light_training.root")
-sig_file = ROOT.TFile("/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/Hits_TTree_output_digi_noMS_5kMuons_10_170Theta_0_5TeV_1.root")
-bkg_file = ROOT.TFile("/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/Hits_TTree_MAIAvxb75_noMS_1_0-0.root")
-
+sig_file = ROOT.TFile(f"/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal/{sensor_thickness}_sig_trng_ttree.root")
+bkg_file = ROOT.TFile(f"/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/bg/{sensor_thickness}_bkg_trng_ttree.root")
 sig_tree = sig_file.Get("HitTree")
 bkg_tree = bkg_file.Get("HitTree")
 
@@ -87,7 +86,7 @@ for v_id, v in variables.items():
     h_sig_name = f"h_sig_{v_id}"
     h_bkg_name = f"h_bkg_{v_id}"
 
-    h_sig = ROOT.TH1F(h_sig_name, f"Normalized {v.label} (signal vs background)", n_bins, x_min, x_max)
+    h_sig = ROOT.TH1F(h_sig_name, f"{sensor_thickness} #mum", n_bins, x_min, x_max)
     h_bkg = ROOT.TH1F(h_bkg_name, f"Normalized {v.label} (signal vs background)", n_bins, x_min, x_max)
 
     # Fill hists from original trees
@@ -101,6 +100,8 @@ for v_id, v in variables.items():
     h_bkg.SetLineColor(ROOT.kBlue)
     h_sig.SetLineWidth(2)
     h_bkg.SetLineWidth(2)
+    h_sig.SetFillColorAlpha(ROOT.kRed, 0.35)
+    h_bkg.SetFillColorAlpha(ROOT.kBlue, 0.35)
     
     # Fix axis issues by normalizing manually
     normalize_in_place(h_sig)
@@ -116,6 +117,7 @@ for v_id, v in variables.items():
     leg = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
     leg.AddEntry(h_sig, "Signal", "l")
     leg.AddEntry(h_bkg, "Background", "l")
+    leg.SetBorderSize(0)
     leg.Draw()
 
     c.Write()

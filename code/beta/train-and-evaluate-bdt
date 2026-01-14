@@ -1,17 +1,19 @@
 #!/bin/bash
 
+SENSOR_THICKNESS="50"
+
 WORKING_DIR="/global/cfs/projectdirs/atlas/jashley/mjolnir/code/beta"
 cd ${WORKING_DIR}
 echo "Changed directory to ${WORKING_DIR}"
 echo "Initiating BDT training"
 
-TRAINING_LOG="training.log"
+TRAINING_LOG="${SENSOR_THICKNESS}_training.log"
 python run_tmva_bdt.py | tee ${TRAINING_LOG}
 date >> ${TRAINING_LOG}
 echo "=== Training completed, log saved to ${TRAINING_LOG} ==="
 
 echo "Initiating BDT evaluation"
-EVALUATION_LOG="evaluation.log"
+EVALUATION_LOG="${SENSOR_THICKNESS}_evaluation.log"
 python evaluate_tmva_bdt.py | tee ${EVALUATION_LOG}
 date >> ${TRAINING_LOG}
 echo "=== Evaluation completed, log saved to ${EVALUATION_LOG} ==="

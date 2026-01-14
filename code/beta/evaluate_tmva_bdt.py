@@ -4,6 +4,8 @@ from ROOT import TMVA, TFile, TH1F
 from sklearn.metrics import roc_curve, auc
 from array import array
 
+sensor_thickness = 50
+
 ROOT.TMVA.Tools.Instance()
 reader    = ROOT.TMVA.Reader("!Color:Silent")
 variables = [
@@ -36,18 +38,18 @@ reader.BookMVA("BDT", "dataset/weights/TMVAClassification_BDT.weights.xml")
 
 # --- INPUT --- #
 # Training files
-sig_training_file = ROOT.TFile.Open("../../data/beta/MAIA/signal/Hits_TTree_output_digi_light_training.root")
-bkg_training_file = ROOT.TFile.Open("../../data/beta/MAIA/bg/Hits_TTree_output_digi_light_training.root")
+sig_training_file = ROOT.TFile.Open(f"../../data/beta/MAIA/signal/{sensor_thickness}_sig_trng_ttree.root")
+bkg_training_file = ROOT.TFile.Open(f"../../data/beta/MAIA/bg/{sensor_thickness}_bkg_trng_ttree.root")
 sig_training_tree = sig_training_file.Get("HitTree")
 bkg_training_tree = bkg_training_file.Get("HitTree")
 # Evaluation files
-sig_eval_file = ROOT.TFile.Open("../../data/beta/MAIA/signal/Hits_TTree_output_digi_light_eval.root")
-bkg_eval_file = ROOT.TFile.Open("../../data/beta/MAIA/bg/Hits_TTree_output_digi_light_eval.root")
+sig_eval_file = ROOT.TFile.Open(f"../../data/beta/MAIA/signal/{sensor_thickness}_sig_eval_ttree.root")
+bkg_eval_file = ROOT.TFile.Open(f"../../data/beta/MAIA/bg/{sensor_thickness}_bkg_eval_ttree.root")
 sig_eval_tree = sig_eval_file.Get("HitTree")
 bkg_eval_tree = bkg_eval_file.Get("HitTree")
 
 # --- OUTPUT --- #
-combined_out_file = ROOT.TFile("BDT_combined_training_eval.root", "RECREATE")
+combined_out_file = ROOT.TFile(f"{sensor_thickness}_BDT_combined_training_eval.root", "RECREATE")
 
 def evaluate_flat_tree(flat_tree, scores_list):
     for evt in flat_tree:
@@ -99,6 +101,8 @@ h_sig_train.SetLineColor(ROOT.kRed)
 h_bkg_train.SetLineColor(ROOT.kBlue)
 h_sig_train.SetLineWidth(2)
 h_bkg_train.SetLineWidth(2)
+h_sig_train.SetFillColorAlpha(ROOT.kRed, 0.35)
+h_bkg_train.SetFillColorAlpha(ROOT.kBlue, 0.35)
 h_sig_train.SetMaximum(training_y_max)
 h_sig_train.Draw("HIST")
 h_bkg_train.Draw("HIST SAME")
@@ -108,9 +112,10 @@ h_sig_train.SetStats(0)
 training_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
 training_hist_legend.AddEntry(h_sig_train, "Signal clusters", "l")
 training_hist_legend.AddEntry(h_bkg_train, "Background clusters", "l")
+training_hist_legend.SetBorderSize(0)
 training_hist_legend.Draw()
 
-c_hist_train.SaveAs("BDT_evaluation_of_training_wpixels.png")
+c_hist_train.SaveAs(f"{sensor_thickness}_BDT_evaluation_of_training_wpixels.png")
 c_hist_train.Write()
 
 # Normalized histograms
@@ -126,6 +131,8 @@ h_sig_train_norm.SetLineColor(ROOT.kRed)
 h_bkg_train_norm.SetLineColor(ROOT.kBlue)
 h_sig_train_norm.SetLineWidth(2)
 h_bkg_train_norm.SetLineWidth(2)
+h_sig_train_norm.SetFillColorAlpha(ROOT.kRed, 0.35)
+h_bkg_train_norm.SetFillColorAlpha(ROOT.kBlue, 0.35)
 h_sig_train_norm.SetMaximum(training_norm_y_max)
 h_sig_train_norm.Draw("HIST")
 h_bkg_train_norm.Draw("HIST SAME")
@@ -135,9 +142,10 @@ h_sig_train_norm.SetStats(0)
 training_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
 training_hist_legend.AddEntry(h_sig_train_norm, "Signal clusters", "l")
 training_hist_legend.AddEntry(h_bkg_train_norm, "Background clusters", "l")
+training_hist_legend.SetBorderSize(0)
 training_hist_legend.Draw()
 
-c_hist_train_norm.SaveAs("BDT_evaluation_of_training_wpixels.png")
+c_hist_train_norm.SaveAs(f"{sensor_thickness}_BDT_evaluation_of_training_wpixels.png")
 c_hist_train_norm.Write()
 
 # ROC curve
@@ -152,7 +160,7 @@ g_train.Draw("AL")
 g_train.GetXaxis().SetLimits(0, 1)
 g_train.GetYaxis().SetRangeUser(0, 1)
 
-c_roc_train.SaveAs("BDT_ROC_of_training_SigEff_vs_BkgRej_wpixels.png")
+c_roc_train.SaveAs(f"{sensor_thickness}_BDT_ROC_of_training_SigEff_vs_BkgRej_wpixels.png")
 g_train.Write("training_ROC_curve")
 
 # --- Evaluation files --- #
@@ -195,6 +203,8 @@ h_sig_eval.SetLineColor(ROOT.kRed)
 h_bkg_eval.SetLineColor(ROOT.kBlue)
 h_sig_eval.SetLineWidth(2)
 h_bkg_eval.SetLineWidth(2)
+h_sig_eval.SetFillColorAlpha(ROOT.kRed, 0.35)
+h_bkg_eval.SetFillColorAlpha(ROOT.kBlue, 0.35)
 h_sig_eval.SetMaximum(eval_y_max)
 h_sig_eval.Draw("HIST")
 h_bkg_eval.Draw("HIST SAME")
@@ -204,9 +214,10 @@ h_sig_eval.SetStats(0)
 eval_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
 eval_hist_legend.AddEntry(h_sig_eval, "Signal clusters", "l")
 eval_hist_legend.AddEntry(h_bkg_eval, "Background clusters", "l")
+eval_hist_legend.SetBorderSize(0)
 eval_hist_legend.Draw()
 
-c_hist_eval.SaveAs("BDT_evaluation_of_eval_wpixels.png")
+c_hist_eval.SaveAs(f"{sensor_thickness}_BDT_evaluation_of_eval_wpixels.png")
 c_hist_eval.Write()
 
 # Normalized histograms
@@ -222,6 +233,8 @@ h_sig_eval_norm.SetLineColor(ROOT.kRed)
 h_bkg_eval_norm.SetLineColor(ROOT.kBlue)
 h_sig_eval_norm.SetLineWidth(2)
 h_bkg_eval_norm.SetLineWidth(2)
+h_sig_eval.SetFillColorAlpha(ROOT.kRed, 0.35)
+h_bkg_eval.SetFillColorAlpha(ROOT.kBlue, 0.35)
 h_sig_eval_norm.SetMaximum(eval_norm_y_max)
 h_sig_eval_norm.Draw("HIST")
 h_bkg_eval_norm.Draw("HIST SAME")
@@ -231,9 +244,10 @@ h_sig_eval_norm.SetStats(0)
 eval_hist_legend = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
 eval_hist_legend.AddEntry(h_sig_eval_norm, "Signal clusters", "l")
 eval_hist_legend.AddEntry(h_bkg_eval_norm, "Background clusters", "l")
+eval_hist_legend.SetBorderSize(0)
 eval_hist_legend.Draw()
 
-c_hist_eval_norm.SaveAs("BDT_evaluation_of_eval_wpixels.png")
+c_hist_eval_norm.SaveAs(f"{sensor_thickness}_BDT_evaluation_of_eval_wpixels.png")
 c_hist_eval_norm.Write()
 
 # ROC curve
@@ -248,7 +262,7 @@ g_eval.Draw("AL")
 g_eval.GetXaxis().SetLimits(0, 1)
 g_eval.GetYaxis().SetRangeUser(0, 1)
 
-c_roc_eval.SaveAs("BDT_ROC_of_eval_SigEff_vs_BkgRej_wpixels.png")
+c_roc_eval.SaveAs(f"{sensor_thickness}_BDT_ROC_of_eval_SigEff_vs_BkgRej_wpixels.png")
 g_eval.Write("eval_ROC_curve")
 
 # --- Combined stats --- #
@@ -276,9 +290,10 @@ comb_hist_legend.AddEntry(h_sig_eval_norm, "Signal (evaluation data)", "l")
 comb_hist_legend.AddEntry(h_sig_train_norm, "Signal (training data)", "l")
 comb_hist_legend.AddEntry(h_bkg_eval_norm, "Background (evaluation data)", "l")
 comb_hist_legend.AddEntry(h_bkg_train_norm, "Background (training data)", "l")
+comb_hist_legend.SetBorderSize(0)
 comb_hist_legend.Draw()
 
-c_hist_comb.SaveAs("BDT_evaluation_of_comb_wpixels.png")
+c_hist_comb.SaveAs(f"{sensor_thickness}_BDT_evaluation_of_comb_wpixels.png")
 c_hist_comb.Write()
 
 # ROC Curve
@@ -291,9 +306,10 @@ g_train.Draw("AL")
 g_eval.Draw("L SAME")
 comb_roc_legend.AddEntry(g_train,"Training Data","l")
 comb_roc_legend.AddEntry(g_eval,"Evaluation Data","l")
+comb_roc_legend.SetBorderSize(0)
 comb_roc_legend.Draw()
 
-c_roc_comb.SaveAs("BDT_ROC_of_comb_SigEff_vs_BkgRej_wpixels.png")
+c_roc_comb.SaveAs(f"{sensor_thickness}_BDT_ROC_of_comb_SigEff_vs_BkgRej_wpixels.png")
 
 # Write all to output file
 h_sig_eval.Write()
