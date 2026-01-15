@@ -32,8 +32,11 @@ variables = [
     "Cluster_Eccentricity"
     ]
 
+# NOTE: The following two for loops must be kept separate to preserve variable order
 for i in range(9):
     variables.append(f"PixelHits_EnergyDeposited_{i}")
+
+for i in range(9):
     variables.append(f"PixelHits_ArrivalTime_{i}")
 
 buffers = {v: array('f', [0.]) for v in variables}
