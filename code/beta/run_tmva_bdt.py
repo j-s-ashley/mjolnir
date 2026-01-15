@@ -193,9 +193,6 @@ variables |= make_pixelhit_vars(
 # Load input variables
 for v_id, _ in variables.items():
     dataloader.AddVariable(v_id, "F")
-for i in range(9):
-    dataloader.AddVariable(f"PixelHits_EnergyDeposited_{i}", "F")
-    dataloader.AddVariable(f"PixelHits_ArrivalTime_{i}", "F")
 
 # Load signal and background files
 sig_file = ROOT.TFile(f"/global/cfs/projectdirs/atlas/jashley/mjolnir/data/beta/MAIA/signal/{sensor_thickness}_sig_trng_ttree.root")
