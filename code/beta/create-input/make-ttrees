@@ -14,14 +14,14 @@ SIG_OUT="data/beta/MAIA/signal"
 BKG_OUT="data/beta/MAIA/bg"
 
 # NOTE: 50 micron sensor data already created at time of script writing
-thicknesses=(
+SENSOR_THICKNESSES=(
     75
     100
     200
     400
 )
 
-for i in "${thicknesses[@]}"; do
+for i in "${SENSOR_THICKNESSES[@]}"; do
     echo "Creating TTrees from === ${i} === micron sensor data"
     # SIGNAL - training data
     python code/beta/create-input/createTTree.py \

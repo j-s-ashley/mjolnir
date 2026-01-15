@@ -10,7 +10,7 @@ Method         : BDT::BDT
 TMVA Release   : 4.2.1         [262657]
 ROOT Release   : 6.30/06       [400902]
 Creator        : jashley
-Date           : Wed Jan 14 16:10:07 2026
+Date           : Thu Jan 15 06:50:02 2026
 Host           : Linux runner-z8jooa6tn-project-190437-concurrent-0-p18ptnml 6.6.13-200.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Jan 20 18:03:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
 Dir            : /global/cfs/cdirs/atlas/jashley/mjolnir/code/beta
 Training events: 24529

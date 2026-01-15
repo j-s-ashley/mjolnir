@@ -1,22 +1,32 @@
 #!/bin/bash
 
-SENSOR_THICKNESS="400"
+SENSOR_THICKNESSES=(
+	50
+	75
+	100
+	200
+	400
+)
 
 WORKING_DIR="/global/cfs/projectdirs/atlas/jashley/mjolnir/code/beta"
 cd ${WORKING_DIR}
 echo "Changed directory to ${WORKING_DIR}"
-echo "Initiating BDT training"
 
-TRAINING_LOG="${SENSOR_THICKNESS}_training.log"
-python run_tmva_bdt.py | tee ${TRAINING_LOG}
-date >> ${TRAINING_LOG}
-echo "=== Training completed, log saved to ${TRAINING_LOG} ==="
-
-echo "Initiating BDT evaluation"
-EVALUATION_LOG="${SENSOR_THICKNESS}_evaluation.log"
-python evaluate_tmva_bdt.py | tee ${EVALUATION_LOG}
-date >> ${TRAINING_LOG}
-echo "=== Evaluation completed, log saved to ${EVALUATION_LOG} ==="
+for t in "${SENSOR_THICKNESSES[@]}"; do
+	echo "Initiating BDT training for === ${t} === micron sensor data"
+	TRAINING_LOG="${t}_training.log"
+	python run_tmva_bdt.py -t ${t} | tee ${TRAINING_LOG}
+	date >> ${TRAINING_LOG}
+	echo "=== Training completed, log saved to ${TRAINING_LOG} ==="
+	echo "Initiating BDT evaluation for === ${t} === micron sensor data"
+	EVALUATION_LOG="${t}_evaluation.log"
+	python evaluate_tmva_bdt.py -t ${t}  | tee ${EVALUATION_LOG}
+	date >> ${TRAINING_LOG}
+	echo "=== Evaluation completed, log saved to ${EVALUATION_LOG} ==="
+	# Move output files to results subdirectory
+	mv ${t}_* results/
+	mv TMVA_output.root results/${t}_TMVA_output.root
+done
 
 echo "Changing directory back to"
 cd -

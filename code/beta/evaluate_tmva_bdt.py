@@ -1,10 +1,16 @@
 import ROOT
+import argparse
 import numpy as np
 from ROOT import TMVA, TFile, TH1F
 from sklearn.metrics import roc_curve, auc
 from array import array
 
-sensor_thickness = 400
+def options():
+    parser = argparse.ArgumentParser(description="Train BDT on data from input TTree files.")
+    parser.add_argument("-t", required=True, type=int, help="VXB sensor thickness")
+    return parser.parse_args()
+
+sensor_thickness = options().t
 
 ROOT.TMVA.Tools.Instance()
 reader    = ROOT.TMVA.Reader("!Color:Silent")

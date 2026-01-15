@@ -225,9 +225,9 @@ Factory                  : Train method: BDT for Classification
 BDT                      : #events: (reweighted) sig: 8741.5 bkg: 8741.5
                          : #events: (unweighted) sig: 2318 bkg: 15165
                          : Training 200 Decision Trees ... patience please
-                         : Elapsed time for training with 17483 events: [1;31m5.9 sec[0m         
+                         : Elapsed time for training with 17483 events: [1;31m4.95 sec[0m         
 BDT                      : [dataset] : Evaluation of BDT on training sample (17483 events)
-                         : Elapsed time for evaluation of 17483 events: [1;31m0.181 sec[0m       
+                         : Elapsed time for evaluation of 17483 events: [1;31m0.129 sec[0m       
                          : Creating xml weight file: [0;36mdataset/weights/TMVAClassification_BDT.weights.xml[0m
                          : Creating standalone class: [0;36mdataset/weights/TMVAClassification_BDT.class.C[0m
                          : TMVA_output.root:/dataset/Method_BDT/BDT
@@ -279,7 +279,7 @@ Factory                  : [1mTest all methods[0m
 Factory                  : Test method: BDT for Classification performance
                          : 
 BDT                      : [dataset] : Evaluation of BDT on testing sample (17483 events)
-                         : Elapsed time for evaluation of 17483 events: [1;31m0.14 sec[0m       
+                         : Elapsed time for evaluation of 17483 events: [1;31m0.111 sec[0m       
 Factory                  : [1mEvaluate all methods[0m
 Factory                  : Evaluate classifier: BDT
                          : 
@@ -355,5 +355,5 @@ Dataset:dataset          : Created tree 'TrainTree' with 17483 events
 Factory                  : [1mThank you for using TMVA![0m
                          : [1mFor citation information, please visit: http://tmva.sf.net/citeTMVA.html[0m
 TMVA training completed. Output saved to 'TMVA_output.root'
-Wed Jan 14 16:01:18 PST 2026
-Wed Jan 14 16:01:50 PST 2026
+Thu Jan 15 06:48:16 PST 2026
+Thu Jan 15 06:48:31 PST 2026

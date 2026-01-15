@@ -1,9 +1,31 @@
 import ROOT
+import argparse
 from ROOT import TMVA
 from dataclasses import dataclass
 from array import array
 
-sensor_thickness = 400
+# Accept sensor thickness CLI input
+def options():
+    parser = argparse.ArgumentParser(description="Train BDT on data from input TTree files.")
+    parser.add_argument("-t", required=True, type=int, help="VXB sensor thickness")
+    return parser.parse_args()
+
+sensor_thickness = options().t
+
+# Pixel information helper function
+def make_pixelhit_vars(prefix, label, *, n=9, ymax, xmin, xmax, legend="right", yscale="log"):
+    # Sorry, Tova. Dictionary comprehension just looks so much better here.
+    return {
+        f"{prefix}_{i}": Variable(
+            label=f"{label} for pixel hit {i}",
+            ymax=ymax,
+            xmin=xmin,
+            xmax=xmax,
+            legend=legend,
+            yscale=yscale,
+        )
+        for i in range(n)
+    }
 
 # Manual normalization
 def normalize_in_place(h):
@@ -152,6 +174,22 @@ variables = {
         ),
         }
 
+variables |= make_pixelhit_vars(
+    "PixelHits_EnergyDeposited",
+    "Pixel hit energy deposited [KeV]",
+    ymax=13250,
+    xmin=0,
+    xmax=62000,
+)
+
+variables |= make_pixelhit_vars(
+    "PixelHits_ArrivalTime",
+    "Pixel hit arrival time [ns]",
+    ymax=13500,
+    xmin=-2.1,
+    xmax=5.2,
+)
+
 # Load input variables
 for v_id, _ in variables.items():
     dataloader.AddVariable(v_id, "F")
@@ -219,11 +257,11 @@ for v_id, v in variables.items():
     h_sig.GetYaxis().SetTitle("Normalized number of clusters")
 
     if v.yscale == "log":
-        gPad.SetLogy(1)
+        ROOT.gPad.SetLogy(1)
 
     h_sig.Draw("HIST F")
     h_bkg.Draw("HIST F SAME")
-    h_sig.Draw("HIST")
+    h_sig.Draw("HIST SAME")
     h_bkg.Draw("HIST SAME")
 
     if v.legend == "right":
