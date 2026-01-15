@@ -4,7 +4,7 @@ from ROOT import TMVA, TFile, TH1F
 from sklearn.metrics import roc_curve, auc
 from array import array
 
-sensor_thickness = 50
+sensor_thickness = 400
 
 ROOT.TMVA.Tools.Instance()
 reader    = ROOT.TMVA.Reader("!Color:Silent")
@@ -76,13 +76,13 @@ training_roc_auc     = auc(training_sig_eff, training_bkg_rej)
 print(f"Training  ROC AUC (Signal efficiency vs Background rejection) = {training_roc_auc:.3f}")
 
 # Save score histograms
-h_sig_train = ROOT.TH1F("h_sig_train_score", "Signal BDT Output (Training);BDT Score;Entries", 100, -1, 1)
+h_sig_train = ROOT.TH1F("h_sig_train_score", f"{sensor_thickness} #mum Signal BDT Output (Training);BDT Score;Entries", 100, -1, 1)
 for s in sig_training_scores:
     h_sig_train.Fill(s)
 h_sig_train_norm = h_sig_train.Clone("h_sig_train_norm")
 h_sig_train_norm.Scale(1. / h_sig_train.Integral())
 
-h_bkg_train = ROOT.TH1F("h_bkg_train_score", "Background BDT Output (Training);BDT Score;Entries", 100, -1, 1)
+h_bkg_train = ROOT.TH1F("h_bkg_train_score", f"{sensor_thickness} #mum Background BDT Output (Training);BDT Score;Entries", 100, -1, 1)
 for b in bkg_training_scores:
     h_bkg_train.Fill(b)
 h_bkg_train_norm = h_bkg_train.Clone("h_bkg_train_norm")
@@ -153,7 +153,7 @@ c_roc_train = ROOT.TCanvas("c_roc_train", "ROC Curve (Signal Eff vs Background R
 g_train = ROOT.TGraph(len(training_sig_eff), array('f', training_bkg_rej), array('f', training_sig_eff))
 
 training_roc_legend = ROOT.TLegend(0.15, 0.20, 0.35, 0.35)
-g_train.SetTitle(f"ROC Curve;Background Rejection;Signal Efficiency")
+g_train.SetTitle(f"{sensor_thickness} #mum ROC Curve;Background Rejection;Signal Efficiency")
 g_train.SetLineColor(ROOT.kBlue)
 g_train.SetLineWidth(2)
 g_train.Draw("AL")
@@ -178,13 +178,13 @@ eval_roc_auc     = auc(eval_sig_eff, eval_bkg_rej)
 print(f"Evaluation ROC AUC (Signal efficiency vs Background rejection) = {eval_roc_auc:.3f}")
 
 # Save score histograms
-h_sig_eval = ROOT.TH1F("h_sig_eval_score", "Signal BDT Output (Evaluation);BDT Score;Entries", 100, -1, 1)
+h_sig_eval = ROOT.TH1F("h_sig_eval_score", f"{sensor_thickness} #mum Signal BDT Output (Evaluation);BDT Score;Entries", 100, -1, 1)
 for s in sig_eval_scores:
     h_sig_eval.Fill(s)
 h_sig_eval_norm = h_sig_eval.Clone("h_sig_eval_norm")
 h_sig_eval_norm.Scale(1. / h_sig_eval.Integral())
 
-h_bkg_eval = ROOT.TH1F("h_bkg_eval_score", "Background BDT Output (Evaluation);BDT Score;Entries", 100, -1, 1)
+h_bkg_eval = ROOT.TH1F("h_bkg_eval_score", f"{sensor_thickness} #mum Background BDT Output (Evaluation);BDT Score;Entries", 100, -1, 1)
 for b in bkg_eval_scores:
     h_bkg_eval.Fill(b)
 h_bkg_eval_norm = h_bkg_eval.Clone("h_bkg_eval_norm")
@@ -255,7 +255,7 @@ c_roc_eval = ROOT.TCanvas("c_roc_eval", "ROC Curve (Signal Eff vs Background Rej
 g_eval = ROOT.TGraph(len(eval_sig_eff), array('f', eval_bkg_rej), array('f', eval_sig_eff))
 
 eval_roc_legend = ROOT.TLegend(0.15, 0.20, 0.35, 0.35)
-g_eval.SetTitle(f"ROC Curve;Background Rejection;Signal Efficiency")
+g_eval.SetTitle(f"{sensor_thickness} #mum ROC Curve;Background Rejection;Signal Efficiency")
 g_eval.SetLineColor(ROOT.kBlue)
 g_eval.SetLineWidth(2)
 g_eval.Draw("AL")

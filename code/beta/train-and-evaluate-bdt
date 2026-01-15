@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SENSOR_THICKNESS="50"
+SENSOR_THICKNESS="400"
 
 WORKING_DIR="/global/cfs/projectdirs/atlas/jashley/mjolnir/code/beta"
 cd ${WORKING_DIR}

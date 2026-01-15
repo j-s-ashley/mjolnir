@@ -3,7 +3,7 @@ from ROOT import TMVA
 from dataclasses import dataclass
 from array import array
 
-sensor_thickness = 50 
+sensor_thickness = 400
 
 # Manual normalization
 def normalize_in_place(h):
@@ -22,27 +22,134 @@ dataloader = TMVA.DataLoader("dataset")
 
 @dataclass(frozen=True)
 class Variable:
-    label: str
-    ymax: float
-    xmin: float
-    xmax: float
+    label: str  # x-axis label for histograms
+    ymax: float # max y-value on histograms
+    xmin: float # min x-value on histograms
+    xmax: float # max x-value on histograms
+    legend: str # legend position tag
+    yscale: str # linear or log scale for y-axis
 
 variables = {
-        "Cluster_ArrivalTime": Variable(label="Cluster arrival time [ns]", ymax=0.23, xmin=-0.52, xmax=0.7),
-        "Cluster_EnergyDeposited": Variable(label="Cluster energy deposited [KeV]", ymax=1.1, xmin=0, xmax=0.0007),
-        "Incident_Angle": Variable(label="Incident angle [radians]", ymax=0.077, xmin=0, xmax=3),
-        "Cluster_Size_x": Variable(label="Cluster size in x [pixels]", ymax=1.1, xmin=0, xmax=60),
-        "Cluster_Size_y": Variable(label="Cluster size in y [pixels]", ymax=1.1, xmin=0, xmax=400),
-        "Cluster_Size_tot": Variable(label="Total cluster size [pixels]", ymax=1.1, xmin=0, xmax=400),
-        "Cluster_x": Variable(label="Cluster x position [cm]", ymax=0.11, xmin=-35, xmax=35),
-        "Cluster_y": Variable(label="Cluster y position [cm]", ymax=0.11, xmin=-35, xmax=35),
-        "Cluster_z": Variable(label="Cluster z position [cm]", ymax=0.0055, xmin=-80, xmax=80),
-        "Cluster_RMS_x": Variable(label="Cluster RMS in x [cm^{2}]", ymax=0.22, xmin=0, xmax=90000),
-        "Cluster_RMS_y": Variable(label="Cluster RMS in y [cm^{2}]", ymax=0.22, xmin=0, xmax=350000),
-        "Cluster_Skew_x": Variable(label="Cluster skew in x", ymax=0.55, xmin=-1.75, xmax=1.75),
-        "Cluster_Skew_y": Variable(label="Cluster skew in y", ymax=0.55, xmin=-1.75, xmax=1.75),
-        "Cluster_AspectRatio": Variable(label="Cluster aspect ratio", ymax=1.1, xmin=0, xmax=25000),
-        "Cluster_Eccentricity": Variable(label="Cluster eccentricity", ymax=1.1, xmin=0.85, xmax=1)
+        "Cluster_ArrivalTime": Variable(
+            label="Cluster arrival time [ns]",
+            ymax=0.3,
+            xmin=-0.52,
+            xmax=0.7,
+            legend="right",
+            yscale="linear",
+        ),
+        "Cluster_EnergyDeposited": Variable(
+            label="Cluster energy deposited [KeV]",
+            ymax=1.1,
+            xmin=0,
+            xmax=0.0007,
+            legend="right",
+            yscale="log",
+        ),
+        "Incident_Angle": Variable(
+            label="Incident angle [radians]",
+            ymax=0.09,
+            xmin=0,
+            xmax=3,
+            legend="center",
+            yscale="linear",
+        ),
+        "Cluster_Size_x": Variable(
+            label="Cluster size in x [pixels]",
+            ymax=1.1,
+            xmin=0,
+            xmax=60,
+            legend="right",
+            yscale="log",
+        ),
+        "Cluster_Size_y": Variable(
+            label="Cluster size in y [pixels]",
+            ymax=1.1,
+            xmin=0,
+            xmax=400,
+            legend="right",
+            yscale="log",
+        ),
+        "Cluster_Size_tot": Variable(
+            label="Total cluster size [pixels]",
+            ymax=1.1,
+            xmin=0,
+            xmax=400,
+            legend="right",
+            yscale="log",
+        ),
+        "Cluster_x": Variable(
+            label="Cluster x position [cm]",
+            ymax=0.11,
+            xmin=-35,
+            xmax=35,
+            legend="center",
+            yscale="linear",
+        ),
+        "Cluster_y": Variable(
+            label="Cluster y position [cm]",
+            ymax=0.11,
+            xmin=-35,
+            xmax=35,
+            legend="center",
+            yscale="linear",
+        ),
+        "Cluster_z": Variable(
+            label="Cluster z position [cm]",
+            ymax=0.55,
+            xmin=-80,
+            xmax=80,
+            legend="right",
+            yscale="linear",
+        ),
+        "Cluster_RMS_x": Variable(
+            label="Cluster RMS in x [cm^{2}]",
+            ymax=0.22,
+            xmin=0,
+            xmax=90000,
+            legend="right",
+            yscale="linear",
+        ),
+        "Cluster_RMS_y": Variable(
+            label="Cluster RMS in y [cm^{2}]",
+            ymax=0.22,
+            xmin=0,
+            xmax=350000,
+            legend="right",
+            yscale="linear",
+        ),
+        "Cluster_Skew_x": Variable(
+            label="Cluster skew in x",
+            ymax=0.55,
+            xmin=-1.75,
+            xmax=1.75,
+            legend="center",
+            yscale="log",
+        ),
+        "Cluster_Skew_y": Variable(
+            label="Cluster skew in y",
+            ymax=0.55,
+            xmin=-1.75,
+            xmax=1.75,
+            legend="center",
+            yscale="log",
+        ),
+        "Cluster_AspectRatio": Variable(
+            label="Cluster aspect ratio",
+            ymax=1.1,
+            xmin=0,
+            xmax=25000,
+            legend="right",
+            yscale="log",
+        ),
+        "Cluster_Eccentricity": Variable(
+            label="Cluster eccentricity",
+            ymax=1.1,
+            xmin=0.85,
+            xmax=1,
+            legend="center",
+            yscale="log",
+        ),
         }
 
 # Load input variables
@@ -111,15 +218,25 @@ for v_id, v in variables.items():
     h_sig.GetXaxis().SetTitle(f"{v.label}")
     h_sig.GetYaxis().SetTitle("Normalized number of clusters")
 
+    if v.yscale == "log":
+        gPad.SetLogy(1)
+
+    h_sig.Draw("HIST F")
+    h_bkg.Draw("HIST F SAME")
     h_sig.Draw("HIST")
     h_bkg.Draw("HIST SAME")
 
-    leg = ROOT.TLegend(0.7, 0.75, 0.9, 0.9)
-    leg.AddEntry(h_sig, "Signal", "l")
-    leg.AddEntry(h_bkg, "Background", "l")
+    if v.legend == "right":
+        leg = ROOT.TLegend(0.7, 0.65, 0.9, 0.8)
+    else:
+        leg = ROOT.TLegend(0.4, 0.65, 0.6, 0.8)
+    leg.AddEntry(h_sig, "Signal", "fl")
+    leg.AddEntry(h_bkg, "Background", "fl")
     leg.SetBorderSize(0)
+    leg.SetFillStyle(0)
     leg.Draw()
 
+    c.SaveAs(f"{sensor_thickness}_{v_id}_dist.png")
     c.Write()
 
 output_file.Close()
