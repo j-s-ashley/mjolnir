@@ -23,9 +23,9 @@ for t in "${SENSOR_THICKNESSES[@]}"; do
 	python evaluate_tmva_bdt.py -t ${t}  | tee ${EVALUATION_LOG}
 	date >> ${TRAINING_LOG}
 	echo "=== Evaluation completed, log saved to ${EVALUATION_LOG} ==="
-	# Move output files to results subdirectory
-	mv ${t}_* results/
-	mv TMVA_output.root results/${t}_TMVA_output.root
+	# Move output files to intermediary results subdirectory
+	mv ${t}_* temp-results/
+	mv TMVA_output.root temp-results/${t}_TMVA_output.root
 done
 
 echo "Changing directory back to"

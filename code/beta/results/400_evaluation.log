@@ -1,2 +1,0 @@
-<FATAL>                          : Dataset[Default] : You declared 33 variables in the Reader while there are 51 variables declared in the file
-***> abort program execution

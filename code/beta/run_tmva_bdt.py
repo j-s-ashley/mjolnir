@@ -1,8 +1,15 @@
 import ROOT
+import math
 import argparse
 from ROOT import TMVA
 from dataclasses import dataclass
 from array import array
+
+train_fraction = .5
+n_trees        = 800
+clust_per_tree = "6.5%"
+max_depth      = 3
+beta           = .5
 
 # Accept sensor thickness CLI input
 def options():
@@ -11,6 +18,15 @@ def options():
     return parser.parse_args()
 
 sensor_thickness = options().t
+
+def get_ttree_clusters(t):
+    n = int(t.GetEntriesFast())
+    return n
+
+def train_test_split(total, train_frac):
+    n_train = int(math.floor(total * train_frac))
+    n_test = total - n_train
+    return n_train, n_test
 
 # Pixel information helper function
 def make_pixelhit_vars(prefix, label, *, n=9, ymax, xmin, xmax, legend="right", yscale="log"):
@@ -203,13 +219,30 @@ bkg_tree = bkg_file.Get("HitTree")
 dataloader.AddSignalTree(sig_tree, 1.0)
 dataloader.AddBackgroundTree(bkg_tree, 1.0)
 
+# Calculate train/test split
+sig_total_clusters = get_ttree_clusters(sig_tree)
+bkg_total_clusters = get_ttree_clusters(bkg_tree)
+
+n_sig_train, n_sig_test = train_test_split(sig_total_clusters, train_fraction)
+n_bkg_train, n_bkg_test = train_test_split(bkg_total_clusters, train_fraction)
+
+dataloader_opts = (
+    f"nTrain_Signal={n_sig_train}:nTest_Signal={n_sig_test}:"
+    f"nTrain_Background={n_bkg_train}:nTest_Background={n_bkg_test}:"
+    "SplitMode=Random:NormMode=NumEvents:!V"
+)
+
 # Prepare dataset
-dataloader.PrepareTrainingAndTestTree(ROOT.TCut(""), ROOT.TCut(""),
-    "nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V")
+dataloader.PrepareTrainingAndTestTree(ROOT.TCut(""), ROOT.TCut(""), dataloader_opts)
+
+bookmethod_opts = (
+    f"!H:!V:NTrees={n_trees}:MaxDepth={max_depth}:"
+    f"MinNodeSize={clust_per_tree}:BoostType=AdaBoost:"
+    f"AdaBoostBeta={beta}:SeparationType=GiniIndex:nCuts=20"
+)
 
 # Book a BDT
-factory.BookMethod(dataloader, TMVA.Types.kBDT, "BDT",
-    "!H:!V:NTrees=200:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:SeparationType=GiniIndex:nCuts=20")
+factory.BookMethod(dataloader, TMVA.Types.kBDT, "BDT", bookmethod_opts)
 
 # Train, test, evaluate
 factory.TrainAllMethods()
@@ -237,13 +270,19 @@ for v_id, v in variables.items():
 
     # Pretty plots
     c = ROOT.TCanvas(f"c_{v_id}", f"{v_id} signal vs background", 800, 600)
+    c.cd()
 
     h_sig.SetLineColor(ROOT.kRed)
     h_bkg.SetLineColor(ROOT.kBlue)
     h_sig.SetLineWidth(2)
     h_bkg.SetLineWidth(2)
-    h_sig.SetFillColorAlpha(ROOT.kRed, 0.35)
-    h_bkg.SetFillColorAlpha(ROOT.kBlue, 0.35)
+
+    sig_color = ROOT.TColor.GetColorTransparent(ROOT.kRed, 0.35)
+    bkg_color = ROOT.TColor.GetColorTransparent(ROOT.kBlue, 0.35)
+    h_sig.SetFillColor(sig_color)
+    h_bkg.SetFillColor(bkg_color)
+    h_sig.SetFillStyle(1001)
+    h_bkg.SetFillStyle(1001)
     
     # Fix axis issues by normalizing manually
     normalize_in_place(h_sig)
@@ -265,11 +304,14 @@ for v_id, v in variables.items():
         leg = ROOT.TLegend(0.7, 0.65, 0.9, 0.8)
     else:
         leg = ROOT.TLegend(0.4, 0.65, 0.6, 0.8)
-    leg.AddEntry(h_sig, "Signal", "fl")
-    leg.AddEntry(h_bkg, "Background", "fl")
+    leg.AddEntry(h_sig, "Signal", "f")
+    leg.AddEntry(h_bkg, "Background", "f")
     leg.SetBorderSize(0)
     leg.SetFillStyle(0)
     leg.Draw()
+
+    c.Modified()
+    c.Update()
 
     c.SaveAs(f"{sensor_thickness}_{v_id}_dist.png")
     c.Write()
