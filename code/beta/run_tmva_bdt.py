@@ -7,7 +7,7 @@ from array import array
 
 train_fraction = .5
 n_trees        = 800
-clust_per_tree = "6.5%"
+clust_per_tree = "9%"
 max_depth      = 3
 beta           = .5
 
@@ -178,14 +178,6 @@ variables = {
             xmin=0,
             xmax=25000,
             legend="right",
-            yscale="log",
-        ),
-        "Cluster_Eccentricity": Variable(
-            label="Cluster eccentricity",
-            ymax=1.1,
-            xmin=0.85,
-            xmax=1,
-            legend="center",
             yscale="log",
         ),
         }

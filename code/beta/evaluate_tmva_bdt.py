@@ -29,7 +29,6 @@ variables = [
     "Cluster_Skew_x",
     "Cluster_Skew_y",
     "Cluster_AspectRatio",
-    "Cluster_Eccentricity"
     ]
 
 # NOTE: The following two for loops must be kept separate to preserve variable order
