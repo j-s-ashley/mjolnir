@@ -1,5 +1,5 @@
 *.slcio
 *.root
 *.pdf
-code/TrkHitsStudiesWorkspace/*
-data/geometries/*
+alpha/code/TrkHitsStudiesWorkspace/
+alpha/data/geometries/*
